@@ -6,158 +6,541 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1920</width>
-    <height>1079</height>
+    <width>2731</width>
+    <height>1002</height>
    </rect>
   </property>
   <property name="font">
    <font>
-    <family>Courier New</family>
+    <family>Rockwell</family>
     <pointsize>12</pointsize>
+    <weight>75</weight>
+    <bold>true</bold>
    </font>
   </property>
   <property name="windowTitle">
-   <string>RO Readings</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(0, 170, 255);</string>
+   <string/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="btnReadParameters">
+   <widget class="QPushButton" name="btn_Connect_to_Galil">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>140</y>
-      <width>251</width>
-      <height>111</height>
+      <x>540</x>
+      <y>40</y>
+      <width>200</width>
+      <height>100</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">font: 12pt &quot;Comic Sans MS&quot;;
-background-color: rgb(85, 255, 0);</string>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
     </property>
-    <property name="text">
-     <string>Connect
-Read Parameters</string>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="lcdMvDist_Pulses">
-    <property name="geometry">
-     <rect>
-      <x>1388</x>
-      <y>361</y>
-      <width>271</width>
-      <height>101</height>
-     </rect>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
     </property>
     <property name="font">
      <font>
-      <family>MS PGothic</family>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
+    <property name="autoFillBackground">
+     <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(0,255, 0);</string>
+     <string notr="true">QPushButton {
+    background-color: rgb(217, 217, 217);   /* light gray background */
+    border-width:5px;
+    border-style: solid;
+    border-top-color: rgb(255, 255, 255);   /* white highlight */
+    border-left-color: rgb(255, 255, 255);  /* white highlight */
+    border-right-color: rgb(90, 90, 90);    /* dark gray shadow */
+    border-bottom-color: rgb(90, 90, 90);   /* dark gray shadow */
+    padding: 4px;
+}
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Connect</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Start_Run">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>150</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgb(217, 217, 217);   /* light gray background */
+    border-width:5px;
+    border-style: solid;
+    border-top-color: rgb(255, 255, 255);   /* white highlight */
+    border-left-color: rgb(255, 255, 255);  /* white highlight */
+    border-right-color: rgb(90, 90, 90);    /* dark gray shadow */
+    border-bottom-color: rgb(90, 90, 90);   /* dark gray shadow */
+    padding: 4px;
+}
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Start Run</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Pause_Run">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>270</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgb(217, 217, 217);   /* light gray background */
+    border-width:5px;
+    border-style: solid;
+    border-top-color: rgb(255, 255, 255);   /* white highlight */
+    border-left-color: rgb(255, 255, 255);  /* white highlight */
+    border-right-color: rgb(90, 90, 90);    /* dark gray shadow */
+    border-bottom-color: rgb(90, 90, 90);   /* dark gray shadow */
+    padding: 4px;
+}
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Pause Run</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Abort_Run">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>390</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgb(217, 217, 217);   /* light gray background */
+    border-width:5px;
+    border-style: solid;
+    border-top-color: rgb(255, 255, 255);   /* white highlight */
+    border-left-color: rgb(255, 255, 255);  /* white highlight */
+    border-right-color: rgb(90, 90, 90);    /* dark gray shadow */
+    border-bottom-color: rgb(90, 90, 90);   /* dark gray shadow */
+    padding: 4px;
+}
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Abort Run</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_End_Run">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>510</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgb(217, 217, 217);   /* light gray background */
+    border-width:5px;
+    border-style: solid;
+    border-top-color: rgb(255, 255, 255);   /* white highlight */
+    border-left-color: rgb(255, 255, 255);  /* white highlight */
+    border-right-color: rgb(90, 90, 90);    /* dark gray shadow */
+    border-bottom-color: rgb(90, 90, 90);   /* dark gray shadow */
+    padding: 4px;
+}
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>End Run</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Trend_Data">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>630</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgb(217, 217, 217);   /* light gray background */
+    border-width:5px;
+    border-style: solid;
+    border-top-color: rgb(255, 255, 255);   /* white highlight */
+    border-left-color: rgb(255, 255, 255);  /* white highlight */
+    border-right-color: rgb(90, 90, 90);    /* dark gray shadow */
+    border-bottom-color: rgb(90, 90, 90);   /* dark gray shadow */
+    padding: 4px;
+}
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Trend Data</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>640</y>
+      <width>251</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Panel</enum>
+     <enum>QFrame::StyledPanel</enum>
     </property>
-    <property name="lineWidth">
-     <number>4</number>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
     </property>
-    <property name="midLineWidth">
-     <number>10</number>
+   </widget>
+   <widget class="QLineEdit" name="txt_Drum_Speed_(Calculated)">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>870</y>
+      <width>137</width>
+      <height>30</height>
+     </rect>
     </property>
-    <property name="segmentStyle">
-     <enum>QLCDNumber::Filled</enum>
+    <property name="readOnly">
+     <bool>false</bool>
     </property>
-    <property name="value" stdset="0">
+   </widget>
+   <widget class="QDoubleSpinBox" name="spin_Shift_Distance_in_mm">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>130</y>
+      <width>63</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>0.000000000000000</double>
+    </property>
+    <property name="maximum">
      <double>0.000000000000000</double>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QDoubleSpinBox" name="spin_Offset_Distance_in_mm">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>122</y>
-      <width>970</width>
-      <height>109</height>
+      <x>300</x>
+      <y>180</y>
+      <width>63</width>
+      <height>30</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="minimum">
+     <double>0.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>0.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="spin_Back_Distance">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>230</y>
+      <width>63</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <double>0.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>0.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txt_Layer_Count">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>280</y>
+      <width>137</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txt_Drum_Revs">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>330</y>
+      <width>137</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <layout class="QHBoxLayout">
      <item>
-      <widget class="QLCDNumber" name="lcdShift">
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(0,255, 0);</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Panel</enum>
-       </property>
-       <property name="lineWidth">
-        <number>4</number>
-       </property>
-       <property name="midLineWidth">
-        <number>10</number>
-       </property>
-       <property name="value" stdset="0">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLCDNumber" name="lcdOffset">
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(0,255, 0);</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Panel</enum>
-       </property>
-       <property name="lineWidth">
-        <number>4</number>
-       </property>
-       <property name="midLineWidth">
-        <number>10</number>
-       </property>
-       <property name="value" stdset="0">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLCDNumber" name="lcdMvDist_mm">
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(0,255, 0);</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Panel</enum>
-       </property>
-       <property name="lineWidth">
-        <number>4</number>
-       </property>
-       <property name="midLineWidth">
-        <number>10</number>
-       </property>
-       <property name="value" stdset="0">
-        <double>0.000000000000000</double>
+      <widget class="QLabel" name="lbl_Shift_Distance_in_mm">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QLabel" name="lbl_Offset_Distance_in_mm">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QLabel" name="lbl_Back_Distance">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QLabel" name="lbl_Layer_Count">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QLabel" name="lbl_Drum_Revs">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="lbl_Drum_Speed_(Calculated)">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>673</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -165,16 +548,10 @@ color: rgb(0,255, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1920</width>
-     <height>26</height>
+     <width>2731</width>
+     <height>30</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuTest">
-    <property name="title">
-     <string>Test</string>
-    </property>
-   </widget>
-   <addaction name="menuTest"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
