@@ -28,8 +28,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>40</y>
+      <x>30</x>
+      <y>100</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -58,8 +58,8 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: rgb(217, 217, 217);   /* light gray background */
+     <string notr="true">QPushButton {background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 100, 100, 255), stop:1 rgba(255,0, 0, 255));
+	color: rgb(204, 204, 204);
     border-width:5px;
     border-style: solid;
     border-top-color: rgb(255, 255, 255);   /* white highlight */
@@ -88,10 +88,13 @@ QPushButton:pressed {
     </property>
    </widget>
    <widget class="QPushButton" name="btn_Start_Run">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>150</y>
+      <x>30</x>
+      <y>210</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -120,8 +123,8 @@ QPushButton:pressed {
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: rgb(217, 217, 217);   /* light gray background */
+     <string notr="true">QPushButton {background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 100, 100, 255), stop:1 rgba(255,0, 0, 255));
+	color: rgb(204, 204, 204);
     border-width:5px;
     border-style: solid;
     border-top-color: rgb(255, 255, 255);   /* white highlight */
@@ -144,10 +147,13 @@ QPushButton:pressed {
     </property>
    </widget>
    <widget class="QPushButton" name="btn_Pause_Run">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>270</y>
+      <x>30</x>
+      <y>330</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -176,8 +182,8 @@ QPushButton:pressed {
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: rgb(217, 217, 217);   /* light gray background */
+     <string notr="true">QPushButton {background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 100, 100, 255), stop:1 rgba(255,0, 0, 255));
+	color: rgb(204, 204, 204);
     border-width:5px;
     border-style: solid;
     border-top-color: rgb(255, 255, 255);   /* white highlight */
@@ -200,10 +206,13 @@ QPushButton:pressed {
     </property>
    </widget>
    <widget class="QPushButton" name="btn_Abort_Run">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>390</y>
+      <x>30</x>
+      <y>450</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -232,8 +241,8 @@ QPushButton:pressed {
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: rgb(217, 217, 217);   /* light gray background */
+     <string notr="true">QPushButton {background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 100, 100, 255), stop:1 rgba(255,0, 0, 255));
+	color: rgb(204, 204, 204);
     border-width:5px;
     border-style: solid;
     border-top-color: rgb(255, 255, 255);   /* white highlight */
@@ -249,6 +258,7 @@ QPushButton:pressed {
     border-right-color: rgb(255, 255, 255); /* white highlight */
     border-bottom-color: rgb(255, 255, 255);/* white highlight */
 }
+
 </string>
     </property>
     <property name="text">
@@ -258,8 +268,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="btn_End_Run">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>510</y>
+      <x>30</x>
+      <y>570</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -288,8 +298,8 @@ QPushButton:pressed {
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: rgb(217, 217, 217);   /* light gray background */
+     <string notr="true">QPushButton {background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 100, 100, 255), stop:1 rgba(255,0, 0, 255));
+	color: rgb(204, 204, 204);
     border-width:5px;
     border-style: solid;
     border-top-color: rgb(255, 255, 255);   /* white highlight */
@@ -314,8 +324,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="btn_Trend_Data">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>630</y>
+      <x>30</x>
+      <y>690</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -344,8 +354,8 @@ QPushButton:pressed {
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: rgb(217, 217, 217);   /* light gray background */
+     <string notr="true">QPushButton {background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 100, 100, 255), stop:1 rgba(255,0, 0, 255));
+	color: rgb(204, 204, 204);
     border-width:5px;
     border-style: solid;
     border-top-color: rgb(255, 255, 255);   /* white highlight */
@@ -367,18 +377,30 @@ QPushButton:pressed {
      <string>Trend Data</string>
     </property>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QLabel" name="lbl_Shift_Distance_in_mm">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>640</y>
-      <width>251</width>
-      <height>161</height>
+      <x>410</x>
+      <y>110</y>
+      <width>181</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Back Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frm_Shift">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>100</y>
+      <width>231</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(165, 15, 9, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -386,148 +408,372 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+    <widget class="QLineEdit" name="lned_Shift_Distance">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>60</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(204, 204, 204);
+color: rgb(0, 0, 255);</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QLineEdit" name="txt_Drum_Speed_(Calculated)">
+   <widget class="QFrame" name="frm_Offset">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>870</y>
-      <width>137</width>
+      <x>390</x>
+      <y>240</y>
+      <width>231</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(165, 15, 9, 255), stop:1 rgba(255, 255, 255, 255));</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLineEdit" name="lned_Offset_Distance">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>60</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(204, 204, 204);
+color: rgb(0, 0, 255);</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="lbl_Offset_Distance_in_mm">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>250</y>
+      <width>201</width>
       <height>30</height>
      </rect>
     </property>
-    <property name="readOnly">
-     <bool>false</bool>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Back Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="spin_Shift_Distance_in_mm">
+   <widget class="QLabel" name="lbl_Offset_Distance_in_mm_3">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>130</y>
-      <width>63</width>
+      <x>420</x>
+      <y>390</y>
+      <width>201</width>
       <height>30</height>
      </rect>
     </property>
-    <property name="minimum">
-     <double>0.000000000000000</double>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
-    <property name="maximum">
-     <double>0.000000000000000</double>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Back Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="spin_Offset_Distance_in_mm">
+   <widget class="QFrame" name="frm_Back">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>180</y>
-      <width>63</width>
-      <height>30</height>
+      <x>390</x>
+      <y>380</y>
+      <width>231</width>
+      <height>121</height>
      </rect>
     </property>
-    <property name="minimum">
-     <double>0.000000000000000</double>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(165, 15, 9, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
-    <property name="maximum">
-     <double>0.000000000000000</double>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
     </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLineEdit" name="lned_Back_Distance">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>60</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(204, 204, 204);
+color: rgb(0, 0, 255);</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QDoubleSpinBox" name="spin_Back_Distance">
+   <widget class="QFrame" name="frm_DrmRev">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>230</y>
-      <width>63</width>
-      <height>30</height>
+      <x>940</x>
+      <y>100</y>
+      <width>231</width>
+      <height>121</height>
      </rect>
     </property>
-    <property name="minimum">
-     <double>0.000000000000000</double>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0229545, x2:0, y2:0.966682, stop:0 rgba(132, 14, 14, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
-    <property name="maximum">
-     <double>0.000000000000000</double>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
     </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="lbl_Drum_Rev_Act">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>70</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 255);</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Drum_Rev">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>191</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));
+</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;DrumRevolutions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QLineEdit" name="txt_Layer_Count">
+   <widget class="QFrame" name="frm_Shift_3">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>280</y>
-      <width>137</width>
-      <height>30</height>
+      <x>940</x>
+      <y>250</y>
+      <width>231</width>
+      <height>121</height>
      </rect>
     </property>
-    <property name="readOnly">
-     <bool>false</bool>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0229545, x2:0, y2:0.966682, stop:0 rgba(132, 14, 14, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="lbl_Drum_Speed_Act">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>70</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 255);</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Drum_Speed">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>0</y>
+       <width>171</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));
+</string>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Rockwell'; font-size:12pt; font-weight:600; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Drum Spd (Calc)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QLineEdit" name="txt_Drum_Revs">
+   <widget class="QFrame" name="frm_Shift_4">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>330</y>
-      <width>137</width>
-      <height>30</height>
+      <x>940</x>
+      <y>400</y>
+      <width>231</width>
+      <height>121</height>
      </rect>
     </property>
-    <property name="readOnly">
-     <bool>false</bool>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0229545, x2:0, y2:0.966682, stop:0 rgba(132, 14, 14, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
-   </widget>
-   <widget class="QWidget" name="">
-    <layout class="QHBoxLayout">
-     <item>
-      <widget class="QLabel" name="lbl_Shift_Distance_in_mm">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
-    <layout class="QHBoxLayout">
-     <item>
-      <widget class="QLabel" name="lbl_Offset_Distance_in_mm">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
-    <layout class="QHBoxLayout">
-     <item>
-      <widget class="QLabel" name="lbl_Back_Distance">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
-    <layout class="QHBoxLayout">
-     <item>
-      <widget class="QLabel" name="lbl_Layer_Count">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
-    <layout class="QHBoxLayout">
-     <item>
-      <widget class="QLabel" name="lbl_Drum_Revs">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="lbl_Layer_Count">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>70</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 255);</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Layer_Count_Act">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>20</y>
+       <width>121</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Rockwell</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));
+</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Layer Count&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QLabel" name="lbl_Drum_Speed_(Calculated)">
     <property name="geometry">
@@ -542,6 +788,159 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="lbl_Button_Back">
+    <property name="geometry">
+     <rect>
+      <x>1370</x>
+      <y>430</y>
+      <width>151</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../../../Pictures/Symbol Factory Graphics/Basic legend plate.bmp</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>1374</x>
+      <y>435</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Switch 1 &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Active&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::RichText</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Sw1_Grn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1410</x>
+      <y>510</y>
+      <width>80</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../../../Pictures/Symbol Factory Graphics/GreenLamp.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_Sw1_Grn_2">
+    <property name="geometry">
+     <rect>
+      <x>1410</x>
+      <y>510</y>
+      <width>80</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../../../Pictures/Symbol Factory Graphics/RedLamp.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Exit">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>810</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 100, 100, 255), stop:1 rgba(255,0, 0, 255));
+	color: rgb(204, 204, 204);
+    border-width:5px;
+    border-style: solid;
+    border-top-color: rgb(255, 255, 255);   /* white highlight */
+    border-left-color: rgb(255, 255, 255);  /* white highlight */
+    border-right-color: rgb(90, 90, 90);    /* dark gray shadow */
+    border-bottom-color: rgb(90, 90, 90);   /* dark gray shadow */
+    padding: 4px;
+}
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Exit</string>
+    </property>
+   </widget>
+   <zorder>lbl_Drum_Speed_(Calculated)</zorder>
+   <zorder>frm_Back</zorder>
+   <zorder>frm_Shift</zorder>
+   <zorder>btn_Connect_to_Galil</zorder>
+   <zorder>btn_Start_Run</zorder>
+   <zorder>btn_Pause_Run</zorder>
+   <zorder>btn_Abort_Run</zorder>
+   <zorder>btn_End_Run</zorder>
+   <zorder>btn_Trend_Data</zorder>
+   <zorder>lbl_Shift_Distance_in_mm</zorder>
+   <zorder>frm_Offset</zorder>
+   <zorder>lbl_Offset_Distance_in_mm</zorder>
+   <zorder>lbl_Offset_Distance_in_mm_3</zorder>
+   <zorder>frm_DrmRev</zorder>
+   <zorder>frm_Shift_3</zorder>
+   <zorder>frm_Shift_4</zorder>
+   <zorder>lbl_Button_Back</zorder>
+   <zorder>label</zorder>
+   <zorder>lbl_Sw1_Grn</zorder>
+   <zorder>lbl_Sw1_Grn_2</zorder>
+   <zorder>btn_Exit</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -549,7 +948,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
      <x>0</x>
      <y>0</y>
      <width>2731</width>
-     <height>30</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

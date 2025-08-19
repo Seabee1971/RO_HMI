@@ -2,42 +2,37 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow,QApplication,QLabel,QTextEdit,QPushButton
 from PyQt6 import uic
 import sys
+from LoadWidgets.button_methods import button_methods
+
 
 class UI(QMainWindow):
     def __init__(self):
         super(UI,self).__init__()
-        # Dynamically assigned button methods
-        button_methods = {
-            "btn_Abort_Run": self.abort_run,
-            "btn_Start_Run": self.start_run,
-            "btn_Stop_Run": self.stop_run,
-            "btn_Exit": self.close,
-            "btn_Connect_to_Galil": self.connect_device,
-            "btn_Disconnect": self.disconnect_device,
-            "btn_Pause_Run": self.pause_run,
-            "btn_End_Run": self.end_run,
-            "btn_Trend_Data":self.trend_run
-        }
 
         #Load uic file
         uic.loadUi("RO_HMI.ui",self)
-        label = self.findChildren(QLabel)
+        labels = self.findChildren(QLabel)
+
         textEdit =self.findChildren(QTextEdit)
         buttons = self.findChildren(QPushButton)
         #  Show the App
         self.showMaximized()
+        self.connect_buttons(buttons)
+        self.connect_labels(labels)
+
+    def connect_buttons(self,buttons):
         for btn in buttons:
-            print(btn.objectName())
             if btn.objectName() in button_methods:
                 # Call the method associated with the button
-
-                btn.clicked.connect(button_methods[btn.objectName()])
+                btn.clicked.connect(getattr(self, button_methods[btn.objectName()]))
             else:
                 print(btn.objectName(), "not found in button_methods")
 
+    def connect_labels(self,labels):
 
+        for label in labels:
+            print(label.objectName())
 
-            #self.show()
 
     def abort_run(self):
         # This function will be called when the button is clicked
@@ -52,6 +47,9 @@ class UI(QMainWindow):
     def end_run(self):
         # This function will be called when the button is clicked
         print("End Run button clicked")
+    def exit(self):
+        sys.exit(1)
+
     def pause_run(self):
         # This function will be called when the button is clicked
         print("Pause Run button clicked")
@@ -79,6 +77,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
     UIWindow = UI()
+
     app.exec()
 
 
