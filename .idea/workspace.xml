@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ded47b8a-1282-4828-ad9b-f4529d5a222d" name="Changes" comment="Added Buttons using findChildren to bring all the buttons in with for loop">
-      <change afterPath="$PROJECT_DIR$/LoadWidgets/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LoadWidgets/button_methods.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LoadWidgets/label_methods.py" afterDir="false" />
+    <list default="true" id="ded47b8a-1282-4828-ad9b-f4529d5a222d" name="Changes" comment="Added Buttons using findChildren to bring all the buttons in with for loop and added package to handle the widgets methods">
+      <change afterPath="$PROJECT_DIR$/WidgetHandlers/label_methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/RO_HMI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RO_HMI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LoadWidgets/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/WidgetHandlers/WriteOutputValues.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LoadWidgets/button_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/WidgetHandlers/button_methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LoadWidgets/label_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/WidgetHandlers/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RO_HMI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/RO_HMI.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -65,7 +68,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -111,6 +114,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="C:\Users\ShaneP\Documents\Coding\Python\RO_HMI\LoadWidgets\button_methods.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -154,7 +158,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-d9fa9deec7cb-d902c0275401-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.23892.515" />
+        <option value="bundled-python-sdk-7e47963ff851-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.515" />
       </set>
     </attachedChunks>
   </component>
@@ -170,6 +174,7 @@
       <workItem from="1755437843377" duration="687000" />
       <workItem from="1755439248892" duration="30000" />
       <workItem from="1755439285931" duration="113000" />
+      <workItem from="1755698430130" duration="7807000" />
     </task>
     <task id="LOCAL-00001" summary="Added Buttons using findChildren to bring all the buttons in with for loop">
       <option name="closed" value="true" />
@@ -179,7 +184,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755621530029</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added Buttons using findChildren to bring all the buttons in with for loop and added package to handle the widgets methods">
+      <option name="closed" value="true" />
+      <created>1755635302456</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755635302456</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,26 +211,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Buttons using findChildren to bring all the buttons in with for loop" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Buttons using findChildren to bring all the buttons in with for loop" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>84</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>20</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Added Buttons using findChildren to bring all the buttons in with for loop and added package to handle the widgets methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Buttons using findChildren to bring all the buttons in with for loop and added package to handle the widgets methods" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RO_HMI$main.coverage" NAME="main Coverage Results" MODIFIED="1755177712337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RO_HMI$main.coverage" NAME="main Coverage Results" MODIFIED="1755705528675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$buildUI.coverage" NAME="buildUI Coverage Results" MODIFIED="1754928164438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

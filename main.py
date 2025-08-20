@@ -1,38 +1,57 @@
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QMainWindow,QApplication,QLabel,QTextEdit,QPushButton
+from PyQt6.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QPushButton, QLineEdit
 from PyQt6 import uic
 import sys
-from LoadWidgets.button_methods import button_methods
-
-
+from WidgetHandlers.button_methods import button_methods
+from WidgetHandlers.label_methods import label_methods
+from WidgetHandlers.WriteOutputValues import WriteWidgetOutputs as writer
 class UI(QMainWindow):
     def __init__(self):
-        super(UI,self).__init__()
+        super(UI, self).__init__()
 
-        #Load uic file
-        uic.loadUi("RO_HMI.ui",self)
+        # Load uic file
+        uic.loadUi("RO_HMI.ui", self)
         labels = self.findChildren(QLabel)
+        # Set the window title and icon
+        self.setWindowTitle("RO HMI")
+        self.setWindowIcon(QIcon("icon.png"))
 
-        textEdit =self.findChildren(QTextEdit)
-        buttons = self.findChildren(QPushButton)
+        #Define Buttons
+
+        self.btn_abort_run = self.findChild(QPushButton, "btn_Abort_Run")
+        self.btn_connect = self.findChild(QPushButton, "btn_Connect_to_Galil")
+        self.btn_end_run = self.findChild(QPushButton,"btn_End_Run")
+        self.btn_exit_app = self.findChild(QPushButton,"btn_Exit")
+        self.btn_pause_run = self.findChild(QPushButton,"btn_Pause_Run")
+        self.btn_start_run = self.findChild(QPushButton, "btn_Start_Run")
+        self.btn_trend_data = self.findChild(QPushButton, "btn_Trend_Data")
+
+        #Define LineEdits
+
+        self.linedit_back_distance = self.findChild(QLineEdit, "lned_Back_Distance")
+        self.linedit_offset_distance = self.findChild(QLineEdit, "lned_Offset_Distance")
+        self.linedit_shift_distance = self.findChild(QLineEdit, "lned_Shift_Distance")
+
+        #Define Labels
+        self.lbl_drum_rev_act = self.findChild(QLabel, "lbl_Drum_Rev_Act")
+        self.lbl_drum_speed_act = self.findChild(QLabel, "lbl_Drum_Speed_Act")
+        self.lbl_layer_count_act = self.findChild(QLabel, "lbl_Layer_Count_Act")
+        self.lbl_sw1_grn = self.findChild(QLabel, "lbl_Sw1_Grn")
+        self.lbl_sw1_red = self.findChild(QLabel, "lbl_Sw1_Red")
+        self.lbl_sw2_grn = self.findChild(QLabel, "lbl_Sw2_Grn")
+        self.lbl_sw2_red = self.findChild(QLabel, "lbl_Sw2_Red")
+
+        # Widget update
+        self.btn_connect.clicked
+
         #  Show the App
         self.showMaximized()
-        self.connect_buttons(buttons)
-        self.connect_labels(labels)
 
-    def connect_buttons(self,buttons):
-        for btn in buttons:
-            if btn.objectName() in button_methods:
-                # Call the method associated with the button
-                btn.clicked.connect(getattr(self, button_methods[btn.objectName()]))
-            else:
-                print(btn.objectName(), "not found in button_methods")
-
-    def connect_labels(self,labels):
-
-        for label in labels:
-            print(label.objectName())
-
+    def drum_rev_act(self):
+        writer.write(self,self.lbl_drum_rev_act,value="22")
+        #self.lbl_Drum_Rev_Act.setText("drum_rev_act")
+    def drum_speed_act(self):
+        writer.write(self,self.lbl_Drum_Speed_Act,"2032")
 
     def abort_run(self):
         # This function will be called when the button is clicked
@@ -41,12 +60,15 @@ class UI(QMainWindow):
     def connect_device(self):
         # This function will be called when the button is clicked
         print("Connect button clicked")
+
     def disconnect_device(self):
         # This function will be called when the button is clicked
         print("Disconnect button clicked")
+
     def end_run(self):
         # This function will be called when the button is clicked
         print("End Run button clicked")
+
     def exit(self):
         sys.exit(1)
 
@@ -64,13 +86,12 @@ class UI(QMainWindow):
     def stop_run(self):
         # This function will be called when the button is clicked
         print("Stop Run button clicked")
+
     def trend_run(self):
         # This function will be called when the button is clicked
         print("Trend Data button clicked")
 
-        # Set the window title and icon
-        self.setWindowTitle("RO HMI")
-        self.setWindowIcon(QIcon("icon.png"))
+
 
 
 if __name__ == "__main__":
@@ -79,6 +100,3 @@ if __name__ == "__main__":
     UIWindow = UI()
 
     app.exec()
-
-
-

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Shane Platt</author>
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
@@ -387,7 +388,7 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Back Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Shift Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QFrame" name="frm_Shift">
@@ -490,10 +491,10 @@ color: rgb(0, 0, 255);</string>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Back Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Offset Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lbl_Offset_Distance_in_mm_3">
+   <widget class="QLabel" name="lbl_Back_Distance_in_mm">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -721,7 +722,7 @@ p, li { white-space: pre-wrap; }
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="lbl_Layer_Count">
+    <widget class="QLabel" name="lbl_Layer_Count_Act">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -749,7 +750,7 @@ color: rgb(0, 0, 255);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="lbl_Layer_Count_Act">
+    <widget class="QLabel" name="lbl_Layer_Count">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -786,82 +787,6 @@ color: rgb(0, 0, 255);</string>
     </property>
     <property name="text">
      <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbl_Button_Back">
-    <property name="geometry">
-     <rect>
-      <x>1370</x>
-      <y>430</y>
-      <width>151</width>
-      <height>171</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../../../Pictures/Symbol Factory Graphics/Basic legend plate.bmp</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>1374</x>
-      <y>435</y>
-      <width>151</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Switch 1 &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Active&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="textFormat">
-     <enum>Qt::RichText</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbl_Sw1_Grn">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>1410</x>
-      <y>510</y>
-      <width>80</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../../../Pictures/Symbol Factory Graphics/GreenLamp.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbl_Sw1_Grn_2">
-    <property name="geometry">
-     <rect>
-      <x>1410</x>
-      <y>510</y>
-      <width>80</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../../../Pictures/Symbol Factory Graphics/RedLamp.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_Exit">
@@ -920,6 +845,192 @@ QPushButton:pressed {
      <string>Exit</string>
     </property>
    </widget>
+   <widget class="QGroupBox" name="gb_Switch1">
+    <property name="geometry">
+     <rect>
+      <x>1600</x>
+      <y>90</y>
+      <width>231</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="lbl_Sw1_Red">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>110</y>
+       <width>80</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../../Pictures/Symbol Factory Graphics/RedLamp.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Button_Back">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>30</y>
+       <width>151</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../../Pictures/Symbol Factory Graphics/Basic legend plate.bmp</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Ignore1">
+     <property name="geometry">
+      <rect>
+       <x>44</x>
+       <y>35</y>
+       <width>151</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Switch 1 &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Active&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Sw1_Grn">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>110</y>
+       <width>80</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../../Pictures/Symbol Factory Graphics/GreenLamp.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>lbl_Button_Back</zorder>
+    <zorder>lbl_Sw1_Grn</zorder>
+    <zorder>lbl_Sw1_Red</zorder>
+    <zorder>lbl_Ignore1</zorder>
+   </widget>
+   <widget class="QGroupBox" name="gb_Switch2">
+    <property name="geometry">
+     <rect>
+      <x>1600</x>
+      <y>300</y>
+      <width>231</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="lbl_Sw2_Red">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>110</y>
+       <width>80</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../../Pictures/Symbol Factory Graphics/RedLamp.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Button_Back_2">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>30</y>
+       <width>151</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../../Pictures/Symbol Factory Graphics/Basic legend plate.bmp</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Ignore1_2">
+     <property name="geometry">
+      <rect>
+       <x>44</x>
+       <y>35</y>
+       <width>151</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Switch 2&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Active&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_Sw2_Grn">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>110</y>
+       <width>80</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../../../Pictures/Symbol Factory Graphics/GreenLamp.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>lbl_Button_Back_2</zorder>
+    <zorder>lbl_Sw2_Grn</zorder>
+    <zorder>lbl_Sw2_Red</zorder>
+    <zorder>lbl_Ignore1_2</zorder>
+   </widget>
    <zorder>lbl_Drum_Speed_(Calculated)</zorder>
    <zorder>frm_Back</zorder>
    <zorder>frm_Shift</zorder>
@@ -932,15 +1043,13 @@ QPushButton:pressed {
    <zorder>lbl_Shift_Distance_in_mm</zorder>
    <zorder>frm_Offset</zorder>
    <zorder>lbl_Offset_Distance_in_mm</zorder>
-   <zorder>lbl_Offset_Distance_in_mm_3</zorder>
+   <zorder>lbl_Back_Distance_in_mm</zorder>
    <zorder>frm_DrmRev</zorder>
    <zorder>frm_Shift_3</zorder>
    <zorder>frm_Shift_4</zorder>
-   <zorder>lbl_Button_Back</zorder>
-   <zorder>label</zorder>
-   <zorder>lbl_Sw1_Grn</zorder>
-   <zorder>lbl_Sw1_Grn_2</zorder>
    <zorder>btn_Exit</zorder>
+   <zorder>gb_Switch1</zorder>
+   <zorder>gb_Switch2</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
