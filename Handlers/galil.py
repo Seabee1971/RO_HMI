@@ -5,14 +5,13 @@ class galil:
         self.g = gclib.py()
         self.IP_address = "169.254.154.33"
 
-
-
     def dmc_connect(self):
         try:
             self.g.GOpen(f'{self.IP_address} --direct')
-            return True,self.g
-        except:
-            return False,self.g
+            return self.g.GInfo(),self.g
+        except Exception as e:
+            return e,self.g
 
-        finally:
-            self.g.GClose()
+    def dmc_disconnect(self):
+        self.g.GClose()
+

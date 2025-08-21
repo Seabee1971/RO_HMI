@@ -1,14 +1,18 @@
+import time
+
+from PyQt6.QtCore import QTimer
 from PyQt6.QtGui import QIcon, QBrush
-from PyQt6.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QPushButton, QLineEdit
+from PyQt6.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QPushButton, QLineEdit, QPlainTextEdit
 from PyQt6 import uic
 import sys
-from WidgetHandlers.WriteOutputValues import WriteWidgetOutputs as Writer
-from WidgetHandlers.galil import galil
+from Handlers.WriteOutputValues import WriteWidgetOutputs as Writer
+from Handlers.galil import galil
+
 
 class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
-        self.galil = galil
+        self.galil = galil()
 
         # Load uic file
         uic.loadUi("RO_HMI.ui", self)
@@ -17,11 +21,12 @@ class UI(QMainWindow):
         # Set the window title and icon
         self.setWindowTitle("RO HMI")
         self.setWindowIcon(QIcon("icon.png"))
-
+        self.counter = 0
         #Define Buttons
 
         self.btn_abort_run = self.findChild(QPushButton, "btn_Abort_Run")
         self.btn_connect = self.findChild(QPushButton, "btn_Connect_to_Galil")
+        self.btn_disconnect = self.findChild(QPushButton, "btn_Disconnect_Galil")
         self.btn_end_run = self.findChild(QPushButton,"btn_End_Run")
         self.btn_exit_app = self.findChild(QPushButton,"btn_Exit")
         self.btn_pause_run = self.findChild(QPushButton,"btn_Pause_Run")
@@ -43,10 +48,19 @@ class UI(QMainWindow):
         self.lbl_sw2_grn = self.findChild(QLabel, "lbl_Sw2_Grn")
         self.lbl_sw2_red = self.findChild(QLabel, "lbl_Sw2_Red")
 
+        #Define PlainTextBox Window
+        self.terminal_window = self.findChild(QPlainTextEdit, "txt_Terminal_Window")
+        self.terminal_window.appendPlainText("Starting program...")
         # Widget button click
-
+        self.btn_disconnect.hide()
         self.btn_connect.clicked.connect(self.connect_device)
+        self.btn_disconnect.clicked.connect(self.disconnect_device)
         self.btn_exit_app.clicked.connect(self.exit)
+
+        # QTimer setup
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_all_widgets())
+        self.timer.start(50)  # 50 milliseconds
         #  Show the App
         self.showMaximized()
 
@@ -55,7 +69,7 @@ class UI(QMainWindow):
         Writer.write(self, self.lbl_drum_rev_act, value=str(self.x))
         #self.lbl_Drum_Rev_Act.setText("drum_rev_act")
     def drum_speed_act(self):
-        Writer.write(self, self.lbl_Drum_Speed_Act, "2032")
+        Writer.write(self, self.lbl_drum_speed_act, "2032")
 
     def abort_run(self):
         # This function will be called when the button is clicked
@@ -63,26 +77,46 @@ class UI(QMainWindow):
 
     def connect_device(self):
         # This function will be called when the button is clicked
-        print(dir(self.btn_connect))
-        self.btn_connect.setStyleSheet("background-color: green;")
+
+        self.terminal_window.appendPlainText("Connecting...")
+        try:
+            self.connected,self.galil_object = self.galil.dmc_connect()
+            self.terminal_window.appendPlainText(str(self.connected))
+            if self.connected == True:
+                self.btn_connect.hide()
+
+                self.btn_disconnect.setStyleSheet(self.button.green)
+                self.btn_disconnect.show()
+                self.terminal_window.appendPlainText(f'Connection Successful\r\n{str(self.connected)}')
+                #self.btn_connect.setStyleSheet(self.button.green)
+            else:
+                self.btn_connect.show()
+                self.btn_disconnect.hide()
+
+        except Exception as e:
+            print(e)
+
+    def update_all_widgets(self):
+        pass
 
     def disconnect_device(self):
-        # This function will be called when the button is clicked
-        print("Disconnect button clicked")
+        self.galil.dmc_disconnect()# This function will be called when the button is clicked
+        self.terminal_window.appendPlainText("Disconnected from Controller")
 
     def end_run(self):
         # This function will be called when the button is clicked
+        self.galil.dmc_disconnect()
         print("End Run button clicked")
 
     def exit(self):
+        self.galil.dmc_disconnect()
+        self.terminal_window.appendPlainText("Disconnected from Controller\r\nHmi Shutting Down in 5 seconds")
+        time.sleep(5)
         sys.exit(1)
 
     def pause_run(self):
         # This function will be called when the button is clicked
         print("Pause Run button clicked")
-
-    def on_button_clicked(self, button: QPushButton):
-        print(f"Button {button.objectName()} clicked")
 
     def start_run(self):
         # This function will be called when the button is clicked
