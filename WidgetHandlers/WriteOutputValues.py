@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QLabel
+from PyQt6.QtWidgets import QLabel, QPushButton
 
 
 class WriteWidgetOutputs:
@@ -8,5 +8,7 @@ class WriteWidgetOutputs:
     def write(self,widget,value):
         if type(widget) == QLabel:
             widget.setText(str(value))
+        # elif type(widget) == QPushButton:
+        #     widget.
 
 

@@ -1,16 +1,18 @@
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QBrush
 from PyQt6.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QPushButton, QLineEdit
 from PyQt6 import uic
 import sys
-from WidgetHandlers.button_methods import button_methods
-from WidgetHandlers.label_methods import label_methods
-from WidgetHandlers.WriteOutputValues import WriteWidgetOutputs as writer
+from WidgetHandlers.WriteOutputValues import WriteWidgetOutputs as Writer
+from WidgetHandlers.galil import galil
+
 class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
+        self.galil = galil
 
         # Load uic file
         uic.loadUi("RO_HMI.ui", self)
+        self.x = 0
         labels = self.findChildren(QLabel)
         # Set the window title and icon
         self.setWindowTitle("RO HMI")
@@ -41,17 +43,19 @@ class UI(QMainWindow):
         self.lbl_sw2_grn = self.findChild(QLabel, "lbl_Sw2_Grn")
         self.lbl_sw2_red = self.findChild(QLabel, "lbl_Sw2_Red")
 
-        # Widget update
-        self.btn_connect.clicked
+        # Widget button click
 
+        self.btn_connect.clicked.connect(self.connect_device)
+        self.btn_exit_app.clicked.connect(self.exit)
         #  Show the App
         self.showMaximized()
 
     def drum_rev_act(self):
-        writer.write(self,self.lbl_drum_rev_act,value="22")
+        self.x+=1
+        Writer.write(self, self.lbl_drum_rev_act, value=str(self.x))
         #self.lbl_Drum_Rev_Act.setText("drum_rev_act")
     def drum_speed_act(self):
-        writer.write(self,self.lbl_Drum_Speed_Act,"2032")
+        Writer.write(self, self.lbl_Drum_Speed_Act, "2032")
 
     def abort_run(self):
         # This function will be called when the button is clicked
@@ -59,7 +63,8 @@ class UI(QMainWindow):
 
     def connect_device(self):
         # This function will be called when the button is clicked
-        print("Connect button clicked")
+        print(dir(self.btn_connect))
+        self.btn_connect.setStyleSheet("background-color: green;")
 
     def disconnect_device(self):
         # This function will be called when the button is clicked
