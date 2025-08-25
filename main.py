@@ -59,7 +59,7 @@ class UI(QMainWindow):
 
         # QTimer setup
         self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_all_widgets())
+        self.timer.timeout.connect(self.update_all_widgets)
         self.timer.start(50)  # 50 milliseconds
         #  Show the App
         self.showMaximized()
@@ -97,7 +97,9 @@ class UI(QMainWindow):
             print(e)
 
     def update_all_widgets(self):
-        pass
+        """Refresh dynamic label values."""
+        self.drum_rev_act()
+        self.drum_speed_act()
 
     def disconnect_device(self):
         self.galil.dmc_disconnect()# This function will be called when the button is clicked
