@@ -1036,7 +1036,7 @@ QPushButton:pressed {
    </widget>
    <widget class="QPushButton" name="btn_Disconnect_Galil">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -1132,7 +1132,7 @@ Galil</string>
      <x>0</x>
      <y>0</y>
      <width>2735</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

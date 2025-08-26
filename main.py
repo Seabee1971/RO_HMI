@@ -80,12 +80,10 @@ class UI(QMainWindow):
 
         self.terminal_window.appendPlainText("Connecting...")
         try:
-            self.connected,self.galil_object = self.galil.dmc_connect()
+            connected,self.galil_object = self.galil.dmc_connect()
             self.terminal_window.appendPlainText(str(self.connected))
-            if self.connected == True:
+            if connected:
                 self.btn_connect.hide()
-
-                self.btn_disconnect.setStyleSheet(self.button.green)
                 self.btn_disconnect.show()
                 self.terminal_window.appendPlainText(f'Connection Successful\r\n{str(self.connected)}')
                 #self.btn_connect.setStyleSheet(self.button.green)
@@ -102,8 +100,13 @@ class UI(QMainWindow):
         self.drum_speed_act()
 
     def disconnect_device(self):
-        self.galil.dmc_disconnect()# This function will be called when the button is clicked
-        self.terminal_window.appendPlainText("Disconnected from Controller")
+        #self.galil.dmc_disconnect()# This function will be called when the button is clicked
+
+        self.disconnected, self.galil_object = self.galil.dmc_disconnect()
+        if self.disconnected:
+            self.terminal_window.appendPlainText("Disconnected from Controller")
+            self.btn_connect.show()
+            self.btn_disconnect.hide()
 
     def end_run(self):
         # This function will be called when the button is clicked
