@@ -149,7 +149,7 @@ QPushButton:pressed {
    </widget>
    <widget class="QPushButton" name="btn_Pause_Run">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -208,7 +208,7 @@ QPushButton:pressed {
    </widget>
    <widget class="QPushButton" name="btn_Abort_Run">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
