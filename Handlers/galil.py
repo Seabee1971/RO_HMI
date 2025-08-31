@@ -20,3 +20,5 @@ class galil:
         return "closed",self.g
 
 
+    def readInputValues(self):
+        pass

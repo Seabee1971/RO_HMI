@@ -1,7 +1,6 @@
 import time
-
+import threading
 from PyQt6.QtCore import QTimer
-
 from PyQt6.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QPlainTextEdit
 from PyQt6 import uic
 import sys
@@ -67,7 +66,7 @@ class UI(QMainWindow):
         # QTimer setup
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_all_widgets)
-        self.timer.start(500)  # 50 milliseconds
+        self.timer.start(50)  # 50 milliseconds
         #  Show the App
         self.showMaximized()
 
@@ -87,7 +86,7 @@ class UI(QMainWindow):
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
                 self.term_msg = f'Connection Successful\r\n{str(connected)}'
-                # self.btn_connect.setStyleSheet(self.button.green)
+               
             else:
                 self.btn_connect.show()
                 self.btn_disconnect.hide()
@@ -96,7 +95,6 @@ class UI(QMainWindow):
             print(e)
 
     def disconnect_device(self):
-        print("disconnect")
         self.disconnected, self.galil_object = self.galil.dmc_disconnect()
         if self.disconnected:
             self.term_msg = "Disconnected from Controller"
