@@ -61,27 +61,20 @@ class UI(QMainWindow):
         self.btn_disconnect.hide()
         self.btn_connect.clicked.connect(self.connect_device)
         self.btn_disconnect.clicked.connect(self.disconnect_device)
-        self.btn_exit_app.clicked.connect(self.exit)
+        self.btn_exit_app.clicked.connect(self.exit_program)
         self.btn_pause_run.clicked.connect(self.pause_run)
 
         # QTimer setup
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_all_widgets)
-        self.timer.start(50)  # 50 milliseconds
+        self.timer.start(500)  # 50 milliseconds
         #  Show the App
         self.showMaximized()
-
-    def drum_rev_act(self):
-        self.x += 1
-        Writer.write(self, self.lbl_drum_rev_act, value=str(self.x))
-        # self.lbl_Drum_Rev_Act.setText("drum_rev_act")
-
-    def drum_speed_act(self):
-        Writer.write(self, self.lbl_drum_speed_act, self.x * -self.x)
 
     def abort_run(self):
         # This function will be called when the button is clicked
         self.term_msg = "Abort Run button clicked"
+
 
     def connect_device(self):
         # This function will be called when the button is clicked
@@ -103,20 +96,27 @@ class UI(QMainWindow):
             print(e)
 
     def disconnect_device(self):
-        self.galil.dmc_disconnect()  # This function will be called when the button is clicked
-
+        print("disconnect")
         self.disconnected, self.galil_object = self.galil.dmc_disconnect()
-        if self.disconnected:
-            self.term_msg = "Disconnected from Controller"
-            self.btn_connect.show()
-            self.btn_disconnect.hide()
+        # if self.disconnected:
+        #     self.term_msg = "Disconnected from Controller"
+        #     self.btn_connect.show()
+        #     self.btn_disconnect.hide()
+
+    def drum_rev_act(self):
+        self.x += 1
+        Writer.write(self, self.lbl_drum_rev_act, value=str(self.x))
+        # self.lbl_Drum_Rev_Act.setText("drum_rev_act")
+
+    def drum_speed_act(self):
+        Writer.write(self, self.lbl_drum_speed_act, self.x * -self.x)
 
     def end_run(self):
         # This function will be called when the button is clicked
         self.term_msg = "End Run button clicked"
         self.galil.dmc_disconnect()
 
-    def exit(self):
+    def exit_program(self):
         self.term_msg = "Disconnected from Controller\r\nHmi Shutting Down in 5 seconds"
         self.update_terminal_window()
         self.galil.dmc_disconnect()

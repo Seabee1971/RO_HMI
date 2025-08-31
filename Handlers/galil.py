@@ -13,5 +13,9 @@ class galil:
             return e,self.g
 
     def dmc_disconnect(self):
-        self.g.GClose()
+        try:
+            self.g.GClose()
+        except Exception as e:
+            return e,self.g
+
 
