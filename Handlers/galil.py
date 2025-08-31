@@ -17,5 +17,6 @@ class galil:
             self.g.GClose()
         except Exception as e:
             return e,self.g
+        return "closed",self.g
 
 

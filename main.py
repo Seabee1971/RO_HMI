@@ -98,10 +98,10 @@ class UI(QMainWindow):
     def disconnect_device(self):
         print("disconnect")
         self.disconnected, self.galil_object = self.galil.dmc_disconnect()
-        # if self.disconnected:
-        #     self.term_msg = "Disconnected from Controller"
-        #     self.btn_connect.show()
-        #     self.btn_disconnect.hide()
+        if self.disconnected:
+            self.term_msg = "Disconnected from Controller"
+            self.btn_connect.show()
+            self.btn_disconnect.hide()
 
     def drum_rev_act(self):
         self.x += 1
