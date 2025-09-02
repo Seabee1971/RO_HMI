@@ -1,59 +1,73 @@
-import time
-import threading
 from PyQt6.QtCore import QTimer
 from PyQt6.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QPlainTextEdit
 from PyQt6 import uic
 import sys
-from Handlers.WriteOutputValues import WriteWidgetOutputs as Writer
-from Handlers.galil import galil
-
+from Handlers.galil import Galil
+from Handlers.error_logging import *
 
 class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
+        self.previous_status = 0
+        self.galil_object = None
         self.term_msg = None
         self.last_term_msg = ""
-        self.galil = galil()
-
-        # Load uic file
+        self.galil = Galil()
+        self.connection_sts = False
+        _ = datetime.now()
+        self.software_error_log = software_logger
+        self.process_error_log = process_error_logger
+        self.process_info_log = process_info_logger
+        self.process_info_log.info(f'Software Started...')
+            # Load .ui
         uic.loadUi("RO_HMI.ui", self)
-        self.x = 0
-        labels = self.findChildren(QLabel)
-        # Set the window title and icon
-        self.setWindowTitle("RO HMI")
 
-        self.counter = 0
-        # Define Buttons
+        # Map widget objectName → Galil variable
+        self.ui_to_galil = {
+            "lned_Back_Distance":  "back",
+            "lned_Shift_Distance": "shift",
+            "lned_Offset_Distance":"offset",
+        }
+        # Hook per-field updates
+        for widget_name, galil_name in self.ui_to_galil.items():
+            widget = self.findChild(QLineEdit, widget_name)
+            if widget:
+                widget.editingFinished.connect(
+                    lambda gname=galil_name, w=widget: self.on_lineedit_changed(gname, w)
+                )
 
-        self.btn_abort_run = self.findChild(QPushButton, "btn_Abort_Run")
-        self.btn_connect = self.findChild(QPushButton, "btn_Connect_to_Galil")
-        self.btn_disconnect = self.findChild(QPushButton, "btn_Disconnect_Galil")
-        self.btn_end_run = self.findChild(QPushButton, "btn_End_Run")
-        self.btn_exit_app = self.findChild(QPushButton, "btn_Exit")
-        self.btn_pause_run = self.findChild(QPushButton, "btn_Pause_Run")
-        self.btn_start_run = self.findChild(QPushButton, "btn_Start_Run")
-        self.btn_trend_data = self.findChild(QPushButton, "btn_Trend_Data")
+        # Window title
+        self.setWindowTitle("Red Oktober")
 
-        # Define LineEdits
+        # Buttons
+        self.btn_abort_run   = self.findChild(QPushButton, "btn_Abort_Run")
+        self.btn_connect     = self.findChild(QPushButton, "btn_Connect_to_Galil")
+        self.btn_disconnect  = self.findChild(QPushButton, "btn_Disconnect_Galil")
+        self.btn_end_run     = self.findChild(QPushButton, "btn_End_Run")
+        self.btn_exit_app    = self.findChild(QPushButton, "btn_Exit")
+        self.btn_pause_run   = self.findChild(QPushButton, "btn_Pause_Run")
+        self.btn_start_run   = self.findChild(QPushButton, "btn_Start_Run")
+        self.btn_trend_data  = self.findChild(QPushButton, "btn_Trend_Data")
 
-        self.linedit_back_distance = self.findChild(QLineEdit, "lned_Back_Distance")
+        # LineEdits
+        self.linedit_back_distance   = self.findChild(QLineEdit, "lned_Back_Distance")
         self.linedit_offset_distance = self.findChild(QLineEdit, "lned_Offset_Distance")
-        self.linedit_shift_distance = self.findChild(QLineEdit, "lned_Shift_Distance")
+        self.linedit_shift_distance  = self.findChild(QLineEdit, "lned_Shift_Distance")
 
-        # Define Labels
-        self.lbl_drum_rev_act = self.findChild(QLabel, "lbl_Drum_Rev_Act")
-        self.lbl_drum_speed_act = self.findChild(QLabel, "lbl_Drum_Speed_Act")
+        # Labels
+        self.lbl_drum_rev_act    = self.findChild(QLabel, "lbl_Drum_Rev_Act")
+        self.lbl_drum_speed_act  = self.findChild(QLabel, "lbl_Drum_Speed_Act")
         self.lbl_layer_count_act = self.findChild(QLabel, "lbl_Layer_Count_Act")
-        self.lbl_sw1_grn = self.findChild(QLabel, "lbl_Sw1_Grn")
+        self.lbl_sw1_grn         = self.findChild(QLabel, "lbl_Sw1_Grn")
         self.lbl_sw1_red = self.findChild(QLabel, "lbl_Sw1_Red")
         self.lbl_sw2_grn = self.findChild(QLabel, "lbl_Sw2_Grn")
         self.lbl_sw2_red = self.findChild(QLabel, "lbl_Sw2_Red")
 
-        # Define PlainTextBox Window
+        # Terminal
         self.terminal_window = self.findChild(QPlainTextEdit, "txt_Terminal_Window")
         self.terminal_window.setReadOnly(True)
 
-        # Widget button click
+        # Click handlers
         self.btn_abort_run.clicked.connect(self.abort_run)
         self.btn_start_run.clicked.connect(self.start_run)
         self.btn_end_run.clicked.connect(self.end_run)
@@ -62,97 +76,200 @@ class UI(QMainWindow):
         self.btn_disconnect.clicked.connect(self.disconnect_device)
         self.btn_exit_app.clicked.connect(self.exit_program)
         self.btn_pause_run.clicked.connect(self.pause_run)
+        # (hook Trend if/when you implement it)
+        # self.btn_trend_data.clicked.connect(self.trend_run)
 
-        # QTimer setup
+        # QTimer
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_all_widgets)
-        self.timer.start(50)  # 50 milliseconds
-        #  Show the App
+        self.timer.start(50)
+
         self.showMaximized()
 
+    # ---------- Button slots ----------
     def abort_run(self):
-        # This function will be called when the button is clicked
         self.term_msg = "Abort Run button clicked"
+        
 
+    def start_run(self):
+        vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
+        self.term_msg = f"Start Run with {vals}"
+        # If you want to push to Galil immediately, do it here based on your program.
+
+    def end_run(self):
+        self.term_msg = "End Run button clicked"
+
+    def pause_run(self):
+        self.term_msg = "Pause Run button clicked"
 
     def connect_device(self):
-        # This function will be called when the button is clicked
-
         self.term_msg = "Connecting..."
         try:
             connected, self.galil_object = self.galil.dmc_connect()
             self.term_msg = str(connected)
+            self.process_info_log.info(self.term_msg)
+
             if connected:
+                self.connection_sts = True
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
                 self.term_msg = f'Connection Successful\r\n{str(connected)}'
-               
+                self.process_info_log.info(self.term_msg)
+                self.btn_start_run.setEnabled(True)
+
+                # --- NEW: read UI and push to Galil on connect ---
+                vals = self.read_galil_inputs_from_ui()  # {'back': ..., 'shift': ..., 'offset': ...}
+
+                assignments = []
+                for var in ("back", "shift", "offset"):
+                    value = vals.get(var, None)
+                    if value is None:
+                        continue  # skip empty fields
+                    assignments.append(f"{var}={value}")
+
+                if assignments:
+                    cmd = ";".join(assignments) + ";"  # Galil likes ';' between/after commands
+                    try:
+                        self.galil_object.GCommand(cmd)
+                        self.term_msg = f"{self.term_msg}\nSent: {cmd}"
+                        self.process_info_log.info(self.term_msg)
+                    except Exception as e:
+                        self.term_msg = f"{self.term_msg}\nError sending values: {e}"
+                        self.process_info_log.info(self.term_msg)
+                        self.software_error_log.error(self.term_msg)
+                # -------------------------------------------------
+
             else:
+                self.connection_sts = False
                 self.btn_connect.show()
                 self.btn_disconnect.hide()
 
         except Exception as e:
-            print(e)
+            self.term_msg = f"Error Connecting: {e}"
+            self.update_terminal_window()
+            self.software_error_log.exception("Error Connecting")
 
     def disconnect_device(self):
         self.disconnected, self.galil_object = self.galil.dmc_disconnect()
         if self.disconnected:
             self.term_msg = "Disconnected from Controller"
+            self.update_terminal_window()
+            self.process_info_log.info(self.term_msg)
             self.btn_connect.show()
             self.btn_disconnect.hide()
 
-    def drum_rev_act(self):
-        self.x += 1
-        Writer.write(self, self.lbl_drum_rev_act, value=str(self.x))
-        # self.lbl_Drum_Rev_Act.setText("drum_rev_act")
-
-    def drum_speed_act(self):
-        Writer.write(self, self.lbl_drum_speed_act, self.x * -self.x)
-
-    def end_run(self):
-        # This function will be called when the button is clicked
-        self.term_msg = "End Run button clicked"
-        self.galil.dmc_disconnect()
-
     def exit_program(self):
-        self.term_msg = "Disconnected from Controller\r\nHmi Shutting Down in 5 seconds"
+        self.term_msg = "Disconnected from Controller\r\nHMI shutting down in 5 seconds"
+        self.process_info_log.info(self.term_msg)
         self.update_terminal_window()
-        self.galil.dmc_disconnect()
-        # Schedule quit in 5 seconds, without freezing GUI
+        try:
+            self.galil.dmc_disconnect()
+        except Exception as e:
+            self.software_error_log.error(e)
         QTimer.singleShot(5000, QApplication.instance().quit)
 
-    def pause_run(self):
-        # This function will be called when the button is clicked
-        self.term_msg = "Pause Run button clicked"
+    # ---------- Simple label demos (keep if you use them) ----------
+    def drum_rev_act(self):
+        # Example write via your galil wrapper
+        try:
+            cmd = "REV"
+            status = int(self.galil.read_input(cmd))
+            if status > self.previous_status:
+                self.lbl_drum_speed_act.setText(str(status))
+                self.previous_status = status
 
-    def start_run(self):
-        # This function will be called when the button is clicked
-        self.term_msg = "Start Run button clicked"
+        except Exception as e:
+            self.term_msg = f"[Error]  Unable to Read {cmd} {e}"
+            self.software_error_log.error(self.term_msg)
+            self.update_terminal_window()
 
-    def stop_run(self):
-        # This function will be called when the button is clicked
-        self.term_msg = "Stop Run button clicked"
+    def drum_speed_act(self):
+        try:
+            self.galil.update_values(self.lbl_drum_speed_act)
+        except Exception as e:
+            self.term_msg = f"Error: Drum Speed Act {str(e)}"
+            self.software_error_log.error(self.term_msg)
+            self.update_terminal_window()
 
-    def trend_run(self):
-        # This function will be called when the button is clicked
-        self.term_msg = "Trend Data button clicked"
+    # ---------- QLineEdit utilities ----------
+    def on_lineedit_changed(self, galil_name: str, widget: QLineEdit) -> None:
+        text_value = widget.text().strip()
+        if text_value == "":
+            value = None
+        else:
+            try:
+                value = float(text_value)
+            except ValueError as e:
+                value = text_value
+                self.term_msg = f"Input is not a float value: {str(e)}"
+                self.process_info_log(self.term_msg)
+                self.update_terminal_window()
 
+        # send live if connected
+        if self.connection_sts and hasattr(self, "galil_object") and self.galil_object:
+            try:
+                if value is not None:
+                    self.galil_object.GCommand(f"{galil_name}={value}")
+                    echoed = self.galil_object.GCommand(f"MG {galil_name}").strip()
+                    self.term_msg = f"{galil_name} changed → {value} (read back {echoed})"
+                    self.process_info_log.info(self.term_msg)
+                else:
+                    self.term_msg = f"{galil_name} left blank; not sent"
+                    self.process_info_log.info(self.term_msg)
+            except Exception as e:
+                self.term_msg = f"{galil_name} write failed: {e}"
+                self.software_error_log.error(self.term_msg)
+                self.update_terminal_window()
+        else:
+            # not connected yet—just log the change
+            self.term_msg = f"{galil_name} changed → {value}"
+            self.process_info_log.info(self.term_msg)
+
+    def read_galil_inputs_from_ui(self) -> dict:
+        """Return {'back': val, 'shift': val, 'offset': val} from QLineEdits."""
+        values = {}
+        for widget_name, galil_name in self.ui_to_galil.items():
+            widget = self.findChild(QLineEdit, widget_name)
+            if not widget:
+                continue
+            text_value = widget.text().strip()
+            if text_value == "":
+                values[galil_name] = None
+            else:
+                try:
+                    values[galil_name] = float(text_value)
+                except ValueError:
+                    values[galil_name] = text_value
+                    self.term_msg = f"Input is not a float value: {text_value}"
+                    self.software_error_log.error(self.term_msg)
+                    self.update_terminal_window()
+        return values
+
+    def write_galil_values_to_ui(self, galil_values: dict) -> None:
+        """Write {'back': val, ...} into the mapped QLineEdits."""
+        for widget_name, galil_name in self.ui_to_galil.items():
+            if galil_name not in galil_values:
+                continue
+            widget = self.findChild(QLineEdit, widget_name)
+            if widget:
+                value = galil_values[galil_name]
+                widget.setText("" if value is None else str(value))
+
+    # ---------- Terminal + periodic update ----------
     def update_terminal_window(self):
-
         if self.term_msg is not None and self.last_term_msg != self.term_msg:
             self.terminal_window.appendPlainText(self.term_msg)
             self.last_term_msg = self.term_msg
 
     def update_all_widgets(self):
-        """Refresh dynamic label values."""
         self.update_terminal_window()
-        self.drum_rev_act()
-        self.drum_speed_act()
+        if self.connection_sts:
+            self.drum_rev_act()
+            self.drum_speed_act()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
     UIWindow = UI()
-
     app.exec()
