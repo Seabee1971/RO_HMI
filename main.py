@@ -39,14 +39,13 @@ class UI(QMainWindow):
             "lned_Back_Distance":  "back",
             "lned_Shift_Distance": "shift",
             "lned_Offset_Distance":"offset",
+
         }
         # Hook per-field updates
         for widget_name, galil_name in self.ui_to_galil.items():
             widget = self.findChild(QLineEdit, widget_name)
             if widget:
-                widget.editingFinished.connect(
-                    lambda gname=galil_name, w=widget: self.on_lineedit_changed(gname, w)
-                )
+                widget.editingFinished.connect(lambda gname=galil_name, w=widget: self.on_lineedit_changed(gname, w))
 
         # Window title
         self.setWindowTitle("Red Oktober")
@@ -73,7 +72,8 @@ class UI(QMainWindow):
         self.lbl_sw1_red         = self.findChild(QLabel, "lbl_Sw1_Red")
         self.lbl_sw2_grn         = self.findChild(QLabel, "lbl_Sw2_Grn")
         self.lbl_sw2_red         = self.findChild(QLabel, "lbl_Sw2_Red")
-
+        self.lbl_sw1_grn.setVisible(False)
+        self.lbl_sw2_red.setVisible(False)
         # Terminal
         self.terminal_window = self.findChild(QPlainTextEdit, "txt_Terminal_Window")
         self.terminal_window.setReadOnly(True)
@@ -137,6 +137,7 @@ class UI(QMainWindow):
             connected, self.galil_object = self.galil.dmc_connect()
 
             if connected:
+                QMessageBox.information(self, "Reminder", "Position Oiler in Forward\r Position Against Drum")
                 self.connection_sts = True
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
@@ -204,8 +205,6 @@ class UI(QMainWindow):
             self.software_error_log.error(f'Exit Program Exception:  {e}')
 
 
-
-    # ---------- Simple label demos (keep if you use them) ----------
     def drum_rev_act(self):
         """Read the current drum revolution count from the controller."""
 
