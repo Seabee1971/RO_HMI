@@ -8,6 +8,12 @@ from Handlers.galil import Galil
 from Handlers.error_logging import *
 
 class UI(QMainWindow):
+    """Main application window for the Red Oktober HMI.
+
+       The class wires up the generated Qt widgets, handles user interaction
+       with the Galil motion controller, and periodically updates status
+       displays.
+       """
     def __init__(self):
         super(UI, self).__init__()
         self._rpm_last_rev = None
@@ -111,6 +117,8 @@ class UI(QMainWindow):
 
 
     def end_run(self):
+        """Prompt the user to confirm ending the current run."""
+
         reply = QMessageBox.question(self, "Confirm End", "Are you sure you want to end run?",
                                      QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if reply == QMessageBox.StandardButton.Yes:
@@ -122,6 +130,8 @@ class UI(QMainWindow):
         self.term_msg = "Pause Run button clicked"
 
     def connect_device(self):
+        """Connect to the Galil controller and send initial values."""
+
         self.term_msg = "Connecting..."
         try:
             connected, self.galil_object = self.galil.dmc_connect()
@@ -167,6 +177,8 @@ class UI(QMainWindow):
             self.software_error_log.exception("Error Connecting")
 
     def disconnect_device(self):
+        """Disconnect from the controller and update button states."""
+
         self.disconnected, self.galil_object = self.galil.dmc_disconnect()
         if self.disconnected:
             self.term_msg = "Disconnected from Controller"
@@ -177,6 +189,8 @@ class UI(QMainWindow):
             self.btn_disconnect.hide()
 
     def exit_program(self):
+        """Attempt to quit the application after disconnecting."""
+
         try:
             self.disconnect_device()
             if self.connection_sts:
@@ -193,13 +207,14 @@ class UI(QMainWindow):
 
     # ---------- Simple label demos (keep if you use them) ----------
     def drum_rev_act(self):
-        # Example write via your galil wrapper
+        """Read the current drum revolution count from the controller."""
+
         try:
             cmd = "REV"
             rev_count = float(self.galil.read_input(cmd))
-            # if rev_count > self.previous_rev_count:
-            #     self.lbl_drum_rev_act.setText(str(rev_count))
-            #     self.previous_rev_count = rev_count
+            if rev_count > self.previous_rev_count:
+                self.lbl_drum_rev_act.setText(str(rev_count))
+                self.previous_rev_count = rev_count
             #     #self.rpm = self.update_drum_speed(rev_count)
 
         except Exception as e:
@@ -212,6 +227,15 @@ class UI(QMainWindow):
 
     # ---------- QLineEdit utilities ----------
     def on_lineedit_changed(self, galil_name: str, widget: QLineEdit) -> None:
+        """Validate and optionally send a QLineEdit's value to the controller.
+
+        Parameters
+        ----------
+        galil_name: str
+            Name of the variable on the Galil controller.
+        widget: QLineEdit
+            Widget that triggered the callback.
+        """
         text_value = widget.text().strip()
         if text_value == "":
             value = None
@@ -276,6 +300,8 @@ class UI(QMainWindow):
 
     # ---------- Terminal + periodic update ----------
     def update_terminal_window(self):
+        """Append the latest message to the terminal widget."""
+
         if self.term_msg is not None and self.last_term_msg != self.term_msg:
             try:
                 self.terminal_window.appendPlainText(str(self.term_msg))
@@ -285,6 +311,7 @@ class UI(QMainWindow):
                 self.software_error_log.error(self.term_msg)
 
     def update_all_widgets(self):
+        """Periodic QTimer slot to refresh UI elements."""
         self.update_terminal_window()
         if self.connection_sts:
             self.drum_rev_act()

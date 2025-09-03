@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ded47b8a-1282-4828-ad9b-f4529d5a222d" name="Changes" comment="Added QMessageBox">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ded47b8a-1282-4828-ad9b-f4529d5a222d" name="Changes" comment="fixed logger call in start_run">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -240,7 +239,7 @@
       <workItem from="1755698430130" duration="13427000" />
       <workItem from="1755790437824" duration="14828000" />
       <workItem from="1755806271593" duration="1016000" />
-      <workItem from="1756409579523" duration="56765000" />
+      <workItem from="1756409579523" duration="57158000" />
     </task>
     <task id="LOCAL-00001" summary="Added Buttons using findChildren to bring all the buttons in with for loop">
       <option name="closed" value="true" />
@@ -362,7 +361,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756907390784</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="fixed logger call in start_run">
+      <option name="closed" value="true" />
+      <created>1756908110513</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1756908110513</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -424,7 +431,8 @@
     <MESSAGE value="added logging" />
     <MESSAGE value="fixed several errors and repeat logging" />
     <MESSAGE value="Added QMessageBox" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added QMessageBox" />
+    <MESSAGE value="fixed logger call in start_run" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed logger call in start_run" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/RO_HMI$QThreadTest.coverage" NAME="QThreadTest Coverage Results" MODIFIED="1756655672899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
