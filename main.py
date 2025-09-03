@@ -68,12 +68,11 @@ class UI(QMainWindow):
 
         # Labels
         self.lbl_drum_rev_act    = self.findChild(QLabel, "lbl_Drum_Rev_Act")
-        self.lbl_drum_speed_act  = self.findChild(QLabel, "lbl_Drum_Speed_Act")
         self.lbl_layer_count_act = self.findChild(QLabel, "lbl_Layer_Count_Act")
         self.lbl_sw1_grn         = self.findChild(QLabel, "lbl_Sw1_Grn")
-        self.lbl_sw1_red = self.findChild(QLabel, "lbl_Sw1_Red")
-        self.lbl_sw2_grn = self.findChild(QLabel, "lbl_Sw2_Grn")
-        self.lbl_sw2_red = self.findChild(QLabel, "lbl_Sw2_Red")
+        self.lbl_sw1_red         = self.findChild(QLabel, "lbl_Sw1_Red")
+        self.lbl_sw2_grn         = self.findChild(QLabel, "lbl_Sw2_Grn")
+        self.lbl_sw2_red         = self.findChild(QLabel, "lbl_Sw2_Red")
 
         # Terminal
         self.terminal_window = self.findChild(QPlainTextEdit, "txt_Terminal_Window")
@@ -104,6 +103,7 @@ class UI(QMainWindow):
 
 
     def start_run(self):
+        """Validate input fields and initiate the run if possible."""
 
         vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
         # vals is a dict like {"back": 42.0, "shift": 10.0, "offset": 5.0}
@@ -112,8 +112,8 @@ class UI(QMainWindow):
             self.term_msg = f"Start Run with {vals}"
 
         else:
-            self.term_msg = f'Unable to Run...\r\nPlease Set the back, shift and offset and try again'
-            self.update_terminal_window()
+            self.term_msg = f'Please Set the back, shift and offset and try again'
+
 
 
     def end_run(self):
@@ -125,7 +125,7 @@ class UI(QMainWindow):
             self.term_msg = "Yes"
         else:
             self.term_msg = "No"
-        #self.update_terminal_window()
+
     def pause_run(self):
         self.term_msg = "Pause Run button clicked"
 
@@ -155,7 +155,7 @@ class UI(QMainWindow):
                     assignments.append(f"{var}={value}")
 
                 if assignments:
-                    cmd = ";".join(assignments) + ";"  # Galil likes ';' between/after commands
+                    cmd = ";".join(assignments) + ";"
                     try:
                         self.galil_object.GCommand(cmd)
                         self.term_msg = f"{self.term_msg}\nSent: {cmd}"
@@ -173,7 +173,7 @@ class UI(QMainWindow):
 
         except Exception as e:
             self.term_msg = f"Error Connecting: {e}"
-            # self.update_terminal_window()
+
             self.software_error_log.exception("Error Connecting")
 
     def disconnect_device(self):
@@ -182,7 +182,7 @@ class UI(QMainWindow):
         self.disconnected, self.galil_object = self.galil.dmc_disconnect()
         if self.disconnected:
             self.term_msg = "Disconnected from Controller"
-            self.update_terminal_window()
+
             self.connection_sts = False
             self.process_info_log.info(self.term_msg)
             self.btn_connect.show()
@@ -196,7 +196,7 @@ class UI(QMainWindow):
             if self.connection_sts:
                 return
             self.term_msg = "Program Exiting."
-            # self.update_terminal_window()
+
             self.process_info_log.info(self.term_msg)
             QTimer.singleShot(2003, QApplication.instance().quit)
 
@@ -221,7 +221,7 @@ class UI(QMainWindow):
             if self.last_term_msg != e:
                 self.term_msg = f'drum_rev_act exception = {e}'
                 self.software_error_log.error(self.term_msg)
-                # self.update_terminal_window()
+
                 self.last_term_msg = self.term_msg
 
 
@@ -246,7 +246,7 @@ class UI(QMainWindow):
                 value = text_value
                 self.term_msg = f"Input is not a float value: {str(e)}"
                 self.process_info_log.info(self.term_msg)
-                # self.update_terminal_window()
+
 
         # send live if connected
         if self.connection_sts and hasattr(self, "galil_object") and self.galil_object:
@@ -262,7 +262,7 @@ class UI(QMainWindow):
             except Exception as e:
                 self.term_msg = f"{galil_name} write failed: {e}"
                 self.software_error_log.error(self.term_msg)
-                # self.update_terminal_window()
+
         else:
             # not connected yet—just log the change
             self.term_msg = f"{galil_name} changed ----> {value}"
@@ -285,7 +285,7 @@ class UI(QMainWindow):
                     values[galil_name] = text_value
                     self.term_msg = f"Input is not a float value: {text_value}"
                     self.software_error_log.error(self.term_msg)
-                    # self.update_terminal_window()
+
         return values
 
     def write_galil_values_to_ui(self, galil_values: dict) -> None:
@@ -315,7 +315,7 @@ class UI(QMainWindow):
         self.update_terminal_window()
         if self.connection_sts:
             self.drum_rev_act()
-            self.drum_speed_act()
+
 
 
 
