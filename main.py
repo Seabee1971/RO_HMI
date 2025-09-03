@@ -111,8 +111,13 @@ class UI(QMainWindow):
 
 
     def end_run(self):
-        self.term_msg = "End Run button clicked"
-
+        reply = QMessageBox.question(self, "Confirm End", "Are you sure you want to end run?",
+                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if reply == QMessageBox.StandardButton.Yes:
+            self.term_msg = "Yes"
+        else:
+            self.term_msg = "No"
+        #self.update_terminal_window()
     def pause_run(self):
         self.term_msg = "Pause Run button clicked"
 
@@ -174,14 +179,13 @@ class UI(QMainWindow):
     def exit_program(self):
         try:
             self.disconnect_device()
-            if not self.connection_sts:
-                self.term_msg = "Disconnected from Controller.."
-                #self.update_terminal_window()
-                time.sleep(1)
-                self.term_msg = "Program Exiting."
-                # self.update_terminal_window()
-                self.process_info_log.info(self.term_msg)
-                QTimer.singleShot(200, QApplication.instance().quit)
+            if self.connection_sts:
+                return
+            time.sleep(1)
+            self.term_msg = "Program Exiting."
+            # self.update_terminal_window()
+            self.process_info_log.info(self.term_msg)
+            QTimer.singleShot(200, QApplication.instance().quit)
 
         except Exception as e:
             self.software_error_log.error(f'Shit Anthony must have fucked this up! {e}')
