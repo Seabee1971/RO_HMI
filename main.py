@@ -95,10 +95,10 @@ class UI(QMainWindow):
     # ---------- Button slots ----------
     def abort_run(self):
         self.term_msg = "Abort Run button clicked"
-        
+
 
     def start_run(self):
-        input_values =[]
+
         vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
         # vals is a dict like {"back": 42.0, "shift": 10.0, "offset": 5.0}
 
@@ -130,7 +130,7 @@ class UI(QMainWindow):
                 self.connection_sts = True
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
-                self.term_msg = f'Connection Successful\r\n{str(connected)}'
+                self.term_msg = f'Connection Successful. {str(connected)}'
                 self.process_info_log.info(self.term_msg)
                 self.btn_start_run.setEnabled(True)
 
@@ -181,14 +181,13 @@ class UI(QMainWindow):
             self.disconnect_device()
             if self.connection_sts:
                 return
-            time.sleep(1)
             self.term_msg = "Program Exiting."
             # self.update_terminal_window()
             self.process_info_log.info(self.term_msg)
-            QTimer.singleShot(200, QApplication.instance().quit)
+            QTimer.singleShot(2003, QApplication.instance().quit)
 
         except Exception as e:
-            self.software_error_log.error(f'Shit Anthony must have fucked this up! {e}')
+            self.software_error_log.error(f'Exit Program Exception:  {e}')
 
 
 
@@ -210,13 +209,6 @@ class UI(QMainWindow):
                 # self.update_terminal_window()
                 self.last_term_msg = self.term_msg
 
-    def drum_speed_act(self):
-        try:
-            self.lbl_drum_speed_act.setText(self.rpm)
-        except Exception as e:
-            self.term_msg = f"Error: Drum Speed Act {str(e)}"
-            self.software_error_log.error(self.term_msg)
-            # self.update_terminal_window()
 
     # ---------- QLineEdit utilities ----------
     def on_lineedit_changed(self, galil_name: str, widget: QLineEdit) -> None:
@@ -229,7 +221,7 @@ class UI(QMainWindow):
             except ValueError as e:
                 value = text_value
                 self.term_msg = f"Input is not a float value: {str(e)}"
-                self.process_info_log(self.term_msg)
+                self.process_info_log.info(self.term_msg)
                 # self.update_terminal_window()
 
         # send live if connected
@@ -298,35 +290,6 @@ class UI(QMainWindow):
             self.drum_rev_act()
             self.drum_speed_act()
 
-    def update_drum_speed(self, current_rev: float) -> float:
-        if self._rpm_last_time is None:
-            self._rpm_last_time = time.perf_counter()
-            delta_t = self._rpm_last_time
-            delta_rev = current_rev - self._rpm_last_rev
-            now = 0
-        else:
-            now = time.perf_counter()
-            delta_t = now - self._rpm_last_time
-            delta_rev = current_rev - self._rpm_last_rev
-            rpm = 0.0
-
-
-        if delta_t > 0:
-            revs_per_sec = delta_rev / delta_t
-            rpm = revs_per_sec * 60.0
-
-        # persist state for next tick
-        self._rpm_last_rev = current_rev
-        self._rpm_last_time = now
-
-        # push to UI (rename label if you have a dedicated RPM label)
-        try:
-            self.lbl_drum_speed_act.setText(f"{rpm:.2f}")
-        except Exception as e:
-            self.term_msg = f"SHIT DAMN FUCK Unable to update drum speed: {e}"
-            self.software_error_log.error(self.term_msg)
-
-        return rpm
 
 
 if __name__ == "__main__":
