@@ -1,5 +1,7 @@
+import time
+
 from PyQt6.QtCore import QTimer
-from PyQt6.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QPlainTextEdit
+from PyQt6.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QPlainTextEdit, QMessageBox
 from PyQt6 import uic
 import sys
 from Handlers.galil import Galil
@@ -8,7 +10,11 @@ from Handlers.error_logging import *
 class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
-        self.previous_status = 0
+        self._rpm_last_rev = None
+        self.disconnected = None
+        self._rpm_last_time = None
+        self.rpm = None
+        self.previous_rev_count = 0
         self.galil_object = None
         self.term_msg = None
         self.last_term_msg = ""
@@ -22,7 +28,7 @@ class UI(QMainWindow):
             # Load .ui
         uic.loadUi("RO_HMI.ui", self)
 
-        # Map widget objectName → Galil variable
+        # Map widget objectName ----> Galil variable
         self.ui_to_galil = {
             "lned_Back_Distance":  "back",
             "lned_Shift_Distance": "shift",
@@ -92,9 +98,17 @@ class UI(QMainWindow):
         
 
     def start_run(self):
+        input_values =[]
         vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
-        self.term_msg = f"Start Run with {vals}"
-        # If you want to push to Galil immediately, do it here based on your program.
+        # vals is a dict like {"back": 42.0, "shift": 10.0, "offset": 5.0}
+
+        if all(v is not None and isinstance(v, (int, float)) for v in vals.values()):
+            self.term_msg = f"Start Run with {vals}"
+
+        else:
+            self.term_msg = f'Unable to Run...\r\nPlease Set the back, shift and offset and try again'
+            self.update_terminal_window()
+
 
     def end_run(self):
         self.term_msg = "End Run button clicked"
@@ -106,8 +120,6 @@ class UI(QMainWindow):
         self.term_msg = "Connecting..."
         try:
             connected, self.galil_object = self.galil.dmc_connect()
-            self.term_msg = str(connected)
-            self.process_info_log.info(self.term_msg)
 
             if connected:
                 self.connection_sts = True
@@ -146,7 +158,7 @@ class UI(QMainWindow):
 
         except Exception as e:
             self.term_msg = f"Error Connecting: {e}"
-            self.update_terminal_window()
+            # self.update_terminal_window()
             self.software_error_log.exception("Error Connecting")
 
     def disconnect_device(self):
@@ -154,42 +166,53 @@ class UI(QMainWindow):
         if self.disconnected:
             self.term_msg = "Disconnected from Controller"
             self.update_terminal_window()
+            self.connection_sts = False
             self.process_info_log.info(self.term_msg)
             self.btn_connect.show()
             self.btn_disconnect.hide()
 
     def exit_program(self):
-        self.term_msg = "Disconnected from Controller\r\nHMI shutting down in 5 seconds"
-        self.process_info_log.info(self.term_msg)
-        self.update_terminal_window()
         try:
-            self.galil.dmc_disconnect()
+            self.disconnect_device()
+            if not self.connection_sts:
+                self.term_msg = "Disconnected from Controller.."
+                #self.update_terminal_window()
+                time.sleep(1)
+                self.term_msg = "Program Exiting."
+                # self.update_terminal_window()
+                self.process_info_log.info(self.term_msg)
+                QTimer.singleShot(200, QApplication.instance().quit)
+
         except Exception as e:
-            self.software_error_log.error(e)
-        QTimer.singleShot(5000, QApplication.instance().quit)
+            self.software_error_log.error(f'Shit Anthony must have fucked this up! {e}')
+
+
 
     # ---------- Simple label demos (keep if you use them) ----------
     def drum_rev_act(self):
         # Example write via your galil wrapper
         try:
             cmd = "REV"
-            status = int(self.galil.read_input(cmd))
-            if status > self.previous_status:
-                self.lbl_drum_speed_act.setText(str(status))
-                self.previous_status = status
+            rev_count = float(self.galil.read_input(cmd))
+            # if rev_count > self.previous_rev_count:
+            #     self.lbl_drum_rev_act.setText(str(rev_count))
+            #     self.previous_rev_count = rev_count
+            #     #self.rpm = self.update_drum_speed(rev_count)
 
         except Exception as e:
-            self.term_msg = f"[Error]  Unable to Read {cmd} {e}"
-            self.software_error_log.error(self.term_msg)
-            self.update_terminal_window()
+            if self.last_term_msg != e:
+                self.term_msg = f'drum_rev_act exception = {e}'
+                self.software_error_log.error(self.term_msg)
+                # self.update_terminal_window()
+                self.last_term_msg = self.term_msg
 
     def drum_speed_act(self):
         try:
-            self.galil.update_values(self.lbl_drum_speed_act)
+            self.lbl_drum_speed_act.setText(self.rpm)
         except Exception as e:
             self.term_msg = f"Error: Drum Speed Act {str(e)}"
             self.software_error_log.error(self.term_msg)
-            self.update_terminal_window()
+            # self.update_terminal_window()
 
     # ---------- QLineEdit utilities ----------
     def on_lineedit_changed(self, galil_name: str, widget: QLineEdit) -> None:
@@ -203,7 +226,7 @@ class UI(QMainWindow):
                 value = text_value
                 self.term_msg = f"Input is not a float value: {str(e)}"
                 self.process_info_log(self.term_msg)
-                self.update_terminal_window()
+                # self.update_terminal_window()
 
         # send live if connected
         if self.connection_sts and hasattr(self, "galil_object") and self.galil_object:
@@ -211,7 +234,7 @@ class UI(QMainWindow):
                 if value is not None:
                     self.galil_object.GCommand(f"{galil_name}={value}")
                     echoed = self.galil_object.GCommand(f"MG {galil_name}").strip()
-                    self.term_msg = f"{galil_name} changed → {value} (read back {echoed})"
+                    self.term_msg = f"{galil_name} changed ----> {value} (read back {echoed})"
                     self.process_info_log.info(self.term_msg)
                 else:
                     self.term_msg = f"{galil_name} left blank; not sent"
@@ -219,10 +242,10 @@ class UI(QMainWindow):
             except Exception as e:
                 self.term_msg = f"{galil_name} write failed: {e}"
                 self.software_error_log.error(self.term_msg)
-                self.update_terminal_window()
+                # self.update_terminal_window()
         else:
             # not connected yet—just log the change
-            self.term_msg = f"{galil_name} changed → {value}"
+            self.term_msg = f"{galil_name} changed ----> {value}"
             self.process_info_log.info(self.term_msg)
 
     def read_galil_inputs_from_ui(self) -> dict:
@@ -242,7 +265,7 @@ class UI(QMainWindow):
                     values[galil_name] = text_value
                     self.term_msg = f"Input is not a float value: {text_value}"
                     self.software_error_log.error(self.term_msg)
-                    self.update_terminal_window()
+                    # self.update_terminal_window()
         return values
 
     def write_galil_values_to_ui(self, galil_values: dict) -> None:
@@ -258,14 +281,48 @@ class UI(QMainWindow):
     # ---------- Terminal + periodic update ----------
     def update_terminal_window(self):
         if self.term_msg is not None and self.last_term_msg != self.term_msg:
-            self.terminal_window.appendPlainText(self.term_msg)
-            self.last_term_msg = self.term_msg
+            try:
+                self.terminal_window.appendPlainText(str(self.term_msg))
+                self.last_term_msg = self.term_msg
+            except Exception as e:
+                self.term_msg = f"Terminal window update failed: {e}"
+                self.software_error_log.error(self.term_msg)
 
     def update_all_widgets(self):
         self.update_terminal_window()
         if self.connection_sts:
             self.drum_rev_act()
             self.drum_speed_act()
+
+    def update_drum_speed(self, current_rev: float) -> float:
+        if self._rpm_last_time is None:
+            self._rpm_last_time = time.perf_counter()
+            delta_t = self._rpm_last_time
+            delta_rev = current_rev - self._rpm_last_rev
+            now = 0
+        else:
+            now = time.perf_counter()
+            delta_t = now - self._rpm_last_time
+            delta_rev = current_rev - self._rpm_last_rev
+            rpm = 0.0
+
+
+        if delta_t > 0:
+            revs_per_sec = delta_rev / delta_t
+            rpm = revs_per_sec * 60.0
+
+        # persist state for next tick
+        self._rpm_last_rev = current_rev
+        self._rpm_last_time = now
+
+        # push to UI (rename label if you have a dedicated RPM label)
+        try:
+            self.lbl_drum_speed_act.setText(f"{rpm:.2f}")
+        except Exception as e:
+            self.term_msg = f"SHIT DAMN FUCK Unable to update drum speed: {e}"
+            self.software_error_log.error(self.term_msg)
+
+        return rpm
 
 
 if __name__ == "__main__":
