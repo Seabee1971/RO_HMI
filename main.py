@@ -316,7 +316,7 @@ class UI(QMainWindow):
             var = e["write_var"]
             if var in galil_values:
                 v = galil_values[var]
-                w.setText("" if v is None else e["fmt"](v))
+                w.setValue("" if v is None else e["fmt"](v))
 
     # ---------- Polling (device → UI) ----------
     def poll_bindings(self):
