@@ -22,7 +22,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(205, 205, 205);</string>
+   <string notr="true">background-color: rgb(0, 0, 0);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="btn_Connect_to_Galil">
@@ -803,7 +803,8 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(170, 0, 0);</string>
+     <string notr="true">color: rgb(170, 0, 0);
+background-color: rgb(204, 204, 204);</string>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -901,8 +902,8 @@ Galil</string>
    <widget class="QLabel" name="lbl_Button_Back_2">
     <property name="geometry">
      <rect>
-      <x>1820</x>
-      <y>550</y>
+      <x>1320</x>
+      <y>340</y>
       <width>151</width>
       <height>171</height>
      </rect>
@@ -920,11 +921,20 @@ Galil</string>
    <widget class="QLabel" name="lbl_Ignore1_2">
     <property name="geometry">
      <rect>
-      <x>1820</x>
-      <y>470</y>
+      <x>1320</x>
+      <y>350</y>
       <width>151</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(170, 0, 0);
+color: rgb(204, 204, 204);</string>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Switch 2&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Active&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1115,9 +1125,9 @@ Screen</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout"/>
    </widget>
+   <zorder>lbl_Button_Back_2</zorder>
    <zorder>lbl_Button_Back</zorder>
    <zorder>layoutWidget</zorder>
-   <zorder>lbl_Button_Back_2</zorder>
    <zorder>btn_Connect_to_Galil</zorder>
    <zorder>btn_Disconnect_Galil</zorder>
    <zorder>frm_Back</zorder>

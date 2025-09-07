@@ -143,9 +143,10 @@ class UI(QMainWindow):
         self.btn_disconnect.clicked.connect(self.disconnect_device)
         self.btn_exit_app.clicked.connect(self.exit_program)
         self.btn_pause_run.clicked.connect(self.pause_run)
-        self.btn_maint_scrn.clicked.connect(self.openMaintenanceWindow)
+        self.btn_maint_scrn.clicked.connect(self.open_maintenance_window)
         self.btn_disconnect.hide()
         self.maintenance_window= None
+
         # --- Timer ---
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_all_widgets)
@@ -153,12 +154,10 @@ class UI(QMainWindow):
 
         self.showMaximized()
 
-    def openMaintenanceWindow(self):
+    def open_maintenance_window(self):
         if self.maintenance_window is None:
             self.maintenance_window = MaintenanceWindow()
         self.maintenance_window.show()
-
-
 
     # ---------- Helpers ----------
     def parse_number(self, text: str):
@@ -171,8 +170,7 @@ class UI(QMainWindow):
             return False, text, "not_numeric"
 
     def log_to_terminal(self, msg: str, level: str = "info"):
-        if not isinstance(msg, str):
-            msg = str(msg)
+
         msg = msg.replace("→", "->")  # keep CP1252-safe
         self.term_msg = msg
         self.update_terminal_window()
@@ -235,16 +233,17 @@ class UI(QMainWindow):
                 self.connection_sts = False
                 self.btn_connect.show()
                 self.btn_disconnect.hide()
-        except Exception:
-            self.software_error_log.exception("Error Connecting")
+        except Exception as e:
+            self.software_error_log.exception(f'"Error Connecting" {e}')
             self.log_to_terminal("Error Connecting (see software log for details)", level="error")
 
     def disconnect_device(self):
         try:
             self.disconnected, self.galil_object = self.galil.dmc_disconnect()
-        except Exception:
+        except Exception as e:
+
             self.disconnected = False
-            self.software_error_log.exception("Disconnect failed")
+            self.software_error_log.exception(f'"Disconnect failed"{e}')
 
         if self.disconnected:
             self.connection_sts = False
