@@ -20,6 +20,7 @@ fh_process_error = logging.FileHandler(f"process_errors_{datetime.now().strftime
 fh_process_info = logging.FileHandler(f"process_info_{datetime.now().strftime('%m%d%y_%H%M')}.log")
 
 # 4. Create a formatter (consistent format)
+# noinspection SpellCheckingInspection
 formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
 
 # 5. Attach formatter to each handler

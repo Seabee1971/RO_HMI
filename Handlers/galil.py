@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import QLabel, QPushButton
 mg = "MG "
 
 class Galil:
-    def __init__(self,parent=None):
+    def __init__(self):
         self.g = gclib.py()
         self.IP_address = "169.254.154.33"
 
@@ -22,6 +22,10 @@ class Galil:
             return e,self.g
         return "closed",self.g
 
+    def read_expr(self, expr: str) -> str:
+        return self.g.GCommand(f"MG {expr}").strip()
+    def write_var(self, name: str, value) -> None:
+          self.g.GCommand(f"{name}={value}")
     def read_input(self, variable: str) -> str:
         return self.g.GCommand(f"MG {variable}").strip()
 
