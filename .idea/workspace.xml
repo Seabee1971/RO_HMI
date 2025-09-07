@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ded47b8a-1282-4828-ad9b-f4529d5a222d" name="Changes" comment="Adding return to main menu button Maintenance Screen">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handlers/error_logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handlers/error_logging.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handlers/galil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handlers/galil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RO_HMI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/RO_HMI.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="ded47b8a-1282-4828-ad9b-f4529d5a222d" name="Changes" comment="not sure" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,44 +52,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.CleanLogs.executor": "Run",
-    "Python.MaintWindow.executor": "Run",
-    "Python.QThreadTest.executor": "Debug",
-    "Python.QTimerEx.executor": "Run",
-    "Python.Temp.executor": "Run",
-    "Python.buildUI.executor": "Run",
-    "Python.button.executor": "Run",
-    "Python.buttons.executor": "Run",
-    "Python.cleanLogs (1).executor": "Run",
-    "Python.config.executor": "Run",
-    "Python.error_logging.executor": "Run",
-    "Python.galil.executor": "Run",
-    "Python.galil_thread.executor": "Debug",
-    "Python.logging.executor": "Run",
-    "Python.logwithlogging (1).executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.parserTest.executor": "Run",
-    "Python.readParser.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Experiment",
-    "last_opened_file_path": "C:/Users/ShaneP/Documents/Coding/Python/RO_HMI",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.CleanLogs.executor&quot;: &quot;Run&quot;,
+    &quot;Python.MaintWindow.executor&quot;: &quot;Run&quot;,
+    &quot;Python.QThreadTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.QTimerEx.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Temp.executor&quot;: &quot;Run&quot;,
+    &quot;Python.buildUI.executor&quot;: &quot;Run&quot;,
+    &quot;Python.button.executor&quot;: &quot;Run&quot;,
+    &quot;Python.buttons.executor&quot;: &quot;Run&quot;,
+    &quot;Python.cleanLogs (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.config.executor&quot;: &quot;Run&quot;,
+    &quot;Python.error_logging.executor&quot;: &quot;Run&quot;,
+    &quot;Python.galil.executor&quot;: &quot;Run&quot;,
+    &quot;Python.galil_thread.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.logging.executor&quot;: &quot;Run&quot;,
+    &quot;Python.logwithlogging (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.parserTest.executor&quot;: &quot;Run&quot;,
+    &quot;Python.readParser.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Experiment&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ShaneP/Documents/Coding/Python/RO_HMI&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="PyCoverageOptionsProvider">
     <option name="myUseBundledCoveragePy" value="true" />
   </component>
@@ -256,7 +248,7 @@
       <workItem from="1755790437824" duration="14828000" />
       <workItem from="1755806271593" duration="1016000" />
       <workItem from="1756409579523" duration="75392000" />
-      <workItem from="1756987003015" duration="14217000" />
+      <workItem from="1756987003015" duration="14251000" />
     </task>
     <task id="LOCAL-00001" summary="Added Buttons using findChildren to bring all the buttons in with for loop">
       <option name="closed" value="true" />
@@ -442,7 +434,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757247359133</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="not sure">
+      <option name="closed" value="true" />
+      <created>1757256557568</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1757256557568</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -510,7 +510,8 @@
     <MESSAGE value="simplifying the galil reads" />
     <MESSAGE value="Adding Maintenance Screen" />
     <MESSAGE value="Adding return to main menu button Maintenance Screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding return to main menu button Maintenance Screen" />
+    <MESSAGE value="not sure" />
+    <option name="LAST_COMMIT_MESSAGE" value="not sure" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
