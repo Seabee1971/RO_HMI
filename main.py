@@ -5,7 +5,7 @@ from datetime import datetime
 from PyQt6.QtCore import QTimer, QObject, QUrl
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PyQt6.QtWidgets import (
-    QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QPlainTextEdit, QMessageBox
+    QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QPlainTextEdit, QMessageBox, QDoubleSpinBox
 )
 from PyQt6 import uic
 
@@ -56,9 +56,9 @@ class UI(QMainWindow):
         self.btn_trend_data  = self.findChild(QPushButton, "btn_Trend_Data")
         self.btn_maint_scrn  = self.findChild(QPushButton, "btn_maint_screen")
 
-        self.linedit_back_distance   = self.findChild(QLineEdit, "lned_Back_Distance")
-        self.linedit_shift_distance  = self.findChild(QLineEdit, "lned_Shift_Distance")
-        self.linedit_offset_distance = self.findChild(QLineEdit, "lned_Offset_Distance")
+        self.dsb_Back_Distance   = self.findChild(QDoubleSpinBox, "dsb_Back_Distance")
+        self.dsb_Shift_Distance = self.findChild(QDoubleSpinBox, "dsb_Shift_Distance")
+        self.dsb_Offset_Distance = self.findChild(QDoubleSpinBox, "dsb_Offset_Distance")
 
         self.lbl_drum_rev_act    = self.findChild(QLabel, "lbl_Drum_Rev_Act")
         self.lbl_drum_speed_act  = self.findChild(QLabel, "lbl_Drum_Speed_Act")
@@ -87,11 +87,11 @@ class UI(QMainWindow):
         # coerce: device text -> python value. fmt: python value -> display text.
         self.BINDINGS = [
             # Two-way numeric inputs
-            dict(object="lned_Back_Distance",   kind="lineedit", read_expr=None, write_var="back",
+            dict(object="dsb_Back_Distance",   kind="doublespinbox", read_expr=None, write_var="back",
                  coerce=float, fmt=lambda v: f"{v:g}"),
-            dict(object="lned_Shift_Distance",  kind="lineedit", read_expr=None, write_var="shift",
+            dict(object="dsb_Shift_Distance",  kind="doublespinbox", read_expr=None, write_var="shift",
                  coerce=float, fmt=lambda v: f"{v:g}"),
-            dict(object="lned_Offset_Distance", kind="lineedit", read_expr=None, write_var="offset",
+            dict(object="dsb_Offset_Distance", kind="doublespinbox", read_expr=None, write_var="offset",
                  coerce=float, fmt=lambda v: f"{v:g}"),
 
             # Device → UI labels (examples; adjust to your actual variables)
@@ -130,9 +130,9 @@ class UI(QMainWindow):
                 if w is None:
                     continue
                 entry = dict(b, widget=w)
-                if b["kind"] == "lineedit" and b["write_var"] and isinstance(w, QLineEdit):
+                if b["kind"] == "doublespinbox" and b["write_var"] and isinstance(w, QDoubleSpinBox):
                     # capture entry to avoid late-binding in lambda
-                    w.editingFinished.connect(lambda e=entry: self._on_lineedit_commit(e))
+                    w.editingFinished.connect(lambda e=entry: self._on_doublespin_commit(e))
             self._bindings.append(entry)
 
         # --- Click handlers ---
@@ -184,12 +184,16 @@ class UI(QMainWindow):
         self.log_to_terminal("Abort Run button clicked")
 
     def start_run(self):
-        vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
-        if all(v is not None and isinstance(v, (int, float)) for v in vals.values()):
-            self.log_to_terminal(f"Start Run with {vals}")
-            # TODO: start your run logic here
-        else:
-            self.log_to_terminal("Please set back, shift, and offset, then try again", level="error")
+        try:
+            vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
+            self.term_msg = f'Back,Shift,Offset = {vals}'
+            if all(v is not None and isinstance(v, (int, float)) for v in vals.values()):
+                self.log_to_terminal(f"Start Run with {vals}")
+                # TODO: start your run logic here
+            else:
+                self.log_to_terminal("Please set back, shift, and offset, then try again", level="info")
+        except Exception as e:
+            self.log_to_terminal(f"Failed to start run: {e}", level="error")
 
     def end_run(self):
         reply = QMessageBox.question(
@@ -207,7 +211,7 @@ class UI(QMainWindow):
     def connect_device(self):
         self.log_to_terminal("Connecting...")
         try:
-            self.player.play()
+            #self.player.play()
             connected, self.galil_object = self.galil.dmc_connect()
             if connected:
                 QMessageBox.information(self, "Reminder", "Position Oiler in Forward\rPosition Against Drum")
@@ -217,7 +221,7 @@ class UI(QMainWindow):
                 self.btn_start_run.setEnabled(True)
                 self.log_to_terminal(f"Connection Successful. {connected}")
 
-                # Push initial values from the three lineedits (if present)
+                # Push initial values from the three doublespinboxs (if present)
                 vals = self.read_galil_inputs_from_ui()
                 for var in ("back", "shift", "offset"):
                     v = vals.get(var)
@@ -263,8 +267,8 @@ class UI(QMainWindow):
             self.log_to_terminal(f"Exit Program Exception: {e}", level="error")
 
     # ---------- Generic write handler (UI → device) ----------
-    def _on_lineedit_commit(self, entry: dict):
-        w: QLineEdit = entry["widget"]
+    def _on_doublespin_commit(self, entry: dict):
+        w: QDoubleSpinBox = entry["widget"]
         write_var = entry["write_var"]
         coerce = entry["coerce"]
 
@@ -274,6 +278,7 @@ class UI(QMainWindow):
             return
 
         try:
+            text = text.removesuffix('mm')
             val = coerce(text)
         except Exception as e:
             self.log_to_terminal(f"Invalid input for {write_var}: {text} ({e})", level="error")
@@ -288,26 +293,26 @@ class UI(QMainWindow):
                 self.software_error_log.exception(f"{write_var} write failed")
                 self.log_to_terminal(f"{write_var} write failed (see software log)", level="error")
         else:
-            self.log_to_terminal(f"{write_var} changed (not connected) -> {val}")
+            self.log_to_terminal(f"{write_var} Not Written There is No Connection -> {val}")
 
     # ---------- UI <-> dict helpers ----------
     def read_galil_inputs_from_ui(self) -> dict:
-        """Return dict of {'back': value/None, ...} using BINDINGS for lineedits."""
+        """Return dict of {'back': value/None, ...} using BINDINGS for doublespinboxs."""
         values = {}
         for e in self._bindings:
-            if e["kind"] != "lineedit":
+            if e["kind"] != "doublespinbox":
                 continue
-            w: QLineEdit = e["widget"]
+            w: QDoubleSpinBox = e["widget"]
             ok, value, _ = self.parse_number(w.text())
             values[e["write_var"]] = value if ok else None
         return values
 
     def write_galil_values_to_ui(self, galil_values: dict) -> None:
-        """Write values back into mapped lineedits."""
+        """Write values back into mapped doublespinboxs."""
         for e in self._bindings:
-            if e["kind"] != "lineedit":
+            if e["kind"] != "doublespinbox":
                 continue
-            w: QLineEdit = e["widget"]
+            w: QDoubleSpinBox = e["widget"]
             var = e["write_var"]
             if var in galil_values:
                 v = galil_values[var]
@@ -332,10 +337,10 @@ class UI(QMainWindow):
                     lbl: QLabel = e["widget"]
                     lbl.setText(e["fmt"](val))
 
-                elif kind == "lineedit":
+                elif kind == "D":
                     # if you want to reflect device changes into the field, uncomment:
-                    # w: QLineEdit = e["widget"]
-                    # w.setText(e["fmt"](val))
+                    w: QDoubleSpinBox = e["widget"]
+                    w.setText(e["fmt"](val))
                     pass
 
                 elif kind == "bool_pair":
