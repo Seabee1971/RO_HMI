@@ -15,12 +15,14 @@
    <font>
     <family>Rockwell</family>
     <pointsize>12</pointsize>
-    <weight>75</weight>
     <bold>true</bold>
    </font>
   </property>
   <property name="windowTitle">
    <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(205, 205, 205);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="btn_Connect_to_Galil">
@@ -51,7 +53,6 @@
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -116,7 +117,6 @@ QPushButton:pressed {
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -175,7 +175,6 @@ QPushButton:pressed {
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -234,7 +233,6 @@ QPushButton:pressed {
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -291,7 +289,6 @@ QPushButton:pressed {
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -347,7 +344,6 @@ QPushButton:pressed {
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -387,11 +383,14 @@ QPushButton:pressed {
       <height>30</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Shift Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#ffffff;&quot;&gt;Shift Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
    <widget class="QFrame" name="frm_Shift">
@@ -404,34 +403,36 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(165, 15, 9, 255), stop:1 rgba(255, 255, 255, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0229545, x2:0, y2:0.966682, stop:0 rgba(132, 14, 14, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QLineEdit" name="lned_Shift_Distance">
+    <widget class="QDoubleSpinBox" name="dsb_Shift_Distance">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>60</x>
        <y>60</y>
-       <width>151</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Rockwell</family>
-       <pointsize>12</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(204, 204, 204);
-color: rgb(0, 0, 255);</string>
+      <string notr="true">font: 75 12pt &quot;Rockwell&quot;;
+background-color: rgb(170, 0, 58);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+     </property>
+     <property name="suffix">
+      <string>mm</string>
      </property>
     </widget>
    </widget>
@@ -445,34 +446,48 @@ color: rgb(0, 0, 255);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(165, 15, 9, 255), stop:1 rgba(255, 255, 255, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0229545, x2:0, y2:0.966682, stop:0 rgba(132, 14, 14, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QLineEdit" name="lned_Offset_Distance">
+    <widget class="QDoubleSpinBox" name="dsb_Offset_Distance">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>60</x>
        <y>60</y>
-       <width>151</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Rockwell</family>
-       <pointsize>12</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
+     <property name="autoFillBackground">
+      <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(204, 204, 204);
-color: rgb(0, 0, 255);</string>
+      <string notr="true">font: 75 12pt &quot;Rockwell&quot;;
+background-color: rgb(170, 0, 58);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+     </property>
+     <property name="suffix">
+      <string>mm</string>
+     </property>
+     <property name="decimals">
+      <number>1</number>
+     </property>
+     <property name="minimum">
+      <double>0.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>0.000000000000000</double>
      </property>
     </widget>
    </widget>
@@ -489,15 +504,14 @@ color: rgb(0, 0, 255);</string>
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Offset Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#ffffff;&quot;&gt;Offset Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_Back_Distance_in_mm">
@@ -513,15 +527,14 @@ color: rgb(0, 0, 255);</string>
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#aa0000;&quot;&gt;Back Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#ffffff;&quot;&gt;Back Distance in mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
    <widget class="QFrame" name="frm_Back">
@@ -534,34 +547,48 @@ color: rgb(0, 0, 255);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(165, 15, 9, 255), stop:1 rgba(255, 255, 255, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0229545, x2:0, y2:0.966682, stop:0 rgba(132, 14, 14, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QLineEdit" name="lned_Back_Distance">
+    <widget class="QDoubleSpinBox" name="dsb_Back_Distance">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>50</x>
        <y>60</y>
-       <width>151</width>
+       <width>121</width>
        <height>31</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Rockwell</family>
-       <pointsize>12</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
+     <property name="autoFillBackground">
+      <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(204, 204, 204);
-color: rgb(0, 0, 255);</string>
+      <string notr="true">font: 75 12pt &quot;Rockwell&quot;;
+background-color: rgb(170, 0, 58);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+     </property>
+     <property name="suffix">
+      <string>mm</string>
+     </property>
+     <property name="decimals">
+      <number>1</number>
+     </property>
+     <property name="minimum">
+      <double>0.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>0.000000000000000</double>
      </property>
     </widget>
    </widget>
@@ -575,13 +602,13 @@ color: rgb(0, 0, 255);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0229545, x2:0, y2:0.966682, stop:0 rgba(132, 14, 14, 255), stop:1 rgba(255, 255, 255, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(165, 15, 9, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QLabel" name="lbl_Drum_Rev_Act">
      <property name="geometry">
@@ -596,7 +623,6 @@ color: rgb(0, 0, 255);</string>
       <font>
        <family>Rockwell</family>
        <pointsize>12</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -608,7 +634,7 @@ color: rgb(0, 0, 255);</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="lbl_Drum_Rev">
@@ -624,7 +650,6 @@ color: rgb(0, 0, 255);</string>
       <font>
        <family>Rockwell</family>
        <pointsize>12</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -633,10 +658,10 @@ color: rgb(0, 0, 255);</string>
 </string>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;DrumRevolutions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;DrumRevolutions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </widget>
@@ -650,13 +675,13 @@ color: rgb(0, 0, 255);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0229545, x2:0, y2:0.966682, stop:0 rgba(132, 14, 14, 255), stop:1 rgba(255, 255, 255, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(165, 15, 9, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QLabel" name="lbl_Layer_Count_Act">
      <property name="geometry">
@@ -671,7 +696,6 @@ color: rgb(0, 0, 255);</string>
       <font>
        <family>Rockwell</family>
        <pointsize>12</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -683,7 +707,7 @@ color: rgb(0, 0, 255);</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="lbl_Layer_Count">
@@ -699,7 +723,6 @@ color: rgb(0, 0, 255);</string>
       <font>
        <family>Rockwell</family>
        <pointsize>12</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -708,10 +731,10 @@ color: rgb(0, 0, 255);</string>
 </string>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Layer Count&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Layer Count&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </widget>
@@ -740,7 +763,6 @@ color: rgb(0, 0, 255);</string>
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -774,8 +796,8 @@ QPushButton:pressed {
    <widget class="QPlainTextEdit" name="txt_Terminal_Window">
     <property name="geometry">
      <rect>
-      <x>303</x>
-      <y>296</y>
+      <x>310</x>
+      <y>270</y>
       <width>871</width>
       <height>651</height>
      </rect>
@@ -815,7 +837,6 @@ QPushButton:pressed {
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -880,8 +901,8 @@ Galil</string>
    <widget class="QLabel" name="lbl_Button_Back_2">
     <property name="geometry">
      <rect>
-      <x>1320</x>
-      <y>340</y>
+      <x>1820</x>
+      <y>550</y>
       <width>151</width>
       <height>171</height>
      </rect>
@@ -899,8 +920,8 @@ Galil</string>
    <widget class="QLabel" name="lbl_Ignore1_2">
     <property name="geometry">
      <rect>
-      <x>1320</x>
-      <y>350</y>
+      <x>1820</x>
+      <y>470</y>
       <width>151</width>
       <height>51</height>
      </rect>
@@ -909,7 +930,7 @@ Galil</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Switch 2&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Active&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="textFormat">
-     <enum>Qt::RichText</enum>
+     <enum>Qt::TextFormat::RichText</enum>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_Sw2_Grn">
@@ -973,16 +994,39 @@ Galil</string>
     <property name="geometry">
      <rect>
       <x>1320</x>
-      <y>180</y>
+      <y>170</y>
       <width>151</width>
-      <height>51</height>
+      <height>71</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <family>Rockwell</family>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Sunken</enum>
+    </property>
+    <property name="lineWidth">
+     <number>5</number>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Switch 1 &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Active&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="textFormat">
-     <enum>Qt::RichText</enum>
+     <enum>Qt::TextFormat::RichText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_Button_Back">
@@ -1029,7 +1073,6 @@ Galil</string>
      <font>
       <family>Rockwell</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -1061,7 +1104,19 @@ QPushButton:pressed {
 Screen</string>
     </property>
    </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout"/>
+   </widget>
    <zorder>lbl_Button_Back</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>lbl_Button_Back_2</zorder>
    <zorder>btn_Connect_to_Galil</zorder>
    <zorder>btn_Disconnect_Galil</zorder>
@@ -1094,7 +1149,7 @@ Screen</string>
      <x>0</x>
      <y>0</y>
      <width>2731</width>
-     <height>30</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -2,17 +2,19 @@ import sys
 import time
 from datetime import datetime
 
-from PyQt6.QtCore import QTimer, QObject
+from PyQt6.QtCore import QTimer, QObject, QUrl
+from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PyQt6.QtWidgets import (
     QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QPlainTextEdit, QMessageBox
 )
 from PyQt6 import uic
 
+
 from Handlers.galil import Galil          # Ensure Galil has read_expr() and write_var()
 from Handlers.error_logging import (      # Assumes these are configured at import
     software_logger, process_error_logger, process_info_logger
 )
-
+from MaintWindow import MaintenanceWindow
 
 class UI(QMainWindow):
     """Red Oktober HMI – UI logic only; Galil I/O via wrapper; logging centralized."""
@@ -51,7 +53,8 @@ class UI(QMainWindow):
         self.btn_exit_app    = self.findChild(QPushButton, "btn_Exit")
         self.btn_pause_run   = self.findChild(QPushButton, "btn_Pause_Run")
         self.btn_start_run   = self.findChild(QPushButton, "btn_Start_Run")
-        # self.btn_trend_data  = self.findChild(QPushButton, "btn_Trend_Data")
+        self.btn_trend_data  = self.findChild(QPushButton, "btn_Trend_Data")
+        self.btn_maint_scrn  = self.findChild(QPushButton, "btn_maint_screen")
 
         self.linedit_back_distance   = self.findChild(QLineEdit, "lned_Back_Distance")
         self.linedit_shift_distance  = self.findChild(QLineEdit, "lned_Shift_Distance")
@@ -105,6 +108,12 @@ class UI(QMainWindow):
             dict(object=("lbl_Sw2_Grn", "lbl_Sw2_Red"), kind="bool_pair", read_expr="@IN[8]", write_var=None,
                  coerce=lambda s: float(s) >= 0.5, fmt=None),
         ]
+        # Audio system
+        self.audio_output = QAudioOutput()
+        self.player = QMediaPlayer()
+        self.player.setAudioOutput(self.audio_output)
+        #Load the Sound File
+        self.player.setSource(QUrl.fromLocalFile("SubDiving.mp3"))
 
         # Resolve widgets & hook editors
         self._bindings = []
@@ -134,14 +143,22 @@ class UI(QMainWindow):
         self.btn_disconnect.clicked.connect(self.disconnect_device)
         self.btn_exit_app.clicked.connect(self.exit_program)
         self.btn_pause_run.clicked.connect(self.pause_run)
+        self.btn_maint_scrn.clicked.connect(self.openMaintenanceWindow)
         self.btn_disconnect.hide()
-
+        self.maintenance_window= None
         # --- Timer ---
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_all_widgets)
         self.timer.start(50)
 
         self.showMaximized()
+
+    def openMaintenanceWindow(self):
+        if self.maintenance_window is None:
+            self.maintenance_window = MaintenanceWindow()
+        self.maintenance_window.show()
+
+
 
     # ---------- Helpers ----------
     def parse_number(self, text: str):
@@ -192,6 +209,7 @@ class UI(QMainWindow):
     def connect_device(self):
         self.log_to_terminal("Connecting...")
         try:
+            self.player.play()
             connected, self.galil_object = self.galil.dmc_connect()
             if connected:
                 QMessageBox.information(self, "Reminder", "Position Oiler in Forward\rPosition Against Drum")

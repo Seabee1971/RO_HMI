@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ded47b8a-1282-4828-ad9b-f4529d5a222d" name="Changes" comment="simplifying the galil reads">
+    <list default="true" id="ded47b8a-1282-4828-ad9b-f4529d5a222d" name="Changes" comment="Adding Maintenance Screen">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handlers/galil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handlers/galil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Maintenance_Window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Maintenance_Window.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RO_HMI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/RO_HMI.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -37,12 +38,12 @@
     &quot;assignee&quot;: &quot;Seabee1971&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://Seabee1971@github.com/Seabee1971/RO_HMI.git",
-    "accountId": "1d65f0bd-0228-44fd-8a7c-79c61e60098c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://Seabee1971@github.com/Seabee1971/RO_HMI.git&quot;,
+    &quot;accountId&quot;: &quot;1d65f0bd-0228-44fd-8a7c-79c61e60098c&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/Temp/3f322dfe-eb69-422d-a591-956598fb61bf_CIP-master.zip.1bf/CIP-master/CIP_xml.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -59,6 +60,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.CleanLogs.executor": "Run",
+    "Python.MaintWindow.executor": "Run",
     "Python.QThreadTest.executor": "Debug",
     "Python.QTimerEx.executor": "Run",
     "Python.buildUI.executor": "Run",
@@ -99,6 +101,29 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
+    <configuration name="MaintWindow" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="RO_HMI" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MaintWindow.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="cleanLogs (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="RO_HMI" />
       <option name="ENV_FILES" value="" />
@@ -168,29 +193,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="logwithlogging (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="RO_HMI" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/logwithlogging.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="RO_HMI" />
       <option name="ENV_FILES" value="" />
@@ -217,10 +219,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.MaintWindow" />
         <item itemvalue="Python.cleanLogs (1)" />
         <item itemvalue="Python.cleanLogs" />
         <item itemvalue="Python.error_logging" />
-        <item itemvalue="Python.logwithlogging (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -247,7 +249,8 @@
       <workItem from="1755698430130" duration="13427000" />
       <workItem from="1755790437824" duration="14828000" />
       <workItem from="1755806271593" duration="1016000" />
-      <workItem from="1756409579523" duration="75318000" />
+      <workItem from="1756409579523" duration="75392000" />
+      <workItem from="1756987003015" duration="8854000" />
     </task>
     <task id="LOCAL-00001" summary="Added Buttons using findChildren to bring all the buttons in with for loop">
       <option name="closed" value="true" />
@@ -401,7 +404,23 @@
       <option name="project" value="LOCAL" />
       <updated>1756920617043</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Adding Maintenance Screen">
+      <option name="closed" value="true" />
+      <created>1756986953262</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1756986953262</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Adding Maintenance Screen">
+      <option name="closed" value="true" />
+      <created>1756987082345</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1756987082345</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,22 +486,28 @@
     <MESSAGE value="Added DocStrings" />
     <MESSAGE value="Remove Drum Speed too buggy" />
     <MESSAGE value="simplifying the galil reads" />
-    <option name="LAST_COMMIT_MESSAGE" value="simplifying the galil reads" />
+    <MESSAGE value="Adding Maintenance Screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding Maintenance Screen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>327</line>
+          <line>345</line>
           <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/MaintWindow.py</url>
+          <line>9</line>
+          <option name="timeStamp" value="109" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/RO_HMI$QThreadTest.coverage" NAME="QThreadTest Coverage Results" MODIFIED="1756655672899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RO_HMI$main.coverage" NAME="main Coverage Results" MODIFIED="1756985794913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RO_HMI$main.coverage" NAME="main Coverage Results" MODIFIED="1757247222783" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$logging.coverage" NAME="logging Coverage Results" MODIFIED="1756834807835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$button.coverage" NAME="button Coverage Results" MODIFIED="1755793234458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WidgetHandlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$galil_thread.coverage" NAME="galil_thread Coverage Results" MODIFIED="1755803429389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
@@ -492,6 +517,7 @@
     <SUITE FILE_PATH="coverage/RO_HMI$buildUI.coverage" NAME="buildUI Coverage Results" MODIFIED="1754928164438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$config.coverage" NAME="config Coverage Results" MODIFIED="1756662796876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$CleanLogs.coverage" NAME="CleanLogs Coverage Results" MODIFIED="1756837812261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
+    <SUITE FILE_PATH="coverage/RO_HMI$MaintWindow.coverage" NAME="MaintWindow Coverage Results" MODIFIED="1756991585253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$readParser.coverage" NAME="readParser Coverage Results" MODIFIED="1756664651969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$logwithlogging__1_.coverage" NAME="logwithlogging (1) Coverage Results" MODIFIED="1756834985314" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$parserTest.coverage" NAME="parserTest Coverage Results" MODIFIED="1756663527015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
