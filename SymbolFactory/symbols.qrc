@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/symbols">
+        <file>SymbolFactory/GreenLamp.png</file>
+        <file>SymbolFactory/Metal legend plate 3 with rivets.bmp</file>
+        <file>SymbolFactory/RedLamp.png</file>
+        <file>SymbolFactory/Screw 1 on gray enamel.bmp</file>
+    </qresource>
+</RCC>

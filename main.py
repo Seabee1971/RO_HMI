@@ -1,11 +1,11 @@
 import sys
 import time
-from datetime import datetime
+from Handlers.bindings_config import BINDINGS
 
-from PyQt6.QtCore import QTimer, QObject, QUrl
+from PyQt6.QtCore import QTimer, QObject, QUrl, QPoint
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PyQt6.QtWidgets import (
-    QMainWindow, QApplication, QLabel, QPushButton, QLineEdit, QPlainTextEdit, QMessageBox, QDoubleSpinBox
+    QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox, QDoubleSpinBox
 )
 from PyQt6 import uic
 
@@ -14,6 +14,8 @@ from Handlers.galil import Galil          # Ensure Galil has read_expr() and wri
 from Handlers.error_logging import (      # Assumes these are configured at import
     software_logger, process_error_logger, process_info_logger
 )
+import threading
+import Handlers.space_invaders
 from MaintWindow import MaintenanceWindow
 
 class UI(QMainWindow):
@@ -64,50 +66,17 @@ class UI(QMainWindow):
         self.lbl_drum_speed_act  = self.findChild(QLabel, "lbl_Drum_Speed_Act")
         self.lbl_layer_count_act = self.findChild(QLabel, "lbl_Layer_Count_Act")
 
-        self.lbl_sw1_grn = self.findChild(QLabel, "lbl_Sw1_Grn")
-        self.lbl_sw1_red = self.findChild(QLabel, "lbl_Sw1_Red")
-        self.lbl_sw2_grn = self.findChild(QLabel, "lbl_Sw2_Grn")
-        self.lbl_sw2_red = self.findChild(QLabel, "lbl_Sw2_Red")
+
 
         self.terminal_window = self.findChild(QPlainTextEdit, "txt_Terminal_Window")
         self.terminal_window.setReadOnly(True)
 
-        # Initial indicator state
-        if self.lbl_sw1_grn and self.lbl_sw1_red:
-            self.lbl_sw1_grn.setVisible(False)
-            self.lbl_sw1_red.setVisible(True)
-        if self.lbl_sw2_grn and self.lbl_sw2_red:
-            self.lbl_sw2_grn.setVisible(False)
-            self.lbl_sw2_red.setVisible(True)
-
-        # --- Bindings registry (one source of truth) ---
+             # --- Bindings registry (one source of truth) ---
         # kind: "lineedit" (two-way) | "label" (device→UI) | "bool_pair" (device→two labels)
         # read_expr: expression usable by MG (e.g., "@IN[6]", "_TPX"). None if not polled.
         # write_var: Galil variable name for "var=value". None if read-only.
         # coerce: device text -> python value. fmt: python value -> display text.
-        self.BINDINGS = [
-            # Two-way numeric inputs
-            dict(object="dsb_Back_Distance",   kind="doublespinbox", read_expr=None, write_var="back",
-                 coerce=float, fmt=lambda v: f"{v:g}"),
-            dict(object="dsb_Shift_Distance",  kind="doublespinbox", read_expr=None, write_var="shift",
-                 coerce=float, fmt=lambda v: f"{v:g}"),
-            dict(object="dsb_Offset_Distance", kind="doublespinbox", read_expr=None, write_var="offset",
-                 coerce=float, fmt=lambda v: f"{v:g}"),
-
-            # Device → UI labels (examples; adjust to your actual variables)
-            dict(object="lbl_Drum_Rev_Act",   kind="label", read_expr="rev",  write_var=None,
-                 coerce=lambda s: float(s), fmt=lambda v: f"{v:.0f}"),
-            dict(object="lbl_Drum_Speed_Act", kind="label", read_expr="_TDX", write_var=None,
-                 coerce=lambda s: float(s), fmt=lambda v: f"{v:.2f}"),
-            # dict(object="lbl_Layer_Count_Act", kind="label", read_expr="_TPY", write_var=None,
-            #      coerce=lambda s: float(s), fmt=lambda v: f"{v:.0f}"),
-
-            # Boolean LED pairs (using @IN[] that return 0.0000 / 1.0000)
-            dict(object=("lbl_Sw1_Grn", "lbl_Sw1_Red"), kind="bool_pair", read_expr="@IN[6]", write_var=None,
-                 coerce=lambda s: float(s) >= 0.5, fmt=None),
-            dict(object=("lbl_Sw2_Grn", "lbl_Sw2_Red"), kind="bool_pair", read_expr="@IN[8]", write_var=None,
-                 coerce=lambda s: float(s) >= 0.5, fmt=None),
-        ]
+        self.BINDINGS = BINDINGS
         # Audio system
         self.audio_output = QAudioOutput()
         self.player = QMediaPlayer()
@@ -142,7 +111,7 @@ class UI(QMainWindow):
         self.btn_connect.clicked.connect(self.connect_device)
         self.btn_disconnect.clicked.connect(self.disconnect_device)
         self.btn_exit_app.clicked.connect(self.exit_program)
-        self.btn_pause_run.clicked.connect(self.pause_run)
+        self.btn_pause_run.clicked.connect(self.launch_space_invaders)
         self.btn_maint_scrn.clicked.connect(self.open_maintenance_window)
         self.btn_disconnect.hide()
         self.maintenance_window= None
@@ -153,120 +122,6 @@ class UI(QMainWindow):
         self.timer.start(50)
 
         self.showMaximized()
-
-    def open_maintenance_window(self):
-        if self.maintenance_window is None:
-            self.maintenance_window = MaintenanceWindow()
-        self.maintenance_window.show()
-
-    # ---------- Helpers ----------
-    def parse_number(self, text: str):
-        text = str(text).strip()
-        if text == "":
-            return False, None, "empty"
-        try:
-            return True, float(text), None
-        except ValueError:
-            return False, text, "not_numeric"
-
-    def log_to_terminal(self, msg: str, level: str = "info"):
-
-        msg = msg.replace("→", "->")  # keep CP1252-safe
-        self.term_msg = msg
-        self.update_terminal_window()
-        if level == "error":
-            self.process_error_log.error(msg)
-        else:
-            self.process_info_log.info(msg)
-
-    # ---------- Button slots ----------
-    def abort_run(self):
-        self.log_to_terminal("Abort Run button clicked")
-
-    def start_run(self):
-        try:
-            vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
-            self.term_msg = f'Back,Shift,Offset = {vals}'
-            if all(v is not None and isinstance(v, (int, float)) for v in vals.values()):
-                self.log_to_terminal(f"Start Run with {vals}")
-                # TODO: start your run logic here
-            else:
-                self.log_to_terminal("Please set back, shift, and offset, then try again", level="info")
-        except Exception as e:
-            self.log_to_terminal(f"Failed to start run: {e}", level="error")
-
-    def end_run(self):
-        reply = QMessageBox.question(
-            self, "Confirm End", "Are you sure you want to end run?",
-            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
-        )
-        if reply == QMessageBox.StandardButton.Yes:
-            self.log_to_terminal("End Run confirmed")
-        else:
-            self.log_to_terminal("End Run cancelled")
-
-    def pause_run(self):
-        self.log_to_terminal("Pause Run button clicked")
-
-    def connect_device(self):
-        self.log_to_terminal("Connecting...")
-        try:
-            #self.player.play()
-            connected, self.galil_object = self.galil.dmc_connect()
-            if connected:
-                QMessageBox.information(self, "Reminder", "Position Oiler in Forward\rPosition Against Drum")
-                self.connection_sts = True
-                self.btn_connect.hide()
-                self.btn_disconnect.show()
-                self.btn_start_run.setEnabled(True)
-                self.log_to_terminal(f"Connection Successful. {connected}")
-
-                # Push initial values from the three doublespinboxs (if present)
-                vals = self.read_galil_inputs_from_ui()
-                for var in ("back", "shift", "offset"):
-                    v = vals.get(var)
-                    if v is None:
-                        continue
-                    try:
-                        # wrapper: name=value
-                        self.galil.write_var(var, v)
-                    except Exception as e:
-                        self.software_error_log.exception(f"Failed sending {var}={v}")
-                        self.log_to_terminal(f"Error sending {var}={v}: {e}", level="error")
-            else:
-                self.connection_sts = False
-                self.btn_connect.show()
-                self.btn_disconnect.hide()
-        except Exception as e:
-            self.software_error_log.exception(f'"Error Connecting" {e}')
-            self.log_to_terminal("Error Connecting (see software log for details)", level="error")
-
-    def disconnect_device(self):
-        try:
-            self.disconnected, self.galil_object = self.galil.dmc_disconnect()
-        except Exception as e:
-
-            self.disconnected = False
-            self.software_error_log.exception(f'"Disconnect failed"{e}')
-
-        if self.disconnected:
-            self.connection_sts = False
-            self.btn_connect.show()
-            self.btn_disconnect.hide()
-            self.log_to_terminal("Disconnected from Controller")
-
-    def exit_program(self):
-        try:
-            self.disconnect_device()
-            if self.connection_sts:
-                return
-            self.log_to_terminal("Program Exiting.")
-            QTimer.singleShot(2000, QApplication.instance().quit)
-        except Exception as e:
-            self.software_error_log.exception("Exit Program Exception")
-            self.log_to_terminal(f"Exit Program Exception: {e}", level="error")
-
-    # ---------- Generic write handler (UI → device) ----------
     def _on_doublespin_commit(self, entry: dict):
         w: QDoubleSpinBox = entry["widget"]
         write_var = entry["write_var"]
@@ -295,30 +150,111 @@ class UI(QMainWindow):
         else:
             self.log_to_terminal(f"{write_var} Not Written There is No Connection -> {val}")
 
-    # ---------- UI <-> dict helpers ----------
-    def read_galil_inputs_from_ui(self) -> dict:
-        """Return dict of {'back': value/None, ...} using BINDINGS for doublespinboxs."""
-        values = {}
-        for e in self._bindings:
-            if e["kind"] != "doublespinbox":
-                continue
-            w: QDoubleSpinBox = e["widget"]
-            ok, value, _ = self.parse_number(w.text())
-            values[e["write_var"]] = value if ok else None
-        return values
 
-    def write_galil_values_to_ui(self, galil_values: dict) -> None:
-        """Write values back into mapped doublespinboxs."""
-        for e in self._bindings:
-            if e["kind"] != "doublespinbox":
-                continue
-            w: QDoubleSpinBox = e["widget"]
-            var = e["write_var"]
-            if var in galil_values:
-                v = galil_values[var]
-                w.setValue("" if v is None else e["fmt"](v))
+    def abort_run(self):
+        self.log_to_terminal("Abort Run button clicked")
 
-    # ---------- Polling (device → UI) ----------
+    def launch_space_invaders(self):
+        self.log_to_terminal("Launching Space Invaders...")
+        threading.Thread(target=Handlers.space_invaders.run_game, daemon=True).start()
+
+    def connect_device(self):
+        self.log_to_terminal("Connecting...")
+        try:
+            #self.player.play()
+            connected, self.galil_object = self.galil.dmc_connect()
+            if connected:
+                self.connection_sts = True
+                self.btn_connect.hide()
+                self.btn_disconnect.show()
+                self.btn_start_run.setEnabled(True)
+                self.log_to_terminal(f"Connection Successful. {connected}")
+                msgBox = QMessageBox()
+                msgBox.setText("Move Oiler to start position(Closest to the Drum)")
+                msgBox.exec()
+
+                # Push initial values from the three doublespinboxs (if present)
+                vals = self.read_galil_inputs_from_ui()
+                for var in ("back", "shift", "offset"):
+                    v = vals.get(var)
+                    if v is None:
+                        continue
+                    try:
+                        # wrapper: name=value
+                        self.galil.write_var(var, v)
+                    except Exception as e:
+                        self.software_error_log.exception(f"Failed sending {var}={v}")
+                        self.log_to_terminal(f"Error sending {var}={v}: {e}", level="error")
+            else:
+                self.connection_sts = False
+                self.btn_connect.show()
+                self.btn_disconnect.hide()
+        except Exception as e:
+            self.software_error_log.exception(f'"Error Connecting" {e}')
+            self.log_to_terminal("Error Connecting (see software log for details)", level="error")
+    def disconnect_device(self):
+        try:
+            self.disconnected, self.galil_object = self.galil.dmc_disconnect()
+        except Exception as e:
+
+            self.disconnected = False
+            self.software_error_log.exception(f'"Disconnect failed"{e}')
+
+        if self.disconnected:
+            self.connection_sts = False
+            self.btn_connect.show()
+            self.btn_disconnect.hide()
+            self.log_to_terminal("Disconnected from Controller")
+    def end_run(self):
+        end_box = QMessageBox()
+        end_box.setText("Are you sure you want to exit program?")
+        end_box.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        ret = end_box.exec()
+        if ret == QMessageBox.StandardButton.Yes:
+            self.log_to_terminal("End Run confirmed")
+            self.galil.write_var("start",0)
+        else:
+            self.log_to_terminal("End Run cancelled")
+    def exit_program(self):
+        exit_box = QMessageBox()
+        exit_box.setText("Are you sure you want to exit program?")
+        exit_box.setStandardButtons(QMessageBox.StandardButton.Yes|QMessageBox.StandardButton.No)
+        ret = exit_box.exec()
+        if ret == QMessageBox.StandardButton.Yes:
+            try:
+                self.disconnect_device()
+                if self.connection_sts:
+                    return
+                self.log_to_terminal("Program Exiting.")
+                QTimer.singleShot(2000, QApplication.instance().quit)
+            except Exception as e:
+                self.software_error_log.exception("Exit Program Exception")
+                self.log_to_terminal(f"Exit Program Exception: {e}", level="error")
+    def log_to_terminal(self, msg: str, level: str = "info"):
+
+        msg = msg.replace("→", "->")  # keep CP1252-safe
+        self.term_msg = msg
+        self.update_terminal_window()
+        if level == "error":
+            self.process_error_log.error(msg)
+        else:
+            self.process_info_log.info(msg)
+
+    def open_maintenance_window(self):
+        if self.maintenance_window is None:
+            self.maintenance_window = MaintenanceWindow()
+        self.maintenance_window.show()
+    def parse_number(self, text: str):
+        text = str(text).removesuffix('mm')
+        if text == "":
+            return False, None, "empty"
+        try:
+            return True, float(text), None
+        except ValueError:
+            return False, text, "not_numeric"
+    def pause_run(self):
+        self.log_to_terminal("Pause Run button clicked")
+
     def poll_bindings(self):
         if not (self.connection_sts and self.galil_object):
             return
@@ -353,7 +289,37 @@ class UI(QMainWindow):
                 # Don't spam; log stack once per problematic expr
                 self.software_error_log.exception(f"Poll failed for {expr}")
 
-    # ---------- Terminal + periodic update ----------
+    def read_galil_inputs_from_ui(self) -> dict:
+        """Return dict of {'back': value/None, ...} using BINDINGS for doublespinboxs."""
+        values = {}
+        for e in self._bindings:
+            if e["kind"] != "doublespinbox":
+                continue
+            w: QDoubleSpinBox = e["widget"]
+            ok, value, _ = self.parse_number(w.text())
+            values[e["write_var"]] = value if ok else None
+        return values
+    def start_run(self):
+        try:
+            vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
+            self.log_to_terminal(f'Back,Shift,Offset = {vals}')
+            ok = True
+            for v in vals.values():
+                if not isinstance(v, (int, float)):
+                    ok = False
+                    break
+            if ok:
+                self.log_to_terminal(f"Start Run with {vals}")
+                self.galil.write_var("start", 1)
+            else:
+                self.log_to_terminal("Please set back, shift, and offset, then try again", level="info")
+
+        except Exception as e:
+            self.log_to_terminal(f"Failed to start run: {e}", level="error")
+
+    def update_all_widgets(self):
+        self.update_terminal_window()
+        self.poll_bindings()
     def update_terminal_window(self):
         if self.term_msg is not None and self.last_term_msg != self.term_msg:
             try:
@@ -361,10 +327,16 @@ class UI(QMainWindow):
                 self.last_term_msg = self.term_msg
             except Exception:
                 self.software_error_log.exception("Terminal window update failed")
-
-    def update_all_widgets(self):
-        self.update_terminal_window()
-        self.poll_bindings()
+    def write_galil_values_to_ui(self, galil_values: dict) -> None:
+        """Write values back into mapped doublespinboxs."""
+        for e in self._bindings:
+            if e["kind"] != "doublespinbox":
+                continue
+            w: QDoubleSpinBox = e["widget"]
+            var = e["write_var"]
+            if var in galil_values:
+                v = galil_values[var]
+                w.setText("" if v is None else e["fmt"](v))
 
 
 
