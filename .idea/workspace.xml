@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3fa40f9-de6c-443f-957e-f7f1843e680d" name="Changes" comment="Added Space invaders">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f3fa40f9-de6c-443f-957e-f7f1843e680d" name="Changes" comment="Using Labels instead of Frames to handle LED illumination">
       <change beforePath="$PROJECT_DIR$/Handlers/bindings_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handlers/bindings_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RO_HMI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/RO_HMI.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,14 +161,23 @@
       <option name="project" value="LOCAL" />
       <updated>1757364106128</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Using Labels instead of Frames to handle LED illumination">
+      <option name="closed" value="true" />
+      <created>1757428909680</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1757428909680</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fixing Offset not writing" />
     <MESSAGE value="Fixed Offset not writing" />
     <MESSAGE value="Added Space invaders" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Space invaders" />
+    <MESSAGE value="Using Labels instead of Frames to handle LED illumination" />
+    <option name="LAST_COMMIT_MESSAGE" value="Using Labels instead of Frames to handle LED illumination" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
