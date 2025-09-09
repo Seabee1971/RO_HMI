@@ -11,8 +11,8 @@ BINDINGS = [
     dict(object="lbl_Drum_Speed_Act", kind="label", read_expr="_TDX", write_var=None,
          coerce=lambda s: float(s), fmt=lambda v: f"{v:.2f}"),
 
-    dict(object=("lbl_Sw1_Grn", "lbl_Sw1_Red"), kind="bool_pair", read_expr="@IN[6]", write_var=None,
+    dict(object=("lbl_Sw1_On", "lbl_Sw1_Off"), kind="bool_pair", read_expr="@IN[6]", write_var=None,
          coerce=lambda s: float(s) >= 0.5, fmt=None),
-    dict(object=("lbl_Sw2_Grn", "lbl_Sw2_Red"), kind="bool_pair", read_expr="@IN[8]", write_var=None,
+    dict(object=("lbl_Sw2_On", "lbl_Sw2_Off"), kind="bool_pair", read_expr="@IN[8]", write_var=None,
          coerce=lambda s: float(s) >= 0.5, fmt=None),
 ]

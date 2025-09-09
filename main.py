@@ -5,7 +5,7 @@ from Handlers.bindings_config import BINDINGS
 from PyQt6.QtCore import QTimer, QObject, QUrl, QPoint
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PyQt6.QtWidgets import (
-    QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox, QDoubleSpinBox
+    QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox, QDoubleSpinBox, QFrame
 )
 from PyQt6 import uic
 
@@ -65,8 +65,14 @@ class UI(QMainWindow):
         self.lbl_drum_rev_act    = self.findChild(QLabel, "lbl_Drum_Rev_Act")
         self.lbl_drum_speed_act  = self.findChild(QLabel, "lbl_Drum_Speed_Act")
         self.lbl_layer_count_act = self.findChild(QLabel, "lbl_Layer_Count_Act")
-
-
+        self.lbl_Sw1_Off = self.findChild(QLabel, "lbl_Sw1_Off")
+        self.lbl_Sw2_Off = self.findChild(QLabel,"lbl_Sw2_Off")
+        self.lbl_Sw1_On = self.findChild(QLabel, "lbl_Sw1_On")
+        self.lbl_Sw2_On = self.findChild(QLabel,"lbl_Sw2_On")
+        self.lbl_Sw1_On.setVisible(False)
+        self.lbl_Sw2_On.setVisible(False)
+        self.lbl_Sw1_Off.setVisible(True)
+        self.lbl_Sw2_Off.setVisible(True)
 
         self.terminal_window = self.findChild(QPlainTextEdit, "txt_Terminal_Window")
         self.terminal_window.setReadOnly(True)
@@ -133,7 +139,7 @@ class UI(QMainWindow):
             return
 
         try:
-            text = text.removesuffix('mm')
+            text = text.removesuffix(' mm')
             val = coerce(text)
         except Exception as e:
             self.log_to_terminal(f"Invalid input for {write_var}: {text} ({e})", level="error")
@@ -206,15 +212,19 @@ class UI(QMainWindow):
             self.btn_disconnect.hide()
             self.log_to_terminal("Disconnected from Controller")
     def end_run(self):
-        end_box = QMessageBox()
-        end_box.setText("Are you sure you want to exit program?")
-        end_box.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-        ret = end_box.exec()
-        if ret == QMessageBox.StandardButton.Yes:
-            self.log_to_terminal("End Run confirmed")
-            self.galil.write_var("start",0)
-        else:
-            self.log_to_terminal("End Run cancelled")
+        try:
+            end_box = QMessageBox()
+            end_box.setText("Are you sure you want to end the run?")
+            end_box.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            ret = end_box.exec()
+            if ret == QMessageBox.StandardButton.Yes:
+                self.log_to_terminal("End Run confirmed")
+                if self.connection_sts:
+                    self.galil.write_var("start",0)
+            else:
+                self.log_to_terminal("End Run cancelled")
+        except Exception as e:
+            self.software_error_log.exception(f'"Error End Run" {e}')
     def exit_program(self):
         exit_box = QMessageBox()
         exit_box.setText("Are you sure you want to exit program?")
