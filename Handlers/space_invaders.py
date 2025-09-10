@@ -1,7 +1,10 @@
 # space_invaders.py
 # Handlers/space_invaders.py
+import os
+
 import pygame
 import sys
+
 
 def run_game():
     pygame.init()
@@ -11,7 +14,10 @@ def run_game():
 
     BLACK, WHITE, GREEN, RED = (0,0,0), (255,255,255), (0,255,0), (255,0,0)
     clock = pygame.time.Clock()
-
+    player_ship = pygame.image.load(WORKING_FOLDER+ "ship.png").convert_alpha()
+    player_ship_rect = player_ship.get_rect()
+    player_ship_rect.x = WIDTH//2 - player_ship.get_width()//2
+    player_ship_rect.y = HEIGHT//2 - player_ship.get_height()//2
     player_width, player_height = 50, 20
     player_x = WIDTH // 2 - player_width // 2
     player_y = HEIGHT - 50
@@ -29,7 +35,9 @@ def run_game():
 
     score, font = 0, pygame.font.SysFont("Arial", 24)
 
-    def draw_player(x, y): pygame.draw.rect(screen, GREEN, (x, y, player_width, player_height))
+    def draw_player(x, y):
+        pygame.draw.rect(screen, GREEN, [player_ship_rect.x, player_ship_rect.y, player_width, player_height])
+
     def draw_bullets(): [pygame.draw.rect(screen, WHITE, b) for b in bullets]
     def draw_enemies(): [pygame.draw.rect(screen, RED, e) for e in enemies]
     def draw_score(): screen.blit(font.render(f"Score: {score}", True, WHITE), (10, 10))
@@ -81,3 +89,4 @@ def run_game():
         clock.tick(60)
 
     pygame.quit()
+run_game()

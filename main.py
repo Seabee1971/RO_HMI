@@ -1,21 +1,15 @@
 import sys
 import time
-from Handlers.bindings_config import BINDINGS
-
-from PyQt6.QtCore import QTimer, QObject, QUrl, QPoint
+import threading
+from PyQt6.QtCore import QTimer, QObject, QUrl
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
-from PyQt6.QtWidgets import (
-    QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox, QDoubleSpinBox, QFrame
-)
+from PyQt6.QtWidgets import (QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox, QDoubleSpinBox)
 from PyQt6 import uic
 
-
 from Handlers.galil import Galil          # Ensure Galil has read_expr() and write_var()
-from Handlers.error_logging import (      # Assumes these are configured at import
-    software_logger, process_error_logger, process_info_logger
-)
-import threading
-import Handlers.space_invaders
+from Handlers.error_logging import (software_logger, process_error_logger, process_info_logger)
+
+
 from MaintWindow import MaintenanceWindow
 
 class UI(QMainWindow):
@@ -82,7 +76,7 @@ class UI(QMainWindow):
         # read_expr: expression usable by MG (e.g., "@IN[6]", "_TPX"). None if not polled.
         # write_var: Galil variable name for "var=value". None if read-only.
         # coerce: device text -> python value. fmt: python value -> display text.
-        self.BINDINGS = BINDINGS
+        #self.BINDINGS = BINDINGS
         # Audio system
         self.audio_output = QAudioOutput()
         self.player = QMediaPlayer()
