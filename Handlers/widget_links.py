@@ -17,4 +17,5 @@ WIDGET_LINKS = [
          convert_value=lambda s: float(s) >= 0.5, fmt=None),
 ]
 READ_CONTINUOUS = [dict(object="lbl_Drum_Rev_Act", widget_type ="label", read_expr="_TPA",write_var=None,
-                        convert_value=lambda s: float(s) >= 0.5, fmt=None),]
+                        convert_value=lambda s: float(s) >= 0.5, fmt=None),
+                   dict(object="tbl_parameters",widget_type ="",)]

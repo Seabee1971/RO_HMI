@@ -1,11 +1,20 @@
 import sys
 import time
-from Handlers.widget_links import WIDGET_LINKS
+import os
+from PyQt6.QtGui import QStandardItemModel, QStandardItem
 
-from PyQt6.QtCore import QTimer, QObject, QUrl, QPoint
+from Handlers.widget_links import WIDGET_LINKS
+from PyQt6.QtCore import QLibraryInfo
+
+plugin_path = QLibraryInfo.path(QLibraryInfo.LibraryPath.PluginsPath)
+os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = plugin_path
+os.environ["QT_QPA_PLATFORM"] = "windows"
+print("Using Qt plugin path:", plugin_path)
+
+from PyQt6.QtCore import QTimer, QObject, QUrl, QAbstractTableModel
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PyQt6.QtWidgets import (
-    QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox, QDoubleSpinBox, QFrame
+    QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox, QDoubleSpinBox, QFrame, QTableView,
 )
 from PyQt6 import uic
 
@@ -17,6 +26,7 @@ from Handlers.error_logging import (      # Assumes these are configured at impo
 import threading
 import Handlers.space_invaders
 from MaintWindow import MaintenanceWindow
+
 
 class UI(QMainWindow):
     """Red Oktober HMI – UI logic only; Galil I/O via wrapper; logging centralized."""
@@ -36,6 +46,7 @@ class UI(QMainWindow):
         # RPM calc state (if you enable speed later)
         self._rpm_last_rev = 0.0
         self._rpm_last_time = time.perf_counter()
+        self.table_view = QStandardItemModel()
 
         # Loggers
         self.software_error_log = software_logger
@@ -76,6 +87,9 @@ class UI(QMainWindow):
 
         self.terminal_window = self.findChild(QPlainTextEdit, "txt_Terminal_Window")
         self.terminal_window.setReadOnly(True)
+
+        self.tbl_parameters = self.findChild(QTableView, "tbl_parameters")
+
 
              # --- Bindings registry (one source of truth) ---
         # widget_type: "lineedit" (two-way) | "label" (device→UI) | "bool_pair" (device→two labels)
@@ -330,8 +344,22 @@ class UI(QMainWindow):
             self.log_to_terminal(f"Failed to start run: {e}", level="error")
 
     def update_all_widgets(self):
+        self.update_tbl_parameters()
         self.update_terminal_window()
         self.poll_widget_links()
+
+    def update_tbl_parameters(self):
+        try:
+            self.data = [('test1', 'test2'), ('test3', 'test4')]
+            for row in self.data:
+                items = [QStandardItem(str(field)) for field in row]
+                self.table_view.appendRow(items)
+                self.tbl_parameters.setModel(self.table_view)
+                self.tbl_parameters.show()
+        except Exception as e:
+            self.log_to_terminal(f"Failed to update table: {e}", level="error")
+
+
     def update_terminal_window(self):
         if self.term_msg is not None and self.last_term_msg != self.term_msg:
             try:
@@ -353,6 +381,7 @@ class UI(QMainWindow):
 
 
 if __name__ == "__main__":
+    os.environ["QT_QPA_PLATFORM"] = "windows"
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
     UIWindow = UI()

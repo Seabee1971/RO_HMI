@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3fa40f9-de6c-443f-957e-f7f1843e680d" name="Changes" comment="Using Labels instead of Frames to handle LED illumination">
-      <change afterPath="$PROJECT_DIR$/Handlers/widget_links.py" afterDir="false" />
+    <list default="true" id="f3fa40f9-de6c-443f-957e-f7f1843e680d" name="Changes" comment="fixing variable names">
+      <change afterPath="$PROJECT_DIR$/Hunt For RedOctober/ocean.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handlers/bindings_config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Handlers/widget_links.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handlers/widget_links.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hunt For RedOctober/hunt.py" beforeDir="false" afterPath="$PROJECT_DIR$/Hunt For RedOctober/hunt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Maintenance_Window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Maintenance_Window.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RO_HMI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/RO_HMI.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SubDiving.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PyQt_MessageBox.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Red Oktober Title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Red Oktober Title_back.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,39 +34,28 @@
   "keyToString": {
     "Python.66e6b066-c0df-4de1-afbb-23ad22902b9a_methods_sorted.executor": "Run",
     "Python.PyQt_MessageBox.executor": "Run",
-    "Python.main.executor": "Run",
+    "Python.Table.executor": "Run",
+    "Python.hunt.executor": "Run",
+    "Python.keyboard.executor": "Run",
+    "Python.main.executor": "Debug",
+    "Python.model.executor": "Run",
     "Python.space_invaders.executor": "Run",
+    "Python.splitter.executor": "Debug",
     "Python.widget_links.executor": "Run",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/ShaneP/Documents/Coding/Python/RO_HMI/Hunt For RedOctober",
     "node.js.selected.package.tslint": "(autodetect)",
     "run.code.analysis.last.selected.profile": "aDefault",
     "settings.editor.selected.configurable": "Errors"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ShaneP\Documents\Coding\Python\RO_HMI\Hunt For RedOctober" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="66e6b066-c0df-4de1-afbb-23ad22902b9a_methods_sorted" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="RO_HMI" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/66e6b066-c0df-4de1-afbb-23ad22902b9a_methods_sorted.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="PyQt_MessageBox" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="RO_HMI" />
       <option name="ENV_FILES" value="" />
@@ -80,6 +71,29 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PyQt_MessageBox.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="hunt" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="RO_HMI" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Hunt For RedOctober" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Hunt For RedOctober/hunt.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -111,7 +125,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="space_invaders" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="splitter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="RO_HMI" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -120,12 +134,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Handlers" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Handlers/space_invaders.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/splitter.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -161,9 +175,9 @@
       <list>
         <item itemvalue="Python.main" />
         <item itemvalue="Python.widget_links" />
-        <item itemvalue="Python.space_invaders" />
         <item itemvalue="Python.PyQt_MessageBox" />
-        <item itemvalue="Python.66e6b066-c0df-4de1-afbb-23ad22902b9a_methods_sorted" />
+        <item itemvalue="Python.hunt" />
+        <item itemvalue="Python.splitter" />
       </list>
     </recent_temporary>
   </component>
@@ -200,7 +214,23 @@
       <option name="project" value="LOCAL" />
       <updated>1757428909680</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fixing variable names">
+      <option name="closed" value="true" />
+      <created>1757855162787</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1757855162787</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fixing variable names">
+      <option name="closed" value="true" />
+      <created>1757855192137</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1757855192137</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -208,43 +238,54 @@
     <MESSAGE value="Fixed Offset not writing" />
     <MESSAGE value="Added Space invaders" />
     <MESSAGE value="Using Labels instead of Frames to handle LED illumination" />
-    <option name="LAST_COMMIT_MESSAGE" value="Using Labels instead of Frames to handle LED illumination" />
+    <MESSAGE value="fixing variable names" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing variable names" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>359</line>
+          <line>386</line>
           <option name="timeStamp" value="134" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>103</line>
-          <option name="timeStamp" value="163" />
+          <condition expression="_[0]=='Temp4'" language="Python" />
+          <url>file://$PROJECT_DIR$/splitter.py</url>
+          <line>6</line>
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Hunt For RedOctober/hunt.py</url>
+          <line>142</line>
+          <option name="timeStamp" value="173" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RO_HMI$hunt.coverage" NAME="hunt Coverage Results" MODIFIED="1757526177698" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
+    <SUITE FILE_PATH="coverage/RO_HMI$hunt.coverage" NAME="hunt Coverage Results" MODIFIED="1757874279930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Hunt For RedOctober" />
+    <SUITE FILE_PATH="coverage/RO_HMI$Table.coverage" NAME="Table Coverage Results" MODIFIED="1757866325457" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$logging.coverage" NAME="logging Coverage Results" MODIFIED="1756834807835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RO_HMI$PyQt_MessageBox.coverage" NAME="PyQt_MessageBox Coverage Results" MODIFIED="1757360103891" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RO_HMI$PyQt_MessageBox.coverage" NAME="PyQt_MessageBox Coverage Results" MODIFIED="1757874854319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$chessboard.coverage" NAME="chessboard Coverage Results" MODIFIED="1757434087682" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Automate_the_Boring_Stuff_3e_onlinematerials" />
+    <SUITE FILE_PATH="coverage/RO_HMI$model.coverage" NAME="model Coverage Results" MODIFIED="1757866518296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$buildUI.coverage" NAME="buildUI Coverage Results" MODIFIED="1754928164438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$66e6b066_c0df_4de1_afbb_23ad22902b9a_methods_sorted.coverage" NAME="66e6b066-c0df-4de1-afbb-23ad22902b9a_methods_sorted Coverage Results" MODIFIED="1757266446976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$config.coverage" NAME="config Coverage Results" MODIFIED="1756662796876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RO_HMI$widget_links.coverage" NAME="widget_links Coverage Results" MODIFIED="1757530325082" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
+    <SUITE FILE_PATH="coverage/RO_HMI$widget_links.coverage" NAME="widget_links Coverage Results" MODIFIED="1757875953065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$space_invaders.coverage" NAME="space_invaders Coverage Results" MODIFIED="1757513349285" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$Temp.coverage" NAME="Temp Coverage Results" MODIFIED="1757251654994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$bindings_config.coverage" NAME="bindings_config Coverage Results" MODIFIED="1757513764838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$QThreadTest.coverage" NAME="QThreadTest Coverage Results" MODIFIED="1756655672899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RO_HMI$main.coverage" NAME="main Coverage Results" MODIFIED="1757600006414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RO_HMI$main.coverage" NAME="main Coverage Results" MODIFIED="1757876441502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$button.coverage" NAME="button Coverage Results" MODIFIED="1755793234458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WidgetHandlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$galil_thread.coverage" NAME="galil_thread Coverage Results" MODIFIED="1755803429389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
+    <SUITE FILE_PATH="coverage/RO_HMI$splitter.coverage" NAME="splitter Coverage Results" MODIFIED="1757872439194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$galil.coverage" NAME="galil Coverage Results" MODIFIED="1756667260991" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$error_logging.coverage" NAME="error_logging Coverage Results" MODIFIED="1756837649109" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$cleanLogs__1_.coverage" NAME="cleanLogs (1) Coverage Results" MODIFIED="1756840163694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
+    <SUITE FILE_PATH="coverage/RO_HMI$keyboard.coverage" NAME="keyboard Coverage Results" MODIFIED="1757871611402" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$CleanLogs.coverage" NAME="CleanLogs Coverage Results" MODIFIED="1756837812261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$MaintWindow.coverage" NAME="MaintWindow Coverage Results" MODIFIED="1756991585253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$logwithlogging__1_.coverage" NAME="logwithlogging (1) Coverage Results" MODIFIED="1756834985314" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
