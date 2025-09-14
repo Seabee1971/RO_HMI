@@ -33,7 +33,7 @@ alternate-background-color: rgb(120, 0, 170);</string>
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>10</y>
+      <y>90</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -61,24 +61,28 @@ alternate-background-color: rgb(120, 0, 170);</string>
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton {background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 100, 100, 255), stop:1 rgba(204204,204, 100));
-	color: rgb(204, 204, 204);
-    border-width:5px;
-    border-style: solid;
-    border-top-color: rgb(255, 255, 255);   /* white highlight */
-    border-left-color: rgb(255, 255, 255);  /* white highlight */
-    border-right-color: rgb(90, 90, 90);    /* dark gray shadow */
-    border-bottom-color: rgb(90, 90, 90);   /* dark gray shadow */
-    padding: 4px;
-}
+     <string notr="true">    QPushButton {
+        background-color: qlineargradient(
+            spread:pad, x1:0, y1:0, x2:1, y2:1,
+            stop:0 rgba(0,0,0,255),
+            stop:1 rgba(0,255,0, 255)
+        );
+        border-width: 5px;
+        border-style: solid;
+        border-top-color: rgb(255, 255, 255);
+        border-left-color: rgb(255, 255, 255);
+        border-right-color: rgb(90, 90, 90);
+        border-bottom-color: rgb(90, 90, 90);
+        padding: 4px;
+        color: rgb(225,255,255);
+    } 
 
 QPushButton:pressed {
     border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
     border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
     border-right-color: rgb(255, 255, 255); /* white highlight */
     border-bottom-color: rgb(255, 255, 255);/* white highlight */
-}
-</string>
+}</string>
     </property>
     <property name="text">
      <string>Connect</string>
@@ -97,7 +101,7 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>120</y>
+      <y>200</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -159,7 +163,7 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>240</y>
+      <y>310</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -221,7 +225,7 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>360</y>
+      <y>420</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -281,7 +285,7 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>480</y>
+      <y>530</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -335,11 +339,11 @@ QPushButton:pressed {
      <string>End Run</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_Trend_Data">
+   <widget class="QPushButton" name="btn_Log_Run_Data">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>600</y>
+      <y>640</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -390,14 +394,15 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>Trend Data</string>
+     <string>Log Run
+ Data</string>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_Shift_Distance_in_mm">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>110</y>
+      <x>370</x>
+      <y>90</y>
       <width>231</width>
       <height>30</height>
      </rect>
@@ -422,8 +427,8 @@ QPushButton:pressed {
    <widget class="QFrame" name="frm_Shift">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>100</y>
+      <x>370</x>
+      <y>80</y>
       <width>231</width>
       <height>121</height>
      </rect>
@@ -444,6 +449,9 @@ QPushButton:pressed {
      <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QDoubleSpinBox" name="dsb_Shift_Distance">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -475,6 +483,9 @@ font: 700 12pt &quot;Arial&quot;;
      <property name="suffix">
       <string> mm</string>
      </property>
+     <property name="decimals">
+      <number>1</number>
+     </property>
      <property name="value">
       <double>0.000000000000000</double>
      </property>
@@ -483,8 +494,8 @@ font: 700 12pt &quot;Arial&quot;;
    <widget class="QFrame" name="frm_Offset">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>100</y>
+      <x>610</x>
+      <y>80</y>
       <width>231</width>
       <height>121</height>
      </rect>
@@ -505,6 +516,9 @@ font: 700 12pt &quot;Arial&quot;;
      <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QDoubleSpinBox" name="dsb_Offset_Distance">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -537,7 +551,7 @@ font: 700 12pt &quot;Arial&quot;;
       <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
      </property>
      <property name="suffix">
-      <string>mm</string>
+      <string> mm</string>
      </property>
      <property name="decimals">
       <number>1</number>
@@ -553,8 +567,8 @@ font: 700 12pt &quot;Arial&quot;;
    <widget class="QLabel" name="lbl_Offset_Distance_in_mm">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>110</y>
+      <x>610</x>
+      <y>90</y>
       <width>231</width>
       <height>30</height>
      </rect>
@@ -580,8 +594,8 @@ font: 700 12pt &quot;Arial&quot;;
    <widget class="QLabel" name="lbl_Back_Distance_in_mm">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>110</y>
+      <x>850</x>
+      <y>90</y>
       <width>231</width>
       <height>30</height>
      </rect>
@@ -607,8 +621,8 @@ font: 700 12pt &quot;Arial&quot;;
    <widget class="QFrame" name="frm_Back">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>100</y>
+      <x>850</x>
+      <y>80</y>
       <width>231</width>
       <height>121</height>
      </rect>
@@ -629,6 +643,9 @@ font: 700 12pt &quot;Arial&quot;;
      <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QDoubleSpinBox" name="dsb_Back_Distance">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -664,7 +681,7 @@ font: 700 12pt &quot;Arial&quot;;
       <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
      </property>
      <property name="suffix">
-      <string>mm</string>
+      <string> mm</string>
      </property>
      <property name="decimals">
       <number>1</number>
@@ -760,7 +777,7 @@ color: rgb(0, 0, 255);</string>
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>720</y>
+      <y>750</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -821,7 +838,7 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>10</y>
+      <y>90</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -853,7 +870,7 @@ QPushButton:pressed {
         background-color: qlineargradient(
             spread:pad, x1:0, y1:0, x2:1, y2:1,
             stop:0 rgba(0,0,0,255),
-            stop:1 rgba(0,0,255, 255)
+            stop:1 rgba(255,0,0, 255)
         );
         border-width: 5px;
         border-style: solid;
@@ -888,7 +905,7 @@ Galil</string>
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>830</y>
+      <y>860</y>
       <width>200</width>
       <height>100</height>
      </rect>
@@ -958,8 +975,8 @@ Screen</string>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>80</y>
+      <x>320</x>
+      <y>60</y>
       <width>801</width>
       <height>171</height>
      </rect>
@@ -985,9 +1002,9 @@ color: rgb(204, 204, 204);</string>
     <property name="geometry">
      <rect>
       <x>1220</x>
-      <y>90</y>
+      <y>60</y>
       <width>281</width>
-      <height>791</height>
+      <height>911</height>
      </rect>
     </property>
     <property name="font">
@@ -1003,87 +1020,6 @@ color: rgb(204, 204, 204);</string>
     <property name="title">
      <string>Process Variables</string>
     </property>
-    <widget class="QFrame" name="frm_Shift_4">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>620</y>
-       <width>231</width>
-       <height>121</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: qlineargradient(spread:pad, x1:0.005, y1:0.994545, x2:0.00542105, y2:0.211, stop:0 rgba(0, 0, 255, 255), stop:1 rgba(204, 204, 204,255));</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Shape::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Raised</enum>
-     </property>
-     <widget class="QLabel" name="lbl_Layer_Count_Act">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>60</y>
-        <width>151</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>12</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 255);</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#0000ff;&quot;&gt;0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lbl_Layer_Count">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>20</y>
-        <width>141</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>12</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));
-</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;Layer Count&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-    </widget>
     <widget class="QGroupBox" name="Switches">
      <property name="geometry">
       <rect>
@@ -1271,16 +1207,33 @@ background-color: rgb(0, 0, 255);</string>
       </property>
      </widget>
     </widget>
-    <zorder>Switches</zorder>
-    <zorder>frm_Shift_4</zorder>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>740</y>
+       <width>221</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>Red Oktober Title_back.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>250</y>
+      <x>270</x>
+      <y>260</y>
       <width>931</width>
-      <height>701</height>
+      <height>521</height>
      </rect>
     </property>
     <property name="font">
@@ -1303,7 +1256,7 @@ color: rgb(204, 204, 204);</string>
        <x>30</x>
        <y>30</y>
        <width>871</width>
-       <height>651</height>
+       <height>471</height>
       </rect>
      </property>
      <property name="font">
@@ -1321,6 +1274,29 @@ background-color: rgb(204, 204, 204);</string>
      </property>
     </widget>
    </widget>
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>60</y>
+      <width>271</width>
+      <height>951</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.361, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(0, 0,255, 255));
+color: rgb(204, 204, 204);</string>
+    </property>
+    <property name="title">
+     <string>Buttons</string>
+    </property>
+   </widget>
+   <zorder>groupBox_4</zorder>
    <zorder>groupBox_3</zorder>
    <zorder>groupBox_2</zorder>
    <zorder>groupBox</zorder>
@@ -1333,7 +1309,7 @@ background-color: rgb(204, 204, 204);</string>
    <zorder>btn_Pause_Run</zorder>
    <zorder>btn_Abort_Run</zorder>
    <zorder>btn_End_Run</zorder>
-   <zorder>btn_Trend_Data</zorder>
+   <zorder>btn_Log_Run_Data</zorder>
    <zorder>lbl_Shift_Distance_in_mm</zorder>
    <zorder>frm_Offset</zorder>
    <zorder>lbl_Offset_Distance_in_mm</zorder>

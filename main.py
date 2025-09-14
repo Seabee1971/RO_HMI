@@ -1,6 +1,6 @@
 import sys
 import time
-from Handlers.bindings_config import BINDINGS
+from Handlers.widget_links import WIDGET_LINKS
 
 from PyQt6.QtCore import QTimer, QObject, QUrl, QPoint
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
@@ -78,11 +78,11 @@ class UI(QMainWindow):
         self.terminal_window.setReadOnly(True)
 
              # --- Bindings registry (one source of truth) ---
-        # kind: "lineedit" (two-way) | "label" (device→UI) | "bool_pair" (device→two labels)
+        # widget_type: "lineedit" (two-way) | "label" (device→UI) | "bool_pair" (device→two labels)
         # read_expr: expression usable by MG (e.g., "@IN[6]", "_TPX"). None if not polled.
         # write_var: Galil variable name for "var=value". None if read-only.
-        # coerce: device text -> python value. fmt: python value -> display text.
-        self.BINDINGS = BINDINGS
+        # convert_value: device text -> python value. fmt: python value -> display text.
+        self.WIDGET_LINKS = WIDGET_LINKS
         # Audio system
         self.audio_output = QAudioOutput()
         self.player = QMediaPlayer()
@@ -91,24 +91,24 @@ class UI(QMainWindow):
         self.player.setSource(QUrl.fromLocalFile("SubDiving.mp3"))
 
         # Resolve widgets & hook editors
-        self._bindings = []
-        for b in self.BINDINGS:
-            obj = b["object"]
-            if b["kind"] == "bool_pair":
-                grn = self.findChild(QLabel, obj[0])
-                red = self.findChild(QLabel, obj[1])
-                if grn is None or red is None:
+        self._widget_links = []
+        for widget in self.WIDGET_LINKS:
+            obj = widget["object"]
+            if widget["widget_type"] == "bool_pair":
+                sw_on = self.findChild(QLabel, obj[0])
+                sw_off = self.findChild(QLabel, obj[1])
+                if sw_on is None or sw_off is None:
                     continue
-                entry = dict(b, widget=(grn, red))
+                entry = dict(widget, widget=(sw_on, sw_off))
             else:
-                w = self.findChild(QObject, obj)
-                if w is None:
+                current_widget = self.findChild(QObject, obj)
+                if current_widget is None:
                     continue
-                entry = dict(b, widget=w)
-                if b["kind"] == "doublespinbox" and b["write_var"] and isinstance(w, QDoubleSpinBox):
+                entry = dict(widget, widget=current_widget)
+                if widget["widget_type"] == "doublespinbox" and widget["write_var"] and isinstance(current_widget, QDoubleSpinBox):
                     # capture entry to avoid late-binding in lambda
-                    w.editingFinished.connect(lambda e=entry: self._on_doublespin_commit(e))
-            self._bindings.append(entry)
+                    current_widget.editingFinished.connect(lambda e=entry: self._on_doublespin_commit(e))
+            self._widget_links.append(entry)
 
         # --- Click handlers ---
         self.btn_abort_run.clicked.connect(self.abort_run)
@@ -131,7 +131,7 @@ class UI(QMainWindow):
     def _on_doublespin_commit(self, entry: dict):
         w: QDoubleSpinBox = entry["widget"]
         write_var = entry["write_var"]
-        coerce = entry["coerce"]
+        convert_value = entry["convert_value"]
 
         text = w.text().strip()
         if text == "":
@@ -140,7 +140,7 @@ class UI(QMainWindow):
 
         try:
             text = text.removesuffix(' mm')
-            val = coerce(text)
+            val = convert_value(text)
         except Exception as e:
             self.log_to_terminal(f"Invalid input for {write_var}: {text} ({e})", level="error")
             return
@@ -154,7 +154,7 @@ class UI(QMainWindow):
                 self.software_error_log.exception(f"{write_var} write failed")
                 self.log_to_terminal(f"{write_var} write failed (see software log)", level="error")
         else:
-            self.log_to_terminal(f"{write_var} Not Written There is No Connection -> {val}")
+            self.log_to_terminal(f"{write_var} No Connection Failure to write-> {val}")
 
 
     def abort_run(self):
@@ -178,7 +178,7 @@ class UI(QMainWindow):
                 msgBox = QMessageBox()
                 msgBox.setText("Move Oiler to start position(Closest to the Drum)")
                 msgBox.exec()
-
+                threading.Thread(target=Handlers.space_invaders.run_game, daemon=True).start()
                 # Push initial values from the three doublespinboxs (if present)
                 vals = self.read_galil_inputs_from_ui()
                 for var in ("back", "shift", "offset"):
@@ -198,6 +198,7 @@ class UI(QMainWindow):
         except Exception as e:
             self.software_error_log.exception(f'"Error Connecting" {e}')
             self.log_to_terminal("Error Connecting (see software log for details)", level="error")
+
     def disconnect_device(self):
         try:
             self.disconnected, self.galil_object = self.galil.dmc_disconnect()
@@ -254,8 +255,9 @@ class UI(QMainWindow):
         if self.maintenance_window is None:
             self.maintenance_window = MaintenanceWindow()
         self.maintenance_window.show()
+
     def parse_number(self, text: str):
-        text = str(text).removesuffix('mm')
+        text = str(text).removesuffix(' mm')
         if text == "":
             return False, None, "empty"
         try:
@@ -265,31 +267,31 @@ class UI(QMainWindow):
     def pause_run(self):
         self.log_to_terminal("Pause Run button clicked")
 
-    def poll_bindings(self):
+    def poll_widget_links(self):
         if not (self.connection_sts and self.galil_object):
             return
 
-        for e in self._bindings:
+        for e in self._widget_links:
             expr = e.get("read_expr")
             if not expr:
                 continue
 
             try:
                 raw = self.galil.read_expr(expr)   # wrapper: GCommand(f"MG {expr}")
-                val = e["coerce"](raw)
+                val = e["convert_value"](raw)
 
-                kind = e["kind"]
-                if kind == "label":
+                widget_type = e["widget_type"]
+                if widget_type == "label":
                     lbl: QLabel = e["widget"]
                     lbl.setText(e["fmt"](val))
 
-                elif kind == "D":
+                elif widget_type == "D":
                     # if you want to reflect device changes into the field, uncomment:
-                    w: QDoubleSpinBox = e["widget"]
-                    w.setText(e["fmt"](val))
+                    current_widget: QDoubleSpinBox = e["widget"]
+                    current_widget.setText(e["fmt"](val))
                     pass
 
-                elif kind == "bool_pair":
+                elif widget_type == "bool_pair":
                     grn, red = e["widget"]
                     is_on = bool(val)
                     grn.setVisible(is_on)
@@ -302,8 +304,8 @@ class UI(QMainWindow):
     def read_galil_inputs_from_ui(self) -> dict:
         """Return dict of {'back': value/None, ...} using BINDINGS for doublespinboxs."""
         values = {}
-        for e in self._bindings:
-            if e["kind"] != "doublespinbox":
+        for e in self._widget_links:
+            if e["widget_type"] != "doublespinbox":
                 continue
             w: QDoubleSpinBox = e["widget"]
             ok, value, _ = self.parse_number(w.text())
@@ -329,7 +331,7 @@ class UI(QMainWindow):
 
     def update_all_widgets(self):
         self.update_terminal_window()
-        self.poll_bindings()
+        self.poll_widget_links()
     def update_terminal_window(self):
         if self.term_msg is not None and self.last_term_msg != self.term_msg:
             try:
@@ -339,8 +341,8 @@ class UI(QMainWindow):
                 self.software_error_log.exception("Terminal window update failed")
     def write_galil_values_to_ui(self, galil_values: dict) -> None:
         """Write values back into mapped doublespinboxs."""
-        for e in self._bindings:
-            if e["kind"] != "doublespinbox":
+        for e in self._widget_links:
+            if e["widget_type"] != "doublespinbox":
                 continue
             w: QDoubleSpinBox = e["widget"]
             var = e["write_var"]
