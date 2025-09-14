@@ -41,7 +41,7 @@ class UI(QMainWindow):
         # RPM calc state (if you enable speed later)
         self._rpm_last_rev = 0.0
         self._rpm_last_time = time.perf_counter()
-        self.table_view = QStandardItemModel()
+
 
         # Loggers
         self.software_error_log = software_logger
@@ -83,7 +83,7 @@ class UI(QMainWindow):
         self.terminal_window = self.findChild(QPlainTextEdit, "txt_Terminal_Window")
         self.terminal_window.setReadOnly(True)
 
-        self.tbl_parameters = self.findChild(QTableView, "tbl_parameters")
+
 
 
              # --- Bindings registry (one source of truth) ---
@@ -340,20 +340,10 @@ class UI(QMainWindow):
             self.log_to_terminal(f"Failed to start run: {e}", level="error")
 
     def update_all_widgets(self):
-        self.update_tbl_parameters()
+
         self.update_terminal_window()
         self.poll_widget_links()
 
-    def update_tbl_parameters(self):
-        try:
-            self.data = [('test1', 'test2'), ('test3', 'test4')]
-            for row in self.data:
-                items = [QStandardItem(str(field)) for field in row]
-                self.table_view.appendRow(items)
-                self.tbl_parameters.setModel(self.table_view)
-                self.tbl_parameters.show()
-        except Exception as e:
-            self.log_to_terminal(f"Failed to update table: {e}", level="error")
 
 
     def update_terminal_window(self):
