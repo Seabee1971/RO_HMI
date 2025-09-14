@@ -1,0 +1,75 @@
+ER 400,400,400; 'Sets error limit of each axes
+OE 1,1,1; 'Enable on-off error. Motion will stop if error occurs
+CN -1,-1; 'Config polarity of home switch, and latch inputs
+MT 2,-2,-2,-2; 'Config motor type to active high step pulses
+CE 0,4,4; 'Config encoder as norm quad and reversed quad
+LC 1,1,1; 'Low Current stepper mode
+PF 5.3; 'Position Format
+VF 5.3; 'Variable Format
+YA 1,1; 'Step reso of the drive (ustep/step)
+YB 200,200; 'motor native res (step/ revolution)***
+YC 100,2540; 'Encoder resolution (Counts/ revolution)***
+'
+xLinRes = 1; 'Motor/enc combination res in mm/rev
+zLinRes = 12.7; 'Lateral Mask Res in mm/rev Added 05/01/2025
+xEncRes = 100; '
+yEncRes = 200; 'Enc res in counts/mm
+zEncRes = 200; 'Enc res in counts/mm
+'Meaningful Names
+GerRto =  0.1575; 'Gear Ratio of X:Z X=1:Z=0.1575
+zMicStep =_YAY; Meaningful name for Stepper Controller MicroStepping
+zStepRes = _YBY; 'Meaningful name for the STEPPER Motor Resolution
+zEncRes = _YCY; 'Meaningful name for the Encoder Resolution
+zActCnt = _TPY; 'Meaningful name for the Raw Ecnoder Values
+zComStps = _RPY; 'Meaningful name for the Commanded Steps(Move)
+
+xMicStep =_YAX; 'Meaningful name for Stepper Controller MicroStepping
+xStepRes = _YBX; 'Meaningful name for the STEPPER Motor Resolution
+xEncRes = _YCX; 'Meaningful name for the Encoder Resolution
+xActCnt = _TPX; 'Meaningful name for the Raw Ecnoder Values
+xComStps = _RPX; 'Meaningful name for the Commanded Steps(Move)
+xStP_mm = xStepRes/xLinRes; 'x axis Step Multipler
+zStP_mm = zStepRes/zLinRes; 'z axis Step Multipler
+LiRoCor = 0.254; 'Linear to Rotary Encoder Correction Value
+
+SHX; 'Enable the X axis
+SHY; 'Enable the Y axis
+MG "Fake_SHZ "; ' Enable Z here once, for homing Z later
+SP 7500, 10000, 5000; 'Set motor speeds (0 added 9/19)
+AC 29696, 14336, 10000; 'Set motor accelarations (0 added 9/19)
+DC 29696, 14336, 10000; 'Set motor deccelarations
+
+
+happy = 0; 'Used to indicate that the oil is in place
+offset = 0; 'Used to change the X axis offset
+shift = 0; 'Used to define the shift distance
+back = 0; 'Holds incremental back up value
+LatAct = 0; ' Use lateral axis 0= no 1= yes
+Temp1 = 0; 'Temp var to check for in-motion offset change
+ShftHLD = 0; 'Temp var to check for in-motion shift change
+Temp3 = 0; 'Temp var to check for in-motion pull back change
+Temp4 = 0; 'Used to add gap distance
+'
+Temp6 = 0; 'User to dispaly message when side to side motion begins
+Temp7 = 0; 'Used to display message when user aborts
+Temp8 = 0;
+count1 = 0; 'Used to make moves every couple drum rotations
+count2 = 0; 'Used to switch to increm. back ups
+count3 = 0; 'Used to switch to laser back up.
+firtScn = 1; 'First Scan bit to set X axis to 0
+pyCap = 0;
+rev = 0; 'Variable to count drum revs.
+sensor = 0;
+abort = 0;
+reading = 0;
+dist = 0;
+moveTol = 15;
+band = 5;
+total = 0;
+total0 = 0;
+t = 0; 'Used in drum speed calc.
+zero=0; '
+add = 0;
+skip = 0;
+maint = 0;
+direct = 1;
