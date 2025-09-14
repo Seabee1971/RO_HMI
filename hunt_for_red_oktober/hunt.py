@@ -1,10 +1,11 @@
 import pygame
 import random
 import sys
-
+import os
 # Initialize pygame
 pygame.init()
-
+WORKING_DIR = r'C:\Users\ShaneP\Documents\Coding\Python\RO_HMI\hunt_for_red_oktober'
+os.chdir(WORKING_DIR)
 # Screen setup
 WIDTH, HEIGHT = 1280, 1024
 screen = pygame.display.set_mode((WIDTH, HEIGHT))

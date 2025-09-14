@@ -6,11 +6,6 @@ from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from Handlers.widget_links import WIDGET_LINKS
 from PyQt6.QtCore import QLibraryInfo
 
-plugin_path = QLibraryInfo.path(QLibraryInfo.LibraryPath.PluginsPath)
-os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = plugin_path
-os.environ["QT_QPA_PLATFORM"] = "windows"
-print("Using Qt plugin path:", plugin_path)
-
 from PyQt6.QtCore import QTimer, QObject, QUrl, QAbstractTableModel
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PyQt6.QtWidgets import (
@@ -24,7 +19,7 @@ from Handlers.error_logging import (      # Assumes these are configured at impo
     software_logger, process_error_logger, process_info_logger
 )
 import threading
-import Handlers.space_invaders
+
 from MaintWindow import MaintenanceWindow
 
 
@@ -131,7 +126,7 @@ class UI(QMainWindow):
         self.btn_connect.clicked.connect(self.connect_device)
         self.btn_disconnect.clicked.connect(self.disconnect_device)
         self.btn_exit_app.clicked.connect(self.exit_program)
-        self.btn_pause_run.clicked.connect(self.launch_space_invaders)
+        self.btn_pause_run.clicked.connect(self.launch_hunt)
         self.btn_maint_scrn.clicked.connect(self.open_maintenance_window)
         self.btn_disconnect.hide()
         self.maintenance_window= None
@@ -174,9 +169,10 @@ class UI(QMainWindow):
     def abort_run(self):
         self.log_to_terminal("Abort Run button clicked")
 
-    def launch_space_invaders(self):
-        self.log_to_terminal("Launching Space Invaders...")
-        threading.Thread(target=Handlers.space_invaders.run_game, daemon=True).start()
+    def launch_hunt(self):
+        self.log_to_terminal("Launching Hunt for Red Oktober...")
+        import hunt_for_red_oktober.hunt as hunt
+        threading.Thread(target=hunt, daemon=True).start()
 
     def connect_device(self):
         self.log_to_terminal("Connecting...")
@@ -192,7 +188,6 @@ class UI(QMainWindow):
                 msgBox = QMessageBox()
                 msgBox.setText("Move Oiler to start position(Closest to the Drum)")
                 msgBox.exec()
-                threading.Thread(target=Handlers.space_invaders.run_game, daemon=True).start()
                 # Push initial values from the three doublespinboxs (if present)
                 vals = self.read_galil_inputs_from_ui()
                 for var in ("back", "shift", "offset"):
@@ -280,6 +275,7 @@ class UI(QMainWindow):
             return False, text, "not_numeric"
     def pause_run(self):
         self.log_to_terminal("Pause Run button clicked")
+        self.launch_hunt()
 
     def poll_widget_links(self):
         if not (self.connection_sts and self.galil_object):
