@@ -1,25 +1,21 @@
+import os
 import sys
 import time
-import os
-from PyQt6.QtGui import QStandardItemModel, QStandardItem
 
-from Handlers.widget_links import WIDGET_LINKS
-from PyQt6.QtCore import QLibraryInfo
+qt_bin_path = os.path.join(os.path.dirname(sys.executable),
+                           "Lib", "site-packages", "PyQt6", "Qt6", "bin")
+os.environ["PATH"] += os.pathsep + qt_bin_path
 
-from PyQt6.QtCore import QTimer, QObject, QUrl, QAbstractTableModel
+from PyQt6.QtCore import QTimer, QObject, QUrl
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
-from PyQt6.QtWidgets import (
-    QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox, QDoubleSpinBox, QFrame, QTableView,
-)
+from PyQt6.QtWidgets import (QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox,
+                             QDoubleSpinBox)
 from PyQt6 import uic
 
-
-from Handlers.galil import Galil          # Ensure Galil has read_expr() and write_var()
-from Handlers.error_logging import (      # Assumes these are configured at import
-    software_logger, process_error_logger, process_info_logger
-)
+from Handlers.widget_links import WIDGET_LINKS
+from Handlers.galil import Galil
+from Handlers.error_logging import (software_logger, process_error_logger, process_info_logger)
 import threading
-
 from MaintWindow import MaintenanceWindow
 
 
@@ -30,6 +26,7 @@ class UI(QMainWindow):
         super().__init__()
 
         # --- State ---
+        self.running = False
         self.galil = Galil()
         self.galil_object = None
         self.connection_sts = False
@@ -240,6 +237,7 @@ class UI(QMainWindow):
         exit_box.setText("Are you sure you want to exit program?")
         exit_box.setStandardButtons(QMessageBox.StandardButton.Yes|QMessageBox.StandardButton.No)
         ret = exit_box.exec()
+
         if ret == QMessageBox.StandardButton.Yes:
             try:
                 self.disconnect_device()
@@ -249,7 +247,8 @@ class UI(QMainWindow):
                 QTimer.singleShot(2000, QApplication.instance().quit)
             except Exception as e:
                 self.software_error_log.exception("Exit Program Exception")
-                self.log_to_terminal(f"Exit Program Exception: {e}", level="error")
+                self.log_to_terminal(f"Exit Program Exception: {e}", level="software_error")
+
     def log_to_terminal(self, msg: str, level: str = "info"):
 
         msg = msg.replace("→", "->")  # keep CP1252-safe
@@ -257,12 +256,16 @@ class UI(QMainWindow):
         self.update_terminal_window()
         if level == "error":
             self.process_error_log.error(msg)
+        elif level == "software_error":
+            self.software_error_log.error(msg)
         else:
             self.process_info_log.info(msg)
 
     def open_maintenance_window(self):
         if self.maintenance_window is None:
-            self.maintenance_window = MaintenanceWindow()
+            self.running = True
+            self.maintenance_window = MaintenanceWindow(self.running, self.log_to_terminal, self.galil)
+            print(self.maintenance_window.isVisible())
         self.maintenance_window.show()
 
     def parse_number(self, text: str):
@@ -338,9 +341,12 @@ class UI(QMainWindow):
 
         except Exception as e:
             self.log_to_terminal(f"Failed to start run: {e}", level="error")
+            self.software_error_log(f"Failed to start run: {e}", level="error")
 
     def update_all_widgets(self):
-
+        if self.maintenance_window is not None and not self.maintenance_window.isVisible():
+            print(self.maintenance_window.isVisible())
+            self.running = False
         self.update_terminal_window()
         self.poll_widget_links()
 
