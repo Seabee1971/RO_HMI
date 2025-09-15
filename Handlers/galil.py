@@ -3,8 +3,16 @@ from PyQt6.QtWidgets import QLabel, QPushButton
 
 mg = "MG "
 
+# Handlers/galil.py
 class Galil:
-    def __init__(self):
+    _instance = None
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._init()
+        return cls._instance
+
+    def _init(self):
         self.g = gclib.py()
         self.IP_address = "169.254.154.33"
 

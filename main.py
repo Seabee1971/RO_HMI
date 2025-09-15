@@ -81,13 +81,6 @@ class UI(QMainWindow):
         self.terminal_window.setReadOnly(True)
 
 
-
-
-             # --- Bindings registry (one source of truth) ---
-        # widget_type: "lineedit" (two-way) | "label" (device→UI) | "bool_pair" (device→two labels)
-        # read_expr: expression usable by MG (e.g., "@IN[6]", "_TPX"). None if not polled.
-        # write_var: Galil variable name for "var=value". None if read-only.
-        # convert_value: device text -> python value. fmt: python value -> display text.
         self.WIDGET_LINKS = WIDGET_LINKS
         # Audio system
         self.audio_output = QAudioOutput()
@@ -265,7 +258,7 @@ class UI(QMainWindow):
         if self.maintenance_window is None:
             self.running = True
             self.maintenance_window = MaintenanceWindow(self.running, self.log_to_terminal, self.galil)
-            print(self.maintenance_window.isVisible())
+
         self.maintenance_window.show()
 
     def parse_number(self, text: str):

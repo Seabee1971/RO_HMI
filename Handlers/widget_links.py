@@ -1,3 +1,10 @@
+
+# --- Bindings registry (one source of truth) ---
+# widget_type: "lineedit" (two-way) | "label" (device→UI) | "bool_pair" (device→two labels)
+# read_expr: expression usable by MG (e.g., "@IN[6]", "_TPX"). None if not polled.
+# write_var: Galil variable name for "var=value". None if read-only.
+# convert_value: device text -> python value. fmt: python value -> display text.
+
 WIDGET_LINKS = [
     dict(object="dsb_Back_Distance", widget_type ="doublespinbox", read_expr=None, write_var="back",
          convert_value=float, fmt=lambda v: f"{v:g}"),
@@ -16,27 +23,4 @@ WIDGET_LINKS = [
     dict(object=("lbl_Sw2_On", "lbl_Sw2_Off"),widget_type ="bool_pair", read_expr="@IN[8]", write_var=None,
          convert_value=lambda s: float(s) >= 0.5, fmt=None),
 ]
-READ_CONTINUOUS = ('''ER,
-OE,
-CN,
-MT,
-CE,
-LC,
-PF,
-VF,
-YA,
-YB,
-YC,
-xLinRes,
-xEncRes,
-yEncRes,
-xMicStep,
-xStepRes,
-xEncRes,
-xActCnt,
-xComStps,
-xStP_mm,
-MG,
-SP,
-AC,
-DC,''')
+READ_CONTINUOUS = ('''ER,OE,CN,MT,CE,LC,PF,VF,YA,YB,YC,LinRes,EncRes,MicStep,StepRes,ActCnt,ComStps,StP_mm,SP,AC,DC''')
