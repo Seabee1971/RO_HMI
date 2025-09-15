@@ -282,6 +282,144 @@ color: rgb(0, 0, 255);</string>
      </property>
     </column>
    </widget>
+   <widget class="QPushButton" name="btn_Connect_to_Galil">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>710</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">    QPushButton {
+        background-color: qlineargradient(
+            spread:pad, x1:0, y1:0, x2:1, y2:1,
+            stop:0 rgba(0,0,0,255),
+            stop:1 rgba(0,255,0, 255)
+        );
+        border-width: 5px;
+        border-style: solid;
+        border-top-color: rgb(255, 255, 255);
+        border-left-color: rgb(255, 255, 255);
+        border-right-color: rgb(90, 90, 90);
+        border-bottom-color: rgb(90, 90, 90);
+        padding: 4px;
+        color: rgb(225,255,255);
+    } 
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}</string>
+    </property>
+    <property name="text">
+     <string>Connect</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Disconnect_Galil">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>710</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">    QPushButton {
+        background-color: qlineargradient(
+            spread:pad, x1:0, y1:0, x2:1, y2:1,
+            stop:0 rgba(0,0,0,255),
+            stop:1 rgba(255,0,0, 255)
+        );
+        border-width: 5px;
+        border-style: solid;
+        border-top-color: rgb(255, 255, 255);
+        border-left-color: rgb(255, 255, 255);
+        border-right-color: rgb(90, 90, 90);
+        border-bottom-color: rgb(90, 90, 90);
+        padding: 4px;
+        color: rgb(225,255,255);
+    } 
+
+QPushButton:pressed {
+    border-top-color: rgb(90, 90, 90);      /* dark gray shadow */
+    border-left-color: rgb(90, 90, 90);     /* dark gray shadow */
+    border-right-color: rgb(255, 255, 255); /* white highlight */
+    border-bottom-color: rgb(255, 255, 255);/* white highlight */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Disconnect from
+Galil</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

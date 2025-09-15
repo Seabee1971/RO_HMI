@@ -11,7 +11,11 @@ class MaintenanceWindow(QMainWindow):
         uic.loadUi("Maintenance_Window.ui", self)  # Load the .ui file
         self.setWindowTitle("Maintenance Window")
         self.showMaximized()
+
         self.btn_ret_main_screen =self.findChild(QPushButton, "btn_RetMainScreen")
+        self.btn_connect = self.findChild(QPushButton, "btn_Connect_to_Galil")
+        self.btn_disconnect = self.findChild(QPushButton, "btn_Disconnect_Galil")
+        self.btn_connect.clicked.connect(self.)
         self.btn_ret_main_screen.clicked.connect(self.ret2main)
         self.running = running
         self.log_to_terminal = log_to_terminal
@@ -38,7 +42,6 @@ class MaintenanceWindow(QMainWindow):
 
     def update_tbl_parameters(self):
         try:
-
             self.poll_galil()
             for row_index, row_data in enumerate(self.current_values):
                 for col_index, cell_data in enumerate(row_data):
