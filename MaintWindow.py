@@ -7,7 +7,6 @@ from Handlers.widget_links import READ_CONTINUOUS
 class MaintenanceWindow(QMainWindow):
     def __init__(self, running, log_to_terminal, galil):
         super().__init__()
-        self.connection_sts = False
         self.current_values = None
         uic.loadUi("Maintenance_Window.ui", self)  # Load the .ui file
         self.setWindowTitle("Maintenance Window")
@@ -17,12 +16,19 @@ class MaintenanceWindow(QMainWindow):
         self.btn_connect = self.findChild(QPushButton, "btn_Connect_to_Galil")
         self.btn_disconnect = self.findChild(QPushButton, "btn_Disconnect_Galil")
         self.btn_connect.clicked.connect(self.connect_device)
+        self.btn_disconnect.clicked.connect(self.disconnect_device)
         self.btn_ret_main_screen.clicked.connect(self.ret2main)
-        self.btn_disconnect.hide()
-        self.btn_connect.show()
+
+
         self.running = running
         self.log_to_terminal = log_to_terminal
         self.galil = galil
+        if self.galil.is_connected():
+            self.btn_disconnect.show()
+            self.btn_connect.hide()
+        else:
+            self.btn_disconnect.hide()
+            self.btn_connect.show()
         self.read_values = READ_CONTINUOUS
 
         layout = QVBoxLayout()
@@ -32,6 +38,7 @@ class MaintenanceWindow(QMainWindow):
 
 
     def ret2main(self):
+        self.connection_sts = self.galil.is_connected()
         self.close()
 
 
@@ -39,42 +46,48 @@ class MaintenanceWindow(QMainWindow):
         self.log_to_terminal("Connecting...")
         try:
 
-            connected, self.galil_object = self.galil.dmc_connect()
-            if connected:
-                self.connection_sts = True
+            self.galil.dmc_connect()
+            if self.galil.is_connected():
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
-                self.log_to_terminal(f"Connection Successful. {connected}")
-                self.update_tbl_parameters()
+                self.log_to_terminal(f"Connection Successful. {self.galil.GInfo()}")
+
             else:
-                self.connection_sts = False
                 self.btn_connect.show()
                 self.btn_disconnect.hide()
         except Exception as e:
-            self.log_to_terminal(f"Error Connecting {e}", level="software_error")
+            self.log_to_terminal(f"Error Connecting {e}", level="error")
 
     def disconnect_device(self):
         try:
-            self.disconnected, self.galil_object = self.galil.dmc_disconnect()
+            self.galil.dmc_disconnect()
+
+            if not self.galil.is_connected():
+                self.btn_connect.show()
+                self.btn_disconnect.hide()
+                self.log_to_terminal("Disconnected from Controller", level="info")
+
         except Exception as e:
+            self.log_to_terminal(f'"Disconnect failed"{e}', level="error")
 
-            self.disconnected = False
-            self.log_to_terminal(f'"Disconnect failed"{e}', level="software_error")
 
-        if self.disconnected:
-            self.connection_sts = False
-            self.btn_connect.show()
-            self.btn_disconnect.hide()
-            self.log_to_terminal("Disconnected from Controller", level= "info")
 
     def poll_galil(self):
 
         try:
-            for value in self.read_values:
-                self.current_values.append = self.galil.read_expr(value)  # wrapper: GCommand(f"MG {expr}")
+            if self.galil.is_connected():
+
+                self.btn_disconnect.show()
+                self.btn_connect.hide()
+                for value in self.read_values:
+                    self.current_values.append = self.galil.read_expr(value)  # wrapper: GCommand(f"MG {expr}")
+            else:
+                self.btn_disconnect.hide()
+                self.btn_connect.show()
+
         except Exception as e:
-            self.log_to_terminal(f'Failed to update Galil Values: {e}', level="software_error")
-        print(self.current_values)
+            self.log_to_terminal(f'Failed to update Galil Values: {e}', level="error")
+
 
     def update_tbl_parameters(self):
         try:

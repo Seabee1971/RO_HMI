@@ -2,10 +2,6 @@ import os
 import sys
 import time
 
-qt_bin_path = os.path.join(os.path.dirname(sys.executable),
-                           "Lib", "site-packages", "PyQt6", "Qt6", "bin")
-os.environ["PATH"] += os.pathsep + qt_bin_path
-
 from PyQt6.QtCore import QTimer, QObject, QUrl
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PyQt6.QtWidgets import (QMainWindow, QApplication, QLabel, QPushButton, QPlainTextEdit, QMessageBox,
@@ -28,8 +24,7 @@ class UI(QMainWindow):
         # --- State ---
         self.running = False
         self.galil = Galil()
-        self.galil_object = None
-        self.connection_sts = False
+
         self.disconnected = False
 
         self.term_msg = None
@@ -41,7 +36,6 @@ class UI(QMainWindow):
 
 
         # Loggers
-        self.software_error_log = software_logger
         self.process_error_log = process_error_logger
         self.process_info_log = process_info_logger
         self.process_info_log.info("Software Started...")
@@ -144,19 +138,19 @@ class UI(QMainWindow):
             self.log_to_terminal(f"Invalid input for {write_var}: {text} ({e})", level="error")
             return
 
-        if self.connection_sts and self.galil_object:
+        if self.galil.is_connected()  :
             try:
                 self.galil.write_var(write_var, val)
                 echoed = self.galil.read_expr(write_var)  # MG var
                 self.log_to_terminal(f"{write_var} changed -> {val} (read back {echoed})")
             except Exception:
-                self.software_error_log.exception(f"{write_var} write failed")
                 self.log_to_terminal(f"{write_var} write failed (see software log)", level="error")
         else:
             self.log_to_terminal(f"{write_var} No Connection Failure to write-> {val}")
 
 
     def abort_run(self):
+        self.galil.write_var("ST",1)
         self.log_to_terminal("Abort Run button clicked")
 
     def launch_hunt(self):
@@ -168,16 +162,14 @@ class UI(QMainWindow):
         self.log_to_terminal("Connecting...")
         try:
             #self.player.play()
-            connected, self.galil_object = self.galil.dmc_connect()
-            if connected:
-                self.connection_sts = True
+            self.galil.dmc_connect()
+            if self.galil.is_connected():
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
                 self.btn_start_run.setEnabled(True)
-                self.log_to_terminal(f"Connection Successful. {connected}")
-                msgBox = QMessageBox()
-                msgBox.setText("Move Oiler to start position(Closest to the Drum)")
-                msgBox.exec()
+                self.log_to_terminal(f"Connection Successful. {self.galil.GInfo()}")
+                self.log_to_terminal(f"Move Oiler to start position(Closest to the Drum)")
+
                 # Push initial values from the three doublespinboxs (if present)
                 vals = self.read_galil_inputs_from_ui()
                 for var in ("back", "shift", "offset"):
@@ -188,26 +180,22 @@ class UI(QMainWindow):
                         # wrapper: name=value
                         self.galil.write_var(var, v)
                     except Exception as e:
-                        self.software_error_log.exception(f"Failed sending {var}={v}")
                         self.log_to_terminal(f"Error sending {var}={v}: {e}", level="error")
             else:
-                self.connection_sts = False
                 self.btn_connect.show()
                 self.btn_disconnect.hide()
         except Exception as e:
-            self.software_error_log.exception(f'"Error Connecting" {e}')
-            self.log_to_terminal("Error Connecting (see software log for details)", level="error")
+            self.log_to_terminal(f"Error Connecting {e}", level="error")
 
     def disconnect_device(self):
         try:
-            self.disconnected, self.galil_object = self.galil.dmc_disconnect()
+           self.galil.dmc_disconnect()
+
         except Exception as e:
 
-            self.disconnected = False
-            self.software_error_log.exception(f'"Disconnect failed"{e}')
+            self.log_to_terminal(f'"Disconnect failed" {e}',"error")
 
-        if self.disconnected:
-            self.connection_sts = False
+        if not self.galil.is_connected():
             self.btn_connect.show()
             self.btn_disconnect.hide()
             self.log_to_terminal("Disconnected from Controller")
@@ -219,12 +207,13 @@ class UI(QMainWindow):
             ret = end_box.exec()
             if ret == QMessageBox.StandardButton.Yes:
                 self.log_to_terminal("End Run confirmed")
-                if self.connection_sts:
+                if self.galil.is_connected():
                     self.galil.write_var("start",0)
             else:
                 self.log_to_terminal("End Run cancelled")
         except Exception as e:
-            self.software_error_log.exception(f'"Error End Run" {e}')
+            self.log_to_terminal(f'"Error End Run" {e}', level="error")
+
     def exit_program(self):
         exit_box = QMessageBox()
         exit_box.setText("Are you sure you want to exit program?")
@@ -234,13 +223,13 @@ class UI(QMainWindow):
         if ret == QMessageBox.StandardButton.Yes:
             try:
                 self.disconnect_device()
-                if self.connection_sts:
+                if self.galil.is_connected():
                     return
                 self.log_to_terminal("Program Exiting.")
                 QTimer.singleShot(2000, QApplication.instance().quit)
             except Exception as e:
-                self.software_error_log.exception("Exit Program Exception")
-                self.log_to_terminal(f"Exit Program Exception: {e}", level="software_error")
+                self.log_to_terminal(f"Exit Program Exception: {e}", level="error")
+
 
     def log_to_terminal(self, msg: str, level: str = "info"):
 
@@ -249,8 +238,6 @@ class UI(QMainWindow):
         self.update_terminal_window()
         if level == "error":
             self.process_error_log.error(msg)
-        elif level == "software_error":
-            self.software_error_log.error(msg)
         else:
             self.process_info_log.info(msg)
 
@@ -258,7 +245,6 @@ class UI(QMainWindow):
         if self.maintenance_window is None:
             self.running = True
             self.maintenance_window = MaintenanceWindow(self.running, self.log_to_terminal, self.galil)
-
         self.maintenance_window.show()
 
     def parse_number(self, text: str):
@@ -274,7 +260,7 @@ class UI(QMainWindow):
         self.launch_hunt()
 
     def poll_widget_links(self):
-        if not (self.connection_sts and self.galil_object):
+        if not (self.galil.is_connected()):
             return
 
         for e in self._widget_links:
@@ -303,9 +289,9 @@ class UI(QMainWindow):
                     grn.setVisible(is_on)
                     red.setVisible(not is_on)
 
-            except Exception:
+            except Exception as e:
                 # Don't spam; log stack once per problematic expr
-                self.software_error_log.exception(f"Poll failed for {expr}")
+                self.log_to_terminal(f"Poll failed for {expr} Error: {e}")
 
     def read_galil_inputs_from_ui(self) -> dict:
         """Return dict of {'back': value/None, ...} using BINDINGS for doublespinboxs."""
@@ -317,31 +303,30 @@ class UI(QMainWindow):
             ok, value, _ = self.parse_number(w.text())
             values[e["write_var"]] = value if ok else None
         return values
+
     def start_run(self):
         try:
-            vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
-            self.log_to_terminal(f'Back,Shift,Offset = {vals}')
-            ok = True
-            for v in vals.values():
-                if not isinstance(v, (int, float)):
-                    ok = False
-                    break
+
+            ok,vals = self._check_start_params()
+            print(ok,vals)
+
             if ok:
+                self.log_to_terminal(f'Back,Shift,Offset = {vals}')
                 self.log_to_terminal(f"Start Run with {vals}")
                 self.galil.write_var("start", 1)
             else:
-                self.log_to_terminal("Please set back, shift, and offset, then try again", level="info")
-
+                self.log_to_terminal(f"Please set {vals} then try again", level="info")
         except Exception as e:
             self.log_to_terminal(f"Failed to start run: {e}", level="error")
-            self.software_error_log(f"Failed to start run: {e}", level="error")
+
+
 
     def update_all_widgets(self):
-        if self.maintenance_window is not None and not self.maintenance_window.isVisible():
-            print(self.maintenance_window.isVisible())
-            self.running = False
         self.update_terminal_window()
-        self.poll_widget_links()
+        if self.galil.is_connected()():
+            self.btn_connect.hide()
+            self.btn_disconnect.show()
+            self.poll_widget_links()
 
 
 
@@ -350,8 +335,10 @@ class UI(QMainWindow):
             try:
                 self.terminal_window.appendPlainText(str(self.term_msg))
                 self.last_term_msg = self.term_msg
-            except Exception:
-                self.software_error_log.exception("Terminal window update failed")
+            except Exception as e:
+                self.log_to_terminal(f"Terminal window update failed: {e}", level="system_error")
+
+
     def write_galil_values_to_ui(self, galil_values: dict) -> None:
         """Write values back into mapped doublespinboxs."""
         for e in self._widget_links:
@@ -362,6 +349,21 @@ class UI(QMainWindow):
             if var in galil_values:
                 v = galil_values[var]
                 w.setText("" if v is None else e["fmt"](v))
+
+    def _check_start_params(self):
+        try:
+            vals = self.read_galil_inputs_from_ui()  # {'back': .., 'shift': .., 'offset': ..}
+
+            for v in vals.items():
+                if v[1] > 0.0:
+                    pass
+                else:
+                    return False,v
+            return True,v
+
+        except Exception as e:
+            self.log_to_terminal(f"Failed to start run: {e}", level="error")
+            return False
 
 
 
