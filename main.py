@@ -10,7 +10,7 @@ from PyQt6 import uic
 
 from Handlers.widget_links import WIDGET_LINKS
 from Handlers.galil import Galil
-from Handlers.error_logging import (software_logger, process_error_logger, process_info_logger)
+from Handlers.error_logging import (process_error_logger, process_info_logger)
 import threading
 from MaintWindow import MaintenanceWindow
 
@@ -23,7 +23,7 @@ class UI(QMainWindow):
 
         # --- State ---
         self.running = False
-        self.galil = Galil()
+
 
         self.disconnected = False
 
@@ -40,6 +40,7 @@ class UI(QMainWindow):
         self.process_info_log = process_info_logger
         self.process_info_log.info("Software Started...")
 
+        self.galil = Galil(self.log_to_terminal)
         # --- Load UI ---
         uic.loadUi("RO_HMI.ui", self)
         self.setWindowTitle("Red Oktober")
@@ -167,7 +168,7 @@ class UI(QMainWindow):
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
                 self.btn_start_run.setEnabled(True)
-                self.log_to_terminal(f"Connection Successful. {self.galil.GInfo()}")
+                self.log_to_terminal(f"Connection Successful. {self.galil.get_info()}")
                 self.log_to_terminal(f"Move Oiler to start position(Closest to the Drum)")
 
                 # Push initial values from the three doublespinboxs (if present)
@@ -243,8 +244,8 @@ class UI(QMainWindow):
 
     def open_maintenance_window(self):
         if self.maintenance_window is None:
-            self.running = True
-            self.maintenance_window = MaintenanceWindow(self.running, self.log_to_terminal, self.galil)
+            self.maintenance_window = MaintenanceWindow(self, self.log_to_terminal, self.galil)
+        self.hide()
         self.maintenance_window.show()
 
     def parse_number(self, text: str):
@@ -323,7 +324,7 @@ class UI(QMainWindow):
 
     def update_all_widgets(self):
         self.update_terminal_window()
-        if self.galil.is_connected()():
+        if self.galil.is_connected():
             self.btn_connect.hide()
             self.btn_disconnect.show()
             self.poll_widget_links()
@@ -336,7 +337,7 @@ class UI(QMainWindow):
                 self.terminal_window.appendPlainText(str(self.term_msg))
                 self.last_term_msg = self.term_msg
             except Exception as e:
-                self.log_to_terminal(f"Terminal window update failed: {e}", level="system_error")
+                self.log_to_terminal(f"Terminal window update failed: {e}", level="error")
 
 
     def write_galil_values_to_ui(self, galil_values: dict) -> None:

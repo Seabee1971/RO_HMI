@@ -1,9 +1,6 @@
 import gclib
-from logging import exception
 
-from PyQt6.QtWidgets import QLabel, QPushButton
-
-mg = "MG "
+_mg = "MG "
 
 # Handlers/galil.py
 class Galil:
@@ -13,31 +10,38 @@ class Galil:
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance._init()
+            cls._instance._init(*args, **kwargs)
         return cls._instance
 
-    def _init(self):
+    def _init(self,log_to_terminal):
         self.g = gclib.py()
         self.IP_address = "169.254.154.33"
-
+        self.log_to_terminal = log_to_terminal
     def dmc_connect(self):
         if not Galil._connected:
             try:
+
                 self.g.GOpen(f'{self.IP_address} --direct')
                 Galil._connected = True
-                return self.g
             except Exception as e:
-                return self.g
-        return None
+                self.log_to_terminal(f"Connecting to {self.IP_address} failed: {e}","error")
+
 
     def dmc_disconnect(self):
         try:
             self.g.GClose()
             Galil._connected = False
         except Exception as e:
-            return self.g
+            self.log_to_terminal(f"Disconnecting from {self.IP_address} failed: {e}","error")
 
-        return self.g
+
+
+
+    def get_info(self) -> str:
+        try:
+            return self.g.GInfo()
+        except Exception as e:
+            return f"Error getting GInfo: {e}"
 
     def is_connected(self):
         return Galil._connected

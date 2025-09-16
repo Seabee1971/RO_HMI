@@ -23,4 +23,8 @@ WIDGET_LINKS = [
     dict(object=("lbl_Sw2_On", "lbl_Sw2_Off"),widget_type ="bool_pair", read_expr="@IN[8]", write_var=None,
          convert_value=lambda s: float(s) >= 0.5, fmt=None),
 ]
-READ_CONTINUOUS = ('''ER,OE,CN,MT,CE,LC,PF,VF,YA,YB,YC,LinRes,EncRes,MicStep,StepRes,ActCnt,ComStps,StP_mm,SP,AC,DC''')
+COMMANDS = [
+    "_ER", "_OE", "_CN", "_MT", "_CE", "LC", "PF", "VF",
+    "YA", "YB", "YC", "LinRes", "EncRes", "MicStep", "StepRes",
+    "ActCnt", "ComStps", "StP_mm", "SP", "AC", "DC"
+]
