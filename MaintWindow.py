@@ -1,4 +1,5 @@
 from PyQt6 import uic
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QTableWidgetItem, QTableWidget, QVBoxLayout, QPlainTextEdit
 
 from Handlers.widget_links import COMMANDS
@@ -7,6 +8,7 @@ w = "[Maintenance Window]"
 class MaintenanceWindow(QMainWindow):
     def __init__(self, main_window, log_to_terminal, galil):
         super().__init__()
+        self.dict_values = None
         self.current_values = []
         self.term_msg = None
         self.main_window = main_window
@@ -57,7 +59,7 @@ class MaintenanceWindow(QMainWindow):
             if self.galil.is_connected():
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
-                self.log_to_terminal(f"{w}Connection Successful. {self.galil.get_info()}")
+                self.log_to_maint_terminal(f"{w}Connection Successful. {self.galil.get_info()}")
 
             else:
                 self.btn_connect.show()
@@ -87,33 +89,48 @@ class MaintenanceWindow(QMainWindow):
             except Exception as e:
                 self.log_to_terminal(f"{w}Terminal window update failed: {e}", level="error")
                 self.log_to_maint_terminal(f"{w}Terminal window update failed: {e}", level="error")
+
     def log_to_maint_terminal(self, msg: str, level: str = "info"):
-        msg = msg.replace("→", "->")  # keep CP1252-safe
+        # msg = msg.replace("→", "->")  # keep CP1252-safe
         self.term_msg = msg
         self.update_maint_terminal()
 
     def update_tbl_parameters(self):
-        try:
-            raise RuntimeError("TEST: simulated failure for logger")
-        except Exception as e:
-            self.log_to_maint_terminal(f"{w}Error updating Maintenance Window: {e}", level="error")
+        self.log_to_maint_terminal(f"Maintenance Window Parameters Update")
 
-        try:
-            AXES = ['A','B']
-            if self.galil.is_connected():
+        AXES = ['X', 'Y']
+        if self.galil.is_connected():
+            try:
                 for axis in AXES:
                     for value in self.read_values:
-                        self.current_values.append(self.galil.read_expr(f'{value}{axis}'))
+                        if value.startswith("_"):
+                            parameter = f"{value}{axis}"
+                        else:
+                            parameter = f"{axis.lower()}{value}"
 
+                        self.log_to_maint_terminal(f"Current Value: {parameter}")
 
-            for row_index, row_data in enumerate(self.current_values):
-                for col_index, cell_data in enumerate(row_data):
-                    item = QTableWidgetItem(cell_data)
-                    # Optional: Customize item properties (e.g., text alignment)
-                    # if col_index == 1: # Center align Age column
-                    #     item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
-                    self.tbl_parameters.setItem(row_index, col_index, item)
+                        result = self.galil.read_expr(parameter)
+                        self.current_values.append(result)
 
+                        # ✅ store parameter → result as key:value
+                        self.dict_values = {parameter: result}
+
+            except Exception as e:
+                self.log_to_maint_terminal(f"{w}Error reading {parameter} {e}", level="error")
+                pass
+
+    def populate_table(self):
+        try:
+            self.tbl_parameters.setRowCount(len(self.dict_values))
+
+            for row, (param, val) in enumerate(self.dict_values.items()):
+                # Key goes into "Parameter" (col 2)
+                self.table.setItem(row, 2, QTableWidgetItem(str(param)))
+
+                # Value goes into "A Axis Current Value" (col 1)
+                self.table.setItem(row, 1, QTableWidgetItem(str(val)))
+                # ✅ A-axis value goes in column 1
         except Exception as e:
             # Assuming you have this method, otherwise just use print()
             self.log_to_terminal(f"{w}Failed to update table: {e}", level="error")

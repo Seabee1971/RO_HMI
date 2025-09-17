@@ -231,7 +231,7 @@ color: rgb(0, 0, 255);</string>
     <row/>
     <column>
      <property name="text">
-      <string>Current Value</string>
+      <string>Update Value</string>
      </property>
      <property name="font">
       <font>
@@ -242,7 +242,7 @@ color: rgb(0, 0, 255);</string>
     </column>
     <column>
      <property name="text">
-      <string>A-Axis</string>
+      <string>A Axis Current Value</string>
      </property>
      <property name="font">
       <font>
@@ -264,7 +264,7 @@ color: rgb(0, 0, 255);</string>
     </column>
     <column>
      <property name="text">
-      <string>B-Axis</string>
+      <string>B-Axis Current Value</string>
      </property>
      <property name="font">
       <font>
@@ -275,7 +275,7 @@ color: rgb(0, 0, 255);</string>
     </column>
     <column>
      <property name="text">
-      <string>Current Value</string>
+      <string>Update Value</string>
      </property>
      <property name="font">
       <font>

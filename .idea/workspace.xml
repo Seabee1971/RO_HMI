@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3fa40f9-de6c-443f-957e-f7f1843e680d" name="Changes" comment="Both windows now share the same galil connection(instance)">
+    <list default="true" id="f3fa40f9-de6c-443f-957e-f7f1843e680d" name="Changes" comment="Fixed Window not closing when the other one is open">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handlers/galil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handlers/galil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Handlers/error_logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handlers/error_logging.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Handlers/widget_links.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handlers/widget_links.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MaintWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MaintWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Maintenance_Window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Maintenance_Window.ui" afterDir="false" />
@@ -30,13 +30,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.66e6b066-c0df-4de1-afbb-23ad22902b9a_methods_sorted.executor": "Run",
-    "Python.MaintWindow.executor": "Debug",
+    "Python.MaintWindow.executor": "Run",
     "Python.PyQt_MessageBox.executor": "Run",
     "Python.Table.executor": "Run",
     "Python.hunt (1).executor": "Run",
     "Python.hunt.executor": "Run",
     "Python.keyboard.executor": "Run",
-    "Python.main.executor": "Run",
+    "Python.main.executor": "Debug",
     "Python.model.executor": "Run",
     "Python.populator.executor": "Run",
     "Python.space_invaders.executor": "Run",
@@ -294,7 +294,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758029008697</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Fixed Window not closing when the other one is open">
+      <option name="closed" value="true" />
+      <created>1758042929137</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1758042929137</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -309,7 +317,8 @@
     <MESSAGE value="fixing MaintainceTables2" />
     <MESSAGE value="fixing MaintainceTables3" />
     <MESSAGE value="Both windows now share the same galil connection(instance)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Both windows now share the same galil connection(instance)" />
+    <MESSAGE value="Fixed Window not closing when the other one is open" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Window not closing when the other one is open" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -322,11 +331,6 @@
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/hunt_for_red_oktober/hunt.py</url>
           <option name="timeStamp" value="176" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/MaintWindow.py</url>
-          <line>105</line>
-          <option name="timeStamp" value="226" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -355,16 +359,16 @@
     <SUITE FILE_PATH="coverage/RO_HMI$bindings_config.coverage" NAME="bindings_config Coverage Results" MODIFIED="1757513764838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$hunt__1_.coverage" NAME="hunt (1) Coverage Results" MODIFIED="1757877293718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hunt_for_red_oktober" />
     <SUITE FILE_PATH="coverage/RO_HMI$QThreadTest.coverage" NAME="QThreadTest Coverage Results" MODIFIED="1756655672899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RO_HMI$main.coverage" NAME="main Coverage Results" MODIFIED="1758042710611" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RO_HMI$main.coverage" NAME="main Coverage Results" MODIFIED="1758056801119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$button.coverage" NAME="button Coverage Results" MODIFIED="1755793234458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WidgetHandlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$galil_thread.coverage" NAME="galil_thread Coverage Results" MODIFIED="1755803429389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
-    <SUITE FILE_PATH="coverage/RO_HMI$splitter.coverage" NAME="splitter Coverage Results" MODIFIED="1758038200756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RO_HMI$splitter.coverage" NAME="splitter Coverage Results" MODIFIED="1758056703662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$galil.coverage" NAME="galil Coverage Results" MODIFIED="1756667260991" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$error_logging.coverage" NAME="error_logging Coverage Results" MODIFIED="1756837649109" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$cleanLogs__1_.coverage" NAME="cleanLogs (1) Coverage Results" MODIFIED="1756840163694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
     <SUITE FILE_PATH="coverage/RO_HMI$keyboard.coverage" NAME="keyboard Coverage Results" MODIFIED="1757871611402" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$CleanLogs.coverage" NAME="CleanLogs Coverage Results" MODIFIED="1756837812261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Handlers" />
-    <SUITE FILE_PATH="coverage/RO_HMI$MaintWindow.coverage" NAME="MaintWindow Coverage Results" MODIFIED="1758034474693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RO_HMI$MaintWindow.coverage" NAME="MaintWindow Coverage Results" MODIFIED="1758056066182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$logwithlogging__1_.coverage" NAME="logwithlogging (1) Coverage Results" MODIFIED="1756834985314" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$readParser.coverage" NAME="readParser Coverage Results" MODIFIED="1756664651969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RO_HMI$parserTest.coverage" NAME="parserTest Coverage Results" MODIFIED="1756663527015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

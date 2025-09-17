@@ -307,7 +307,6 @@ class UI(QMainWindow):
 
     def start_run(self):
         try:
-
             ok,vals = self._check_start_params()
             print(ok,vals)
 

@@ -24,7 +24,7 @@ WIDGET_LINKS = [
          convert_value=lambda s: float(s) >= 0.5, fmt=None),
 ]
 COMMANDS = [
-    "_ER", "_OE", "_CN", "_MT", "_CE", "LC", "PF", "VF",
-    "YA", "YB", "YC", "LinRes", "EncRes", "MicStep", "StepRes",
-    "ActCnt", "ComStps", "StP_mm", "SP", "AC", "DC"
+    "_ER", "_OE", "_CN", "_MT", "_CE", "_LC", "_PF", "_VF",
+    "_YA", "_YB", "_YC", "LinRes", "EncRes", "MicStep", "StepRes",
+    "ActCnt", "ComStps", "StP_mm", "_SP", "_AC", "_DC"
 ]
