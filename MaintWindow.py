@@ -8,13 +8,14 @@ w = "[Maintenance Window]"
 class MaintenanceWindow(QMainWindow):
     def __init__(self, main_window, log_to_terminal, galil):
         super().__init__()
-        self.dict_values = None
+        self.dict_values = {}
         self.current_values = []
         self.term_msg = None
         self.main_window = main_window
         self.last_term_msg = ""
         uic.loadUi("Maintenance_Window.ui", self)  # Load the .ui file
         self.setWindowTitle("Maintenance Window")
+
         self.showMaximized()
         # Widget creation
         self.btn_poll_settings = self.findChild(QPushButton, "btn_Poll_Settings")
@@ -45,6 +46,12 @@ class MaintenanceWindow(QMainWindow):
         self.tbl_parameters = self.findChild(QTableWidget, "tbl_parameters")
         layout.addWidget(self.tbl_parameters)
         self.setLayout(layout)
+        self.tbl_parameters.setStyleSheet("""
+                    QTableWidget {
+                        font-size: 14pt;
+                        font-weight: bold;
+                    }
+                """)
 
 
     def ret2main(self):
@@ -100,38 +107,57 @@ class MaintenanceWindow(QMainWindow):
 
         AXES = ['X', 'Y']
         if self.galil.is_connected():
-            try:
+
+
                 for axis in AXES:
                     for value in self.read_values:
                         if value.startswith("_"):
                             parameter = f"{value}{axis}"
                         else:
                             parameter = f"{axis.lower()}{value}"
+                        try:
+                            result = self.galil.read_expr(parameter)
+                            self.log_to_maint_terminal(f"Current Value: {parameter}={result}")
+                            self.current_values.append(result)
 
-                        self.log_to_maint_terminal(f"Current Value: {parameter}")
+                            # ✅ store parameter → result as key:value
+                            self.dict_values[parameter] = result
+                            print(self.dict_values.items())
 
-                        result = self.galil.read_expr(parameter)
-                        self.current_values.append(result)
+                        except Exception as e:
+                            self.log_to_maint_terminal(f"{w}Error reading {parameter} {e}", level="error")
+                            self.log_to_terminal(f"{w}Error reading {parameter} {e}", level="error")
 
-                        # ✅ store parameter → result as key:value
-                        self.dict_values = {parameter: result}
-
-            except Exception as e:
-                self.log_to_maint_terminal(f"{w}Error reading {parameter} {e}", level="error")
-                pass
+                self.populate_table()
 
     def populate_table(self):
+
         try:
             self.tbl_parameters.setRowCount(len(self.dict_values))
 
             for row, (param, val) in enumerate(self.dict_values.items()):
+                if param.startswith("x"):
+                    param = param.removeprefix("x")
+                    col =2
+                    x_row = 1
+                elif param.endswith("X"):
+                    param = param.removesuffix("X")
+                    col = 2
+                elif param.startswith("y"):
+                    param = param.removeprefix("y")
+                    col = 3
+                    row = row + 1
+                elif param.endswith("Y"):
+                    param = param.removesuffix("Y")
+                    col = 3
+                    row = row + 1
                 # Key goes into "Parameter" (col 2)
-                self.table.setItem(row, 2, QTableWidgetItem(str(param)))
+                self.tbl_parameters.setItem(row, col, QTableWidgetItem(str(param)))
 
                 # Value goes into "A Axis Current Value" (col 1)
-                self.table.setItem(row, 1, QTableWidgetItem(str(val)))
-                # ✅ A-axis value goes in column 1
+                self.tbl_parameters.setItem(row, 1, QTableWidgetItem(str(val)))
+
         except Exception as e:
-            # Assuming you have this method, otherwise just use print()
-            self.log_to_terminal(f"{w}Failed to update table: {e}", level="error")
-            self.log_to_maint_terminal(f"{w}Failed to update table: {e}", level="error")
+            # Replace w with "" or remove it (looks like a leftover variable)
+            self.log_to_terminal(f"Failed to update table: {e}", level="error")
+            self.log_to_maint_terminal(f"Failed to update table: {e}", level="error")
