@@ -67,13 +67,14 @@ class MaintenanceWindow(QMainWindow):
                 self.btn_connect.hide()
                 self.btn_disconnect.show()
                 self.log_to_maint_terminal(f"{w}Connection Successful. {self.galil.get_info()}")
-
             else:
+                self.log_to_terminal(f"{w}Failed to connect to controller", level="error")
+                self.log_to_maint_terminal(f"{w}Failed to connect to controller", level="error")
                 self.btn_connect.show()
                 self.btn_disconnect.hide()
         except Exception as e:
             self.log_to_terminal(f"{w}Error Connecting {e}", level="error")
-
+            self.log_to_maint_terminal(f"{w}Error Connecting {e}", level="error")
     def disconnect_device(self):
         try:
             self.galil.dmc_disconnect()
@@ -122,7 +123,6 @@ class MaintenanceWindow(QMainWindow):
 
                             # ✅ store parameter → result as key:value
                             self.dict_values[parameter] = result
-                            print(self.dict_values.items())
 
                         except Exception as e:
                             self.log_to_maint_terminal(f"{w}Error reading {parameter} {e}", level="error")

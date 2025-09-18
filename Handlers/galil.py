@@ -25,7 +25,7 @@ class Galil:
                 Galil._connected = True
             except Exception as e:
                 self.log_to_terminal(f"Connecting to {self.IP_address} failed: {e}","error")
-
+                self.log_to_main
 
     def dmc_disconnect(self):
         try:
